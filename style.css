@@ -335,13 +335,13 @@ MOBILE RESPONSIVE VIEW
   .line-pill {
     width: 56px;
     height: 30px;
-    font-size: 13px;
+    font-size: auto;
   }
 
   .metro-pill {
     width: 30px;
     height: 30px;
-    font-size: 12px;
+    font-size: auto;
   }
 
   .content {
