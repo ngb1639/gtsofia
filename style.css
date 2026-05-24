@@ -424,7 +424,7 @@ MOBILE RESPONSIVE VIEW
   .line-pill {
     width: 54px;
     height: 28px;
-    font-size: 12px;
+    font-size: auto;
   }
 
   .stops-card {
