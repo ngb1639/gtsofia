@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sofia Transport</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="logo">GTSOFIA</div>
+
+    <input class="search" id="searchInput" placeholder="Търсене по линия…" />
+
+    <div class="filters">
+      <button class="filter-btn active" onclick="setFilter(null, this)">Всички</button>
+      <button class="filter-btn" onclick="setFilter('bus', this)">Автобуси</button>
+      <button class="filter-btn" onclick="setFilter('tram', this)">Трамваи</button>
+      <button class="filter-btn" onclick="setFilter('trolley', this)">Тролейбуси</button>
+      <button class="filter-btn" onclick="setFilter('metro', this)">Метро</button>
+      <button class="filter-btn" onclick="setFilter('night', this)">Нощни</button>
+    </div>
+
+    <h3 class="section-title">Линии</h3>
+
+    <div class="lines-grid" id="linesGrid"></div>
+
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+    <div id="contentArea">
+      <div class="empty-state">Изберете линия, за да видите спирките ѝ.</div>
+    </div>
+  </main>
+
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
