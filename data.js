@@ -16,7 +16,7 @@ const lines = [
     type: "bus",
     number: "10",
     color: "#be1e2d",
-    icon: "https://stolica.bg/svg/02-tram.svg",
+    icon: "https://stolica.bg/svg/05-bus.svg",
     directionA: "Бусманци",
     directionB: "Димитър Миленков",
     activeDirection: "A",
