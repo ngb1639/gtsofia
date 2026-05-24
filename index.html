@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sofia Transport</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Sofia Sans", sans-serif;
+      background: #f3f4f6;
+      height: 100vh;
+      overflow: hidden;
+      color: #111827;
+    }
+
+    .app {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+      width: 360px;
+      background: white;
+      border-right: 1px solid #e5e7eb;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .search {
+      width: 100%;
+      height: 44px;
+      border: none;
+      border-radius: 12px;
+      padding: 0 16px;
+      background: #f3f4f6;
+      font-size: 15px;
+      margin-bottom: 16px;
+      outline: none;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .filter-btn {
+      border: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: #e5e7eb;
+      color: #374151;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 14px;
+    }
+
+    .filter-btn:hover {
+      background: #d1d5db;
+    }
+
+    .filter-btn.active {
+      background: #111827;
+      color: white;
+    }
+
+    .lines-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* SIDEBAR PILLS */
+
+    .line-pill {
+      width: 60px;
+      height: 30px;
+      border-radius: 6px;
+      color: white;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .line-pill:hover {
+      transform: scale(1.05);
+    }
+
+    .metro-pill {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.2s;
+      flex-shrink: 0;
+    }
+
+    .metro-pill:hover {
+      transform: scale(1.08);
+    }
+
+    /* CONTENT */
+
+    .content {
+      flex: 1;
+      padding: 32px;
+      overflow-y: auto;
+    }
+
+    .empty-state {
+      color: #9ca3af;
+      font-size: 18px;
+      margin-top: 40px;
+    }
+
+    .line-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
+    .line-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .switch-btn {
+      border: none;
+      background: #111827;
+      color: white;
+      height: 42px;
+      padding: 0 18px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .switch-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* ROUTE HEADER */
+
+    .route-direction {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .direction-arrow {
+      width: 22px;
+      height: 22px;
+      opacity: 0.7;
+    }
+
+    .destination-name {
+      font-size: 25px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    /* DETAILS */
+
+    .details-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .details-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    .details-icon img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+    }
+
+    .details-number {
+      width: 60px;
+      height: 30px;
+      border-radius: 6px;
+      color: white;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* STOPS */
+
+    .stops-card {
+      background: white;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      max-width: 700px;
+    }
+
+    .stops-line {
+      position: relative;
+      margin-left: 12px;
+    }
+
+    .stops-line::before {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #d1d5db;
+    }
+
+    .stop-item {
+      position: relative;
+      padding-left: 36px;
+      padding-bottom: 28px;
+    }
+
+    .stop-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .stop-dot {
+      position: absolute;
+      left: 0;
+      top: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: #111827;
+      border: 4px solid white;
+      z-index: 2;
+    }
+
+    .stop-name {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    h3.section-title {
+      margin-bottom: 12px;
+      color: #6b7280;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="logo">GTSOFIA</div>
+
+    <input class="search" id="searchInput" placeholder="Търсене по линия…" />
+
+    <div class="filters">
+
+      <button class="filter-btn active" onclick="setFilter(null, this)">Всички</button>
+      <button class="filter-btn" onclick="setFilter('bus', this)">Автобуси</button>
+      <button class="filter-btn" onclick="setFilter('tram', this)">Трамваи</button>
+      <button class="filter-btn" onclick="setFilter('trolley', this)">Тролейбуси</button>
+      <button class="filter-btn" onclick="setFilter('metro', this)">Метро</button>
+      <button class="filter-btn" onclick="setFilter('night', this)">Нощни</button>
+
+    </div>
+
+    <h3 class="section-title">Линии</h3>
+
+    <div class="lines-grid" id="linesGrid"></div>
+
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+    <div id="contentArea">
+      <div class="empty-state">Изберете линия, за да видите спирките ѝ.</div>
+    </div>
+  </main>
+
+</div>
+
+<script>
+
+const lines = [
+
+  {
+    type: "bus",
+    number: "9",
+    color: "#be1e2d",
+    icon: "https://stolica.bg/svg/05-bus.svg",
+    directionA: "Автобаза Искър",
+    directionB: "ул. ген. Гурко",
+    activeDirection: "A",
+    stopsA: ["ул. ген. Гурко","СУ Св. Климент Охридски","Военна академия","129-то ОУ","ул. Черковна","ул. Оборище","ул. Калиманци","Румънско посолство","ул. Хемус","ул. Александър Жендов","ул. Николай Коперник","НУ за танцово изкуство","Автостанция Гео Милев","ж.к. Слатина","ВТУ Т. Каблешков","Слатина Булгарплод","БКС Средец","Автобаза Искър"],
+    stopsB: ["Airport Terminal 2","Mladost 1","Sofia University","Orlov Most","Central Station"]
+  },
+
+  {
+    type: "tram",
+    number: "5",
+    color: "#f6921e",
+    icon: "https://stolica.bg/svg/02-tram.svg",
+    directionA: "Court House",
+    directionB: "Knyazhevo",
+    activeDirection: "A",
+    stopsA: ["Knyazhevo","Russian Monument","NDK","Court House"],
+    stopsB: ["Court House","NDK","Russian Monument","Knyazhevo"]
+  },
+
+  {
+    type: "trolley",
+    number: "9",
+    color: "#2aa9e0",
+    icon: "https://stolica.bg/svg/04-trolley.svg",
+    directionA: "Hadzhi Dimitar",
+    directionB: "Borovo",
+    activeDirection: "A",
+    stopsA: ["Borovo","NDK","Sofia University","Hadzhi Dimitar"],
+    stopsB: ["Hadzhi Dimitar","Sofia University","NDK","Borovo"]
+  },
+
+  {
+    type: "night",
+    number: "N4",
+    color: "#000000",
+    icon: "https://stolica.bg/svg/07-night-bus.svg",
+    directionA: "Studentski Grad",
+    directionB: "Obelya",
+    activeDirection: "A",
+    stopsA: ["Obelya","Lomsko Shose","Serdika","Studentski Grad"],
+    stopsB: ["Studentski Grad","Serdika","Lomsko Shose","Obelya"]
+  },
+
+  {
+    type: "metro",
+    number: "1",
+    color: "#ec2029",
+    textColor: "white",
+    icon: "https://stolica.bg/svg/01-metro.svg",
+    directionA: "Airport",
+    directionB: "Slivnitsa",
+    activeDirection: "A",
+    stopsA: ["Slivnitsa","Serdika","Sofia University","Mladost","Airport"],
+    stopsB: ["Airport","Mladost","Sofia University","Serdika","Slivnitsa"]
+  },
+
+  {
+    type: "metro",
+    number: "2",
+    color: "#1077bc",
+    textColor: "white",
+    icon: "https://stolica.bg/svg/01-metro.svg",
+    directionA: "Vitosha",
+    directionB: "Obelya",
+    activeDirection: "A",
+    stopsA: ["Obelya","Serdika","NDK","Vitosha"],
+    stopsB: ["Vitosha","NDK","Serdika","Obelya"]
+  },
+
+  {
+    type: "metro",
+    number: "3",
+    color: "#3bb44b",
+    textColor: "white",
+    icon: "https://stolica.bg/svg/01-metro.svg",
+    directionA: "Hadzhi Dimitar",
+    directionB: "Ovcha Kupel",
+    activeDirection: "A",
+    stopsA: ["Ovcha Kupel","Medical University","NDK","Hadzhi Dimitar"],
+    stopsB: ["Hadzhi Dimitar","NDK","Medical University","Ovcha Kupel"]
+  },
+
+  {
+    type: "metro",
+    number: "4",
+    color: "#fcd403",
+    textColor: "black",
+    icon: "https://stolica.bg/svg/01-metro.svg",
+    directionA: "Business Park",
+    directionB: "Airport",
+    activeDirection: "A",
+    stopsA: ["Airport","Mladost 1","Business Park"],
+    stopsB: ["Business Park","Mladost 1","Airport"]
+  }
+
+];
+
+let currentFilter = null;
+
+function renderLines() {
+
+  const grid = document.getElementById("linesGrid");
+  const search = document.getElementById("searchInput").value.toLowerCase();
+
+  grid.innerHTML = "";
+
+  lines.filter(l =>
+    (!currentFilter || l.type === currentFilter) &&
+    l.number.toLowerCase().includes(search)
+  ).forEach(line => {
+
+    if (line.type === "metro") {
+
+      const el = document.createElement("div");
+      el.className = "metro-pill";
+      el.style.background = line.color;
+      el.style.color = line.textColor;
+      el.innerText = line.number;
+      el.onclick = () => selectLine(line);
+      grid.appendChild(el);
+
+    } else {
+
+      const el = document.createElement("div");
+      el.className = "line-pill";
+      el.style.background = line.color;
+      el.innerText = line.number;
+      el.onclick = () => selectLine(line);
+      grid.appendChild(el);
+
+    }
+
+  });
+
+}
+
+function selectLine(line) {
+
+  const direction = line.activeDirection === "A"
+    ? line.directionA
+    : line.directionB;
+
+  const stops = line.activeDirection === "A"
+    ? line.stopsA
+    : line.stopsB;
+
+  const content = document.getElementById("contentArea");
+
+  const pill = line.type === "metro"
+    ? `
+      <div class="details-pill">
+        <div class="details-icon">
+          <img src="${line.icon}" />
+        </div>
+        <div class="metro-pill"
+          style="background:${line.color}; color:${line.textColor};">
+          ${line.number}
+        </div>
+      </div>`
+    : `
+      <div class="details-pill">
+        <div class="details-icon">
+          <img src="${line.icon}" />
+        </div>
+        <div class="details-number" style="background:${line.color}">
+          ${line.number}
+        </div>
+      </div>`;
+
+  content.innerHTML = `
+    <div class="line-header">
+      <div class="line-left">
+
+        <div class="route-direction">
+          ${pill}
+          <img class="direction-arrow" src="https://sofiatraffic.bg/images/next.svg"/>
+          <div class="destination-name">
+            ${direction}
+          </div>
+        </div>
+
+      </div>
+
+      <button class="switch-btn" onclick="switchDirection('${line.number}')">
+        Смяна на посоката
+      </button>
+    </div>
+
+    <div class="stops-card">
+      <div class="stops-line">
+        ${stops.map(s => `
+          <div class="stop-item">
+            <div class="stop-dot"></div>
+            <div class="stop-name">${s}</div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function switchDirection(number) {
+  const line = lines.find(l => l.number === number);
+  line.activeDirection = line.activeDirection === "A" ? "B" : "A";
+  selectLine(line);
+}
+
+function setFilter(type, el) {
+  currentFilter = type;
+
+  document.querySelectorAll(".filter-btn")
+    .forEach(b => b.classList.remove("active"));
+
+  if (el) el.classList.add("active");
+  renderLines();
+}
+
+document.getElementById("searchInput").addEventListener("input", renderLines);
+
+renderLines();
+
+</script>
+
+</body>
+</html>
