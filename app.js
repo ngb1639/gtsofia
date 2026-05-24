@@ -89,6 +89,12 @@ function selectLine(line) {
       </button>
     </div>
 
+    ${line.note ? `
+      <div class="line-note">
+        ${line.note}
+      </div>
+    ` : ""}
+
     <div class="stops-card">
       <div class="stops-line">
         ${stops.map(s => `
