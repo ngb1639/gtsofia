@@ -84,7 +84,8 @@ function selectLine(line) {
 
       </div>
 
-      <button class="switch-btn" onclick="switchDirection('${line.number}')">
+      <button class="switch-btn"
+        onclick="switchDirection('${line.type}', '${line.number}')">
         Смяна на посоката
       </button>
     </div>
@@ -108,8 +109,14 @@ function selectLine(line) {
   `;
 }
 
-function switchDirection(number) {
-  const line = lines.find(l => l.number === number);
+function switchDirection(type, number) {
+
+  const line = lines.find(
+    l => l.type === type && l.number === number
+  );
+
+  if (!line) return;
+
   line.activeDirection = line.activeDirection === "A" ? "B" : "A";
   selectLine(line);
 }
@@ -124,6 +131,7 @@ function setFilter(type, el) {
   renderLines();
 }
 
-document.getElementById("searchInput").addEventListener("input", renderLines);
+document.getElementById("searchInput")
+  .addEventListener("input", renderLines);
 
 renderLines();
