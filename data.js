@@ -1382,7 +1382,7 @@ const lines = [
 
 {
     type: "trolley",
-    number: "9&nbsp;",
+    number: "9",
     color: "#2AA9E0",
     icon: "https://stolica.bg/svg/04-trolley.svg",
     directionA: "Сточна гара",
@@ -1394,7 +1394,7 @@ const lines = [
 
 {
     type: "trolley",
-    number: "11&nbsp;",
+    number: "11",
     color: "#2AA9E0",
     icon: "https://stolica.bg/svg/04-trolley.svg",
     directionA: "Дружба I",
