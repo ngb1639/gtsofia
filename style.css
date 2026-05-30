@@ -161,7 +161,7 @@ body {
   border-radius: 6px;
   color: white;
   font-weight: 700;
-  font-size: 18px;
+  font-size: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -181,7 +181,7 @@ body {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 18px;
+  font-size: auto;
   cursor: pointer;
   transition: 0.2s;
   flex-shrink: 0;
@@ -271,7 +271,6 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 18px;
 }
 
 .details-icon {
@@ -408,11 +407,15 @@ MOBILE RESPONSIVE VIEW
   }
 
   .line-pill {
-    font-size: 18px;
+    width: 56px;
+    height: 30px;
+    font-size: auto;
   }
 
   .metro-pill {
-    font-size: 18px;
+    width: 30px;
+    height: 30px;
+    font-size: auto;
   }
 
   .content {
@@ -493,7 +496,9 @@ MOBILE RESPONSIVE VIEW
   }
 
   .line-pill {
-    font-size: 18px;
+    width: 54px;
+    height: 28px;
+    font-size: auto;
   }
 
   .stops-card {
