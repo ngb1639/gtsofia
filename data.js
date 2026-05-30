@@ -2,6 +2,17 @@ const lines = [
 
   {
     type: "bus",
+    number: "R7",
+    color: "#654321",
+    icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/dd78ee33cdc0a83ff065730276920ef476a112b5/download.svg",
+    directionA: "Св. Александър Невски",
+    activeDirection: "A",
+    note: "Атракционна ретро автобусна линия, движеща се на 30.05. и 31.05.",
+    stopsA: ["Св. Александър Невски","Орлов мост","Кино Одеон","Национален дворец на културата","Руски паметник","Централни хали","Лъвов мост","пл. Княз Александър Батенберг","Св. Александър Невски"]
+  },
+  
+  {
+    type: "bus",
     number: "У1",
     color: "#be1e2d",
     icon: "https://stolica.bg/svg/05-bus.svg",
