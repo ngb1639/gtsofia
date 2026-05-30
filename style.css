@@ -161,7 +161,7 @@ body {
   border-radius: 6px;
   color: white;
   font-weight: 700;
-  font-size: 20px;
+  font-size: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -181,7 +181,7 @@ body {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 20px;
+  font-size: auto;
   cursor: pointer;
   transition: 0.2s;
   flex-shrink: 0;
@@ -294,7 +294,6 @@ body {
   width: 60px;
   height: 30px;
   border-radius: 6px;
-  font-size: 20px;
   color: white;
   font-weight: 700;
   display: flex;
@@ -410,13 +409,13 @@ MOBILE RESPONSIVE VIEW
   .line-pill {
     width: 56px;
     height: 30px;
-    font-size: 20px;
+    font-size: auto;
   }
 
   .metro-pill {
     width: 30px;
     height: 30px;
-    font-size: 20px;
+    font-size: auto;
   }
 
   .content {
@@ -499,7 +498,7 @@ MOBILE RESPONSIVE VIEW
   .line-pill {
     width: 54px;
     height: 28px;
-    font-size: 20px;
+    font-size: auto;
   }
 
   .stops-card {
