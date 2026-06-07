@@ -57,6 +57,10 @@ function selectLine(line) {
 
   const content = document.getElementById("contentArea");
 
+  const buttonClass = hasMap
+    ? "map-toggle-buttons two-buttons"
+    : "map-toggle-buttons one-button";
+
   const pill = line.type === "metro"
     ? `
       <div class="details-pill">
@@ -90,7 +94,7 @@ function selectLine(line) {
         </div>
       </div>
 
-      <div class="map-toggle-buttons">
+      <div class="${buttonClass}">
 
         <button class="switch-btn"
           onclick="switchDirection('${line.type}', '${line.number}')">
@@ -132,17 +136,20 @@ function toggleMap(relationId, color) {
 
   const mapContainer = document.getElementById("map");
 
-  // toggle off
+  // toggle OFF
   if (mapContainer.classList.contains("active")) {
     mapContainer.classList.remove("active");
-    mapContainer.innerHTML = "";
-    currentMap = null;
+
+    if (currentMap) {
+      currentMap.remove();
+      currentMap = null;
+    }
+
     return;
   }
 
   mapContainer.classList.add("active");
 
-  // reset previous map instance
   if (currentMap) {
     currentMap.remove();
     currentMap = null;
@@ -154,21 +161,36 @@ function toggleMap(relationId, color) {
     attribution: "© OpenStreetMap contributors"
   }).addTo(currentMap);
 
-  fetch(`https://overpass-api.de/api/interpreter?data=[out:json];relation(${relationId});out geom;`)
+  fetch(`https://overpass-api.de/api/interpreter?data=
+[out:json];
+relation(${relationId});
+(._;>>;);
+out body;
+`)
     .then(r => r.json())
     .then(data => {
 
+      const nodes = {};
       const coords = [];
 
       data.elements.forEach(el => {
-        if (el.geometry) {
-          el.geometry.forEach(p => {
-            coords.push([p.lat, p.lon]);
+        if (el.type === "node") {
+          nodes[el.id] = [el.lat, el.lon];
+        }
+      });
+
+      data.elements.forEach(el => {
+        if (el.type === "way" && el.nodes) {
+          el.nodes.forEach(id => {
+            if (nodes[id]) coords.push(nodes[id]);
           });
         }
       });
 
-      if (!coords.length) return;
+      if (!coords.length) {
+        console.warn("No route geometry found");
+        return;
+      }
 
       const polyline = L.polyline(coords, {
         color: color,
