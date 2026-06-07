@@ -95,7 +95,6 @@ function selectLine(line) {
       </div>
 
       <div class="${buttonClass}">
-
         <button class="switch-btn"
           onclick="switchDirection('${line.type}', '${line.number}')">
           Смяна на посоката
@@ -107,7 +106,6 @@ function selectLine(line) {
             Покажи картата
           </button>
         ` : ""}
-
       </div>
     </div>
 
@@ -136,7 +134,6 @@ function toggleMap(relationId, color) {
 
   const mapContainer = document.getElementById("map");
 
-  // toggle OFF
   if (mapContainer.classList.contains("active")) {
     mapContainer.classList.remove("active");
 
@@ -171,33 +168,42 @@ out body;
     .then(data => {
 
       const nodes = {};
-      const coords = [];
+      const ways = [];
 
       data.elements.forEach(el => {
         if (el.type === "node") {
           nodes[el.id] = [el.lat, el.lon];
         }
-      });
 
-      data.elements.forEach(el => {
         if (el.type === "way" && el.nodes) {
-          el.nodes.forEach(id => {
-            if (nodes[id]) coords.push(nodes[id]);
-          });
+          ways.push(el.nodes);
         }
       });
 
-      if (!coords.length) {
-        console.warn("No route geometry found");
-        return;
-      }
+      const coords = [];
+
+      ways.forEach(w => {
+        const segment = [];
+
+        w.forEach(id => {
+          if (nodes[id]) segment.push(nodes[id]);
+        });
+
+        if (segment.length) {
+          coords.push(...segment);
+        }
+      });
+
+      if (!coords.length) return;
 
       const polyline = L.polyline(coords, {
         color: color,
         weight: 4
       }).addTo(currentMap);
 
-      currentMap.fitBounds(polyline.getBounds());
+      currentMap.fitBounds(polyline.getBounds(), {
+        padding: [20, 20]
+      });
 
     })
     .catch(err => {
