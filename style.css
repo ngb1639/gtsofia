@@ -362,43 +362,6 @@ h3.section-title {
   letter-spacing: 1px;
 }
 
-/* MAP */
-
-.map-toggle-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-  flex-wrap: wrap;
-}
-
-.map-btn {
-  border: none;
-  background: #111827;
-  color: white;
-  height: 42px;
-  padding: 0 16px;
-  border-radius: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.map-btn:hover {
-  opacity: 0.9;
-}
-
-.map-card {
-  margin-top: 16px;
-  border-radius: 18px;
-  overflow: hidden;
-  height: 360px;
-  display: none;
-}
-
-.map-card.active {
-  display: block;
-}
-
 /* =========================
 MOBILE RESPONSIVE VIEW
 ========================= */
@@ -508,32 +471,6 @@ MOBILE RESPONSIVE VIEW
     line-height: 1.4;
   }
 
-.map-toggle-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-  width: 100%;
-}
-
-/* BOTH BUTTONS */
-.map-toggle-buttons.two-buttons {
-  flex-direction: row;
-}
-
-.map-toggle-buttons.two-buttons button {
-  flex: 1;
-}
-
-/* SINGLE BUTTON */
-.map-toggle-buttons.one-button {
-  justify-content: center;
-}
-
-.map-toggle-buttons.one-button button {
-  width: 100%;
-  max-width: 420px;
-}
-
 }
 
 @media (max-width: 480px) {
@@ -576,31 +513,5 @@ MOBILE RESPONSIVE VIEW
   .stops-card {
     padding: 18px;
   }
-
-.map-toggle-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-  width: 100%;
-}
-
-/* BOTH BUTTONS */
-.map-toggle-buttons.two-buttons {
-  flex-direction: row;
-}
-
-.map-toggle-buttons.two-buttons button {
-  flex: 1;
-}
-
-/* SINGLE BUTTON */
-.map-toggle-buttons.one-button {
-  justify-content: center;
-}
-
-.map-toggle-buttons.one-button button {
-  width: 100%;
-  max-width: 420px;
-}
 
 }
