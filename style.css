@@ -511,17 +511,27 @@ MOBILE RESPONSIVE VIEW
 .map-toggle-buttons {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap;
   margin-top: 12px;
+  width: 100%;
+}
+
+/* BOTH BUTTONS */
+.map-toggle-buttons.two-buttons {
+  flex-direction: row;
 }
 
 .map-toggle-buttons.two-buttons button {
   flex: 1;
-  text-align: center;
+}
+
+/* SINGLE BUTTON */
+.map-toggle-buttons.one-button {
+  justify-content: center;
 }
 
 .map-toggle-buttons.one-button button {
   width: 100%;
+  max-width: 420px;
 }
 
 }
@@ -570,17 +580,27 @@ MOBILE RESPONSIVE VIEW
 .map-toggle-buttons {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap;
   margin-top: 12px;
+  width: 100%;
+}
+
+/* BOTH BUTTONS */
+.map-toggle-buttons.two-buttons {
+  flex-direction: row;
 }
 
 .map-toggle-buttons.two-buttons button {
   flex: 1;
-  text-align: center;
+}
+
+/* SINGLE BUTTON */
+.map-toggle-buttons.one-button {
+  justify-content: center;
 }
 
 .map-toggle-buttons.one-button button {
   width: 100%;
+  max-width: 420px;
 }
 
 }
