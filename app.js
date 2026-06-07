@@ -145,8 +145,22 @@ function toggleMap(relationId, color) {
     currentMap = null;
   }
 
+  // Check cache first
+  if (mapCache[relationId]) {
+    initializeMapAndRender(mapContainer, mapCache[relationId], color);
+    return;
+  }
+
+  // Fetch data for the first time
+  fetchMapData(relationId, color, mapContainer);
+}
+
+function initializeMapAndRender(mapContainer, cachedData, color) {
+  // Clear any previous content
+  mapContainer.innerHTML = '';
+
   // Initialize map with a default center (Sofia, Bulgaria)
-  currentMap = L.map("map", {
+  currentMap = L.map(mapContainer, {
     center: [42.6977, 23.3219],
     zoom: 12
   });
@@ -156,20 +170,31 @@ function toggleMap(relationId, color) {
     maxZoom: 19
   }).addTo(currentMap);
 
-  // Check cache first
-  if (mapCache[relationId]) {
-    renderPolyline(mapCache[relationId], color);
-    return;
-  }
-
-  // Show loading indicator
-  mapContainer.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #9ca3af;">Зареждане на картата...</div>';
-  mapContainer.classList.add("active");
-
-  fetchMapData(relationId, color);
+  // Use cached data
+  renderPolyline(cachedData, color);
 }
 
-function fetchMapData(relationId, color) {
+function fetchMapData(relationId, color, mapContainer) {
+  // Clear container and initialize map
+  mapContainer.innerHTML = '';
+
+  currentMap = L.map(mapContainer, {
+    center: [42.6977, 23.3219],
+    zoom: 12
+  });
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap contributors",
+    maxZoom: 19
+  }).addTo(currentMap);
+
+  // Create loading overlay
+  const loadingOverlay = document.createElement('div');
+  loadingOverlay.id = 'map-loading';
+  loadingOverlay.style.cssText = 'position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; border-radius: 18px;';
+  loadingOverlay.innerHTML = '<div style="color: #9ca3af; font-size: 14px;">Зареждане на картата...</div>';
+  mapContainer.appendChild(loadingOverlay);
+
   const query = `[out:json];
 (
   relation(${relationId});
@@ -189,6 +214,8 @@ out geom;`;
 
       if (!data.elements || data.elements.length === 0) {
         console.warn("No elements found for relation", relationId);
+        const loading = document.getElementById('map-loading');
+        if (loading) loading.remove();
         currentMap.setView([42.6977, 23.3219], 12);
         return;
       }
@@ -212,6 +239,8 @@ out geom;`;
 
       if (!coords.length) {
         console.warn("No valid coordinates found for relation", relationId);
+        const loading = document.getElementById('map-loading');
+        if (loading) loading.remove();
         currentMap.setView([42.6977, 23.3219], 12);
         return;
       }
@@ -219,14 +248,18 @@ out geom;`;
       // Cache the coordinates
       mapCache[relationId] = { coords, color };
 
+      // Remove loading overlay
+      const loading = document.getElementById('map-loading');
+      if (loading) loading.remove();
+
       renderPolyline({ coords, color }, color);
 
     })
     .catch(err => {
       console.error("Map error:", err);
-      const mapContainer = document.getElementById("map");
-      if (mapContainer) {
-        mapContainer.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #ef4444;">Грешка при зареждане на картата</div>';
+      const loading = document.getElementById('map-loading');
+      if (loading) {
+        loading.innerHTML = '<div style="color: #ef4444; font-size: 14px;">Грешка при зареждане на картата</div>';
       }
     });
 }
@@ -237,25 +270,6 @@ function renderPolyline(data, color) {
   if (!coords || coords.length === 0) {
     console.warn("No coordinates to render");
     return;
-  }
-
-  // Clear the loading message and render the map
-  const mapContainer = document.getElementById("map");
-  if (mapContainer) {
-    mapContainer.innerHTML = '';
-  }
-
-  // Re-initialize the map if needed
-  if (!currentMap) {
-    currentMap = L.map("map", {
-      center: [42.6977, 23.3219],
-      zoom: 12
-    });
-
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "© OpenStreetMap contributors",
-      maxZoom: 19
-    }).addTo(currentMap);
   }
 
   const polyline = L.polyline(coords, {
