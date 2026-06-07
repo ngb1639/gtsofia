@@ -362,6 +362,43 @@ h3.section-title {
   letter-spacing: 1px;
 }
 
+/* MAP */
+
+.map-toggle-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.map-btn {
+  border: none;
+  background: #111827;
+  color: white;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.map-btn:hover {
+  opacity: 0.9;
+}
+
+.map-card {
+  margin-top: 16px;
+  border-radius: 18px;
+  overflow: hidden;
+  height: 360px;
+  display: none;
+}
+
+.map-card.active {
+  display: block;
+}
+
 /* =========================
 MOBILE RESPONSIVE VIEW
 ========================= */
