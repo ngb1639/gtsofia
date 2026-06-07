@@ -197,10 +197,10 @@ function fetchMapData(relationId, color, mapContainer) {
 
   const query = `[out:json];
 relation(${relationId});
-way(r);
-out geom;`;
+(._;>;);
+out body geom;`;
 
-  console.log("Fetching relation", relationId, "with query:", query);
+  console.log("Fetching relation", relationId, "with full geometry query");
 
   fetch(`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`)
     .then(r => {
@@ -208,10 +208,9 @@ out geom;`;
       return r.json();
     })
     .then(data => {
-      console.log("Overpass response for relation", relationId, data);
+      console.log("Overpass response for relation", relationId, "elements:", data.elements.length);
 
       const coords = [];
-      const seen = new Set();
 
       if (!data.elements || data.elements.length === 0) {
         console.warn("No elements found for relation", relationId);
@@ -221,28 +220,22 @@ out geom;`;
         return;
       }
 
-      console.log("Total elements received:", data.elements.length);
-
-      // Extract coordinates from all ways
+      // Extract coordinates from all ways with their full geometry in order
       data.elements.forEach((element, index) => {
-        console.log(`Element ${index}:`, element.type, element.id, "geometry:", element.geometry ? element.geometry.length : "none");
-        
         if (element.type === "way" && element.geometry && Array.isArray(element.geometry)) {
           console.log(`Processing way ${element.id} with ${element.geometry.length} points`);
           
           element.geometry.forEach(p => {
             if (p.lat && p.lon) {
-              const key = p.lat + "," + p.lon;
-              if (!seen.has(key)) {
-                seen.add(key);
-                coords.push([p.lat, p.lon]);
-              }
+              coords.push([p.lat, p.lon]);
             }
           });
         }
       });
 
-      console.log("Total unique coordinates extracted:", coords.length);
+      console.log("Total coordinates extracted:", coords.length);
+      console.log("First 5 coordinates:", coords.slice(0, 5));
+      console.log("Last 5 coordinates:", coords.slice(-5));
 
       if (!coords.length) {
         console.warn("No valid coordinates found for relation", relationId);
@@ -275,31 +268,23 @@ function renderPolyline(data, color) {
   const { coords } = data;
 
   console.log("Rendering polyline with", coords.length, "coordinates");
-  console.log("First 5 coordinates:", coords.slice(0, 5));
-  console.log("Last 5 coordinates:", coords.slice(-5));
 
   if (!coords || coords.length === 0) {
     console.warn("No coordinates to render");
     return;
   }
 
-  // Sort coordinates to ensure they are in order
-  const sortedCoords = [...coords];
-  
-  const polyline = L.polyline(sortedCoords, {
+  const polyline = L.polyline(coords, {
     color: color,
     weight: 6,
     opacity: 1,
     lineCap: 'round',
-    lineJoin: 'round',
-    dashArray: 'none'
+    lineJoin: 'round'
   }).addTo(currentMap);
 
   console.log("Polyline added to map");
 
   const bounds = polyline.getBounds();
-
-  console.log("Polyline bounds:", bounds);
 
   if (bounds && bounds.isValid()) {
     console.log("Fitting map to bounds");
