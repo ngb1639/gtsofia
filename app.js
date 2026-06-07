@@ -1,5 +1,16 @@
 let currentFilter = null;
 
+// =========================
+// MAP STATE
+// =========================
+let map = null;
+let currentPolyline = null;
+let shapeIndex = {}; // will be filled later (optional)
+
+
+// =========================
+// RENDER LIST
+// =========================
 function renderLines() {
 
   const grid = document.getElementById("linesGrid");
@@ -37,6 +48,10 @@ function renderLines() {
 
 }
 
+
+// =========================
+// LINE SELECTION
+// =========================
 function selectLine(line) {
 
   const direction = line.activeDirection === "A"
@@ -106,9 +121,19 @@ function selectLine(line) {
         `).join("")}
       </div>
     </div>
+
+    <!-- MAP (NEW) -->
+    <div id="routeMap" class="route-map"></div>
   `;
+
+  // render map AFTER DOM update
+  setTimeout(() => renderShapeForLine(line), 0);
 }
 
+
+// =========================
+// SWITCH DIRECTION
+// =========================
 function switchDirection(type, number) {
 
   const line = lines.find(
@@ -121,6 +146,10 @@ function switchDirection(type, number) {
   selectLine(line);
 }
 
+
+// =========================
+// FILTER
+// =========================
 function setFilter(type, el) {
   currentFilter = type;
 
@@ -131,7 +160,93 @@ function setFilter(type, el) {
   renderLines();
 }
 
+
+// =========================
+// SEARCH
+// =========================
 document.getElementById("searchInput")
   .addEventListener("input", renderLines);
 
+
+// =========================
+// MAP INIT
+// =========================
+function initMap() {
+
+  if (map) return;
+
+  map = L.map("routeMap").setView([42.6977, 23.3219], 12);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap contributors"
+  }).addTo(map);
+
+}
+
+
+// =========================
+// LOAD SHAPE (SAFE)
+// =========================
+async function loadShape(shapeId) {
+  try {
+    const res = await fetch(`shapes/${shapeId}.json`);
+    return await res.json();
+  } catch (e) {
+    console.warn("No shape found:", shapeId);
+    return null;
+  }
+}
+
+
+// =========================
+// DRAW SHAPE
+// =========================
+function drawShape(points, color) {
+
+  if (!map || !points) return;
+
+  if (currentPolyline) {
+    map.removeLayer(currentPolyline);
+  }
+
+  currentPolyline = L.polyline(points, {
+    color,
+    weight: 4
+  }).addTo(map);
+
+  map.fitBounds(currentPolyline.getBounds(), {
+    padding: [20, 20]
+  });
+}
+
+
+// =========================
+// RENDER SHAPE FOR LINE
+// =========================
+async function renderShapeForLine(line) {
+
+  const shapeInfo = shapeIndex[line.number];
+
+  if (!shapeInfo) return;
+
+  const shapeId =
+    line.activeDirection === "A"
+      ? shapeInfo.A
+      : shapeInfo.B;
+
+  if (!shapeId) return;
+
+  initMap();
+
+  const shape = await loadShape(shapeId);
+
+  if (!shape) return;
+
+  drawShape(shape, line.color);
+}
+
+
+// =========================
+// INIT
+// =========================
 renderLines();
