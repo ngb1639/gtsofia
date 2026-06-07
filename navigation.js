@@ -10,9 +10,16 @@ function navigateTo(page) {
   if (targetPage) {
     targetPage.classList.add('active');
     
-    // If navigating to lines page, initialize the lines
+    // If navigating to lines page, initialize the lines and show sidebar
     if (page === 'lines') {
       renderLines();
+      showSidebar();
+      showPromo();
+    } else {
+      // Hide sidebar for other pages
+      hideSidebar();
+      // Hide promo card for other pages
+      hidePromo();
     }
   }
 
@@ -24,6 +31,34 @@ function navigateTo(page) {
 
   // Scroll to top
   window.scrollTo(0, 0);
+}
+
+function showSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar) {
+    sidebar.style.display = 'flex';
+  }
+}
+
+function hideSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar) {
+    sidebar.style.display = 'none';
+  }
+}
+
+function showPromo() {
+  const promoCard = document.querySelector('.promo-card');
+  if (promoCard) {
+    promoCard.style.display = 'block';
+  }
+}
+
+function hidePromo() {
+  const promoCard = document.querySelector('.promo-card');
+  if (promoCard) {
+    promoCard.style.display = 'none';
+  }
 }
 
 function toggleMobileMenu() {
