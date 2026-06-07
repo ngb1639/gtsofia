@@ -152,8 +152,10 @@ function toggleMap(relationId, color) {
 
   fetch(`https://overpass-api.de/api/interpreter?data=
 [out:json];
-relation(${relationId});
-way(r);
+(
+  relation(${relationId});
+  way(r:"route");
+);
 out geom;
 `)
     .then(r => r.json())
@@ -164,7 +166,7 @@ out geom;
       const seen = new Set();
 
       data.elements
-        .filter(el => el.type === "way" && el.geometry)
+        .filter(el => el.type === "way" && el.geometry && Array.isArray(el.geometry))
         .forEach(way => {
 
           way.geometry.forEach(p => {
@@ -178,16 +180,20 @@ out geom;
 
         });
 
-      if (!coords.length) return;
+      if (!coords.length) {
+        console.warn("No coordinates found for relation", relationId);
+        return;
+      }
 
       const polyline = L.polyline(coords, {
         color: color,
-        weight: 4,
-        smoothFactor: 1.3
+        weight: 5,
+        opacity: 0.8,
+        smoothFactor: 0.5
       }).addTo(currentMap);
 
       currentMap.fitBounds(polyline.getBounds(), {
-        padding: [20, 20]
+        padding: [50, 50]
       });
 
     })
