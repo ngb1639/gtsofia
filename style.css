@@ -508,6 +508,10 @@ MOBILE RESPONSIVE VIEW
     line-height: 1.4;
   }
 
+  .map-toggle-buttons {
+  flex-wrap: wrap;
+}
+
 }
 
 @media (max-width: 480px) {
@@ -550,5 +554,9 @@ MOBILE RESPONSIVE VIEW
   .stops-card {
     padding: 18px;
   }
+
+  .map-toggle-buttons {
+  flex-wrap: wrap;
+}
 
 }
