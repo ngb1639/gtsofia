@@ -1,4 +1,5 @@
 let currentFilter = null;
+let currentMap = null;
 
 function renderLines() {
 
@@ -52,23 +53,7 @@ function selectLine(line) {
       ? line.relationIdA
       : line.relationIdB;
 
-  const mapHTML = relationId
-    ? `
-      <div class="map-card">
-        <iframe
-          width="100%"
-          height="350"
-          frameborder="0"
-          scrolling="no"
-          src="https://www.openstreetmap.org/export/embed.html?relation=${relationId}&layer=mapnik">
-        </iframe>
-      </div>
-    `
-    : `
-      <div class="map-card no-map">
-        No map available
-      </div>
-    `;
+  const hasMap = !!relationId;
 
   const content = document.getElementById("contentArea");
 
@@ -96,7 +81,6 @@ function selectLine(line) {
   content.innerHTML = `
     <div class="line-header">
       <div class="line-left">
-
         <div class="route-direction">
           ${pill}
           <img class="direction-arrow" src="https://sofiatraffic.bg/images/next.svg"/>
@@ -104,13 +88,23 @@ function selectLine(line) {
             ${direction}
           </div>
         </div>
-
       </div>
 
-      <button class="switch-btn"
-        onclick="switchDirection('${line.type}', '${line.number}')">
-        Смяна на посоката
-      </button>
+      <div class="map-toggle-buttons">
+
+        <button class="switch-btn"
+          onclick="switchDirection('${line.type}', '${line.number}')">
+          Смяна на посоката
+        </button>
+
+        ${hasMap ? `
+          <button class="map-btn"
+            onclick="toggleMap(${relationId}, '${line.color}')">
+            Покажи картата
+          </button>
+        ` : ""}
+
+      </div>
     </div>
 
     ${line.note ? `
@@ -130,9 +124,63 @@ function selectLine(line) {
       </div>
     </div>
 
-    ${mapHTML}
-
+    <div id="map" class="map-card"></div>
   `;
+}
+
+function toggleMap(relationId, color) {
+
+  const mapContainer = document.getElementById("map");
+
+  // toggle off
+  if (mapContainer.classList.contains("active")) {
+    mapContainer.classList.remove("active");
+    mapContainer.innerHTML = "";
+    currentMap = null;
+    return;
+  }
+
+  mapContainer.classList.add("active");
+
+  // reset previous map instance
+  if (currentMap) {
+    currentMap.remove();
+    currentMap = null;
+  }
+
+  currentMap = L.map("map");
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap contributors"
+  }).addTo(currentMap);
+
+  fetch(`https://overpass-api.de/api/interpreter?data=[out:json];relation(${relationId});out geom;`)
+    .then(r => r.json())
+    .then(data => {
+
+      const coords = [];
+
+      data.elements.forEach(el => {
+        if (el.geometry) {
+          el.geometry.forEach(p => {
+            coords.push([p.lat, p.lon]);
+          });
+        }
+      });
+
+      if (!coords.length) return;
+
+      const polyline = L.polyline(coords, {
+        color: color,
+        weight: 4
+      }).addTo(currentMap);
+
+      currentMap.fitBounds(polyline.getBounds());
+
+    })
+    .catch(err => {
+      console.error("Map load error:", err);
+    });
 }
 
 function switchDirection(type, number) {
