@@ -47,6 +47,29 @@ function selectLine(line) {
     ? line.stopsA
     : line.stopsB;
 
+  const relationId =
+    line.activeDirection === "A"
+      ? line.relationIdA
+      : line.relationIdB;
+
+  const mapHTML = relationId
+    ? `
+      <div class="map-card">
+        <iframe
+          width="100%"
+          height="350"
+          frameborder="0"
+          scrolling="no"
+          src="https://www.openstreetmap.org/export/embed.html?relation=${relationId}&layer=mapnik">
+        </iframe>
+      </div>
+    `
+    : `
+      <div class="map-card no-map">
+        No map available
+      </div>
+    `;
+
   const content = document.getElementById("contentArea");
 
   const pill = line.type === "metro"
@@ -106,6 +129,9 @@ function selectLine(line) {
         `).join("")}
       </div>
     </div>
+
+    ${mapHTML}
+
   `;
 }
 
