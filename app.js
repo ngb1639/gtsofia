@@ -197,7 +197,10 @@ function fetchMapData(relationId, color, mapContainer) {
 
   const query = `[out:json];
 relation(${relationId});
-out center;`;
+way(r);
+out geom;`;
+
+  console.log("Fetching relation", relationId, "with query:", query);
 
   fetch(`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`)
     .then(r => {
@@ -218,9 +221,15 @@ out center;`;
         return;
       }
 
-      // Extract coordinates from all ways in the relation
-      data.elements.forEach(element => {
+      console.log("Total elements received:", data.elements.length);
+
+      // Extract coordinates from all ways
+      data.elements.forEach((element, index) => {
+        console.log(`Element ${index}:`, element.type, element.id, "geometry:", element.geometry ? element.geometry.length : "none");
+        
         if (element.type === "way" && element.geometry && Array.isArray(element.geometry)) {
+          console.log(`Processing way ${element.id} with ${element.geometry.length} points`);
+          
           element.geometry.forEach(p => {
             if (p.lat && p.lon) {
               const key = p.lat + "," + p.lon;
@@ -230,31 +239,16 @@ out center;`;
               }
             }
           });
-        } else if (element.type === "relation" && element.members) {
-          // If it's a relation, we need to fetch the ways
-          element.members.forEach(member => {
-            if (member.type === "way" && member.geometry && Array.isArray(member.geometry)) {
-              member.geometry.forEach(p => {
-                if (p.lat && p.lon) {
-                  const key = p.lat + "," + p.lon;
-                  if (!seen.has(key)) {
-                    seen.add(key);
-                    coords.push([p.lat, p.lon]);
-                  }
-                }
-              });
-            }
-          });
         }
       });
 
-      console.log("Extracted coordinates:", coords.length);
+      console.log("Total unique coordinates extracted:", coords.length);
 
       if (!coords.length) {
-        console.warn("No valid coordinates found, trying alternative query");
+        console.warn("No valid coordinates found for relation", relationId);
         const loading = document.getElementById('map-loading');
         if (loading) loading.remove();
-        fetchMapDataAlternative(relationId, color, mapContainer);
+        currentMap.setView([42.6977, 23.3219], 12);
         return;
       }
 
@@ -277,92 +271,28 @@ out center;`;
     });
 }
 
-function fetchMapDataAlternative(relationId, color, mapContainer) {
-  // Try fetching with geometry information
-  const query = `[out:json];
-(
-  relation(${relationId});
-  way(r);
-);
-out geom;`;
-
-  const loading = document.getElementById('map-loading');
-  if (loading) {
-    loading.innerHTML = '<div style="color: #9ca3af; font-size: 14px;">Зареждане на картата...</div>';
-  }
-
-  fetch(`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`)
-    .then(r => {
-      if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
-      return r.json();
-    })
-    .then(data => {
-      console.log("Alternative Overpass response:", data);
-
-      const coords = [];
-      const seen = new Set();
-
-      if (data.elements && data.elements.length > 0) {
-        data.elements.forEach(element => {
-          if (element.type === "way" && element.geometry && Array.isArray(element.geometry)) {
-            element.geometry.forEach(p => {
-              if (p.lat && p.lon) {
-                const key = p.lat + "," + p.lon;
-                if (!seen.has(key)) {
-                  seen.add(key);
-                  coords.push([p.lat, p.lon]);
-                }
-              }
-            });
-          }
-        });
-      }
-
-      console.log("Alternative coordinates found:", coords.length);
-
-      if (!coords.length) {
-        console.warn("Still no coordinates found for relation", relationId);
-        const loading = document.getElementById('map-loading');
-        if (loading) {
-          loading.innerHTML = '<div style="color: #ef4444; font-size: 12px;">Няма данни за маршрута на картата</div>';
-        }
-        return;
-      }
-
-      // Cache the coordinates
-      mapCache[relationId] = { coords, color };
-
-      // Remove loading overlay
-      const loading = document.getElementById('map-loading');
-      if (loading) loading.remove();
-
-      renderPolyline({ coords, color }, color);
-    })
-    .catch(err => {
-      console.error("Alternative map error:", err);
-      const loading = document.getElementById('map-loading');
-      if (loading) {
-        loading.innerHTML = '<div style="color: #ef4444; font-size: 14px;">Грешка при зареждане на картата</div>';
-      }
-    });
-}
-
 function renderPolyline(data, color) {
   const { coords } = data;
 
   console.log("Rendering polyline with", coords.length, "coordinates");
+  console.log("First 5 coordinates:", coords.slice(0, 5));
+  console.log("Last 5 coordinates:", coords.slice(-5));
 
   if (!coords || coords.length === 0) {
     console.warn("No coordinates to render");
     return;
   }
 
-  const polyline = L.polyline(coords, {
+  // Sort coordinates to ensure they are in order
+  const sortedCoords = [...coords];
+  
+  const polyline = L.polyline(sortedCoords, {
     color: color,
-    weight: 5,
-    opacity: 0.8,
+    weight: 6,
+    opacity: 1,
     lineCap: 'round',
-    lineJoin: 'round'
+    lineJoin: 'round',
+    dashArray: 'none'
   }).addTo(currentMap);
 
   console.log("Polyline added to map");
@@ -371,7 +301,8 @@ function renderPolyline(data, color) {
 
   console.log("Polyline bounds:", bounds);
 
-  if (bounds.isValid()) {
+  if (bounds && bounds.isValid()) {
+    console.log("Fitting map to bounds");
     currentMap.fitBounds(bounds, {
       padding: [50, 50],
       maxZoom: 16
