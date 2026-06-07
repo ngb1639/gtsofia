@@ -13,29 +13,21 @@ function renderLines() {
     l.number.toLowerCase().includes(search)
   ).forEach(line => {
 
-    if (line.type === "metro") {
+    const el = document.createElement("div");
 
-      const el = document.createElement("div");
+    if (line.type === "metro") {
       el.className = "metro-pill";
       el.style.background = line.color;
       el.style.color = line.textColor;
-      el.innerText = line.number;
-      el.onclick = () => selectLine(line);
-      grid.appendChild(el);
-
     } else {
-
-      const el = document.createElement("div");
       el.className = "line-pill";
       el.style.background = line.color;
-      el.innerText = line.number;
-      el.onclick = () => selectLine(line);
-      grid.appendChild(el);
-
     }
 
+    el.innerText = line.number;
+    el.onclick = () => selectLine(line);
+    grid.appendChild(el);
   });
-
 }
 
 function selectLine(line) {
@@ -169,13 +161,20 @@ out geom;
 
       const coords = [];
 
-      // IMPORTANT: use ordered geometry from OSM ways
+      const seen = new Set();
+
       data.elements
         .filter(el => el.type === "way" && el.geometry)
         .forEach(way => {
 
-          const segment = way.geometry.map(p => [p.lat, p.lon]);
-          coords.push(...segment);
+          way.geometry.forEach(p => {
+            const key = p.lat + "," + p.lon;
+
+            if (!seen.has(key)) {
+              seen.add(key);
+              coords.push([p.lat, p.lon]);
+            }
+          });
 
         });
 
@@ -184,7 +183,7 @@ out geom;
       const polyline = L.polyline(coords, {
         color: color,
         weight: 4,
-        smoothFactor: 1.2
+        smoothFactor: 1.3
       }).addTo(currentMap);
 
       currentMap.fitBounds(polyline.getBounds(), {
@@ -197,8 +196,8 @@ out geom;
 
 function switchDirection(type, number) {
 
-  const line = lines.find(
-    l => l.type === type && l.number === number
+  const line = lines.find(l =>
+    l.type === type && l.number === number
   );
 
   if (!line) return;
@@ -208,12 +207,14 @@ function switchDirection(type, number) {
 }
 
 function setFilter(type, el) {
+
   currentFilter = type;
 
   document.querySelectorAll(".filter-btn")
     .forEach(b => b.classList.remove("active"));
 
   if (el) el.classList.add("active");
+
   renderLines();
 }
 
