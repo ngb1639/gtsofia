@@ -161,44 +161,30 @@ function toggleMap(relationId, color) {
   fetch(`https://overpass-api.de/api/interpreter?data=
 [out:json];
 relation(${relationId});
-(._;>>;);
-out body;
+way(r);
+out geom;
 `)
     .then(r => r.json())
     .then(data => {
 
-      const nodes = {};
-      const ways = [];
-
-      data.elements.forEach(el => {
-        if (el.type === "node") {
-          nodes[el.id] = [el.lat, el.lon];
-        }
-
-        if (el.type === "way" && el.nodes) {
-          ways.push(el.nodes);
-        }
-      });
-
       const coords = [];
 
-      ways.forEach(w => {
-        const segment = [];
+      // IMPORTANT: use ordered geometry from OSM ways
+      data.elements
+        .filter(el => el.type === "way" && el.geometry)
+        .forEach(way => {
 
-        w.forEach(id => {
-          if (nodes[id]) segment.push(nodes[id]);
-        });
-
-        if (segment.length) {
+          const segment = way.geometry.map(p => [p.lat, p.lon]);
           coords.push(...segment);
-        }
-      });
+
+        });
 
       if (!coords.length) return;
 
       const polyline = L.polyline(coords, {
         color: color,
-        weight: 4
+        weight: 4,
+        smoothFactor: 1.2
       }).addTo(currentMap);
 
       currentMap.fitBounds(polyline.getBounds(), {
@@ -206,9 +192,7 @@ out body;
       });
 
     })
-    .catch(err => {
-      console.error("Map load error:", err);
-    });
+    .catch(err => console.error("Map error:", err));
 }
 
 function switchDirection(type, number) {
