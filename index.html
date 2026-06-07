@@ -17,76 +17,217 @@
 
 <div class="app">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-logo" onclick="navigateTo('lines'); return false;" style="cursor: pointer;">GTSOFIA</div>
+      
+      <button class="navbar-toggle" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-    <div class="logo">GTSOFIA</div>
+      <ul class="navbar-menu" id="navbarMenu">
+        <li><a href="#" onclick="navigateTo('lines'); return false;">Lines</a></li>
+        <li><a href="#" onclick="navigateTo('rolling-stock'); return false;">Rolling Stock</a></li>
+        <li><a href="#" onclick="navigateTo('about'); return false;">About</a></li>
+        <li><a href="#" onclick="navigateTo('contacts'); return false;">Contacts</a></li>
+      </ul>
+    </div>
+  </nav>
 
-    <input class="search" id="searchInput" placeholder="Търсене по линия…" />
+  <!-- MAIN CONTENT -->
+  <div class="main-container">
 
-    <div class="filters">
+    <!-- LINES PAGE -->
+    <div id="lines-page" class="page active">
+      <aside class="sidebar">
+        <div class="logo">GTSOFIA</div>
 
-      <button class="filter-btn active" onclick="setFilter(null, this)">Всички</button>
-      <button class="filter-btn" onclick="setFilter('bus', this)">Автобуси</button>
-      <button class="filter-btn" onclick="setFilter('tram', this)">Трамваи</button>
-      <button class="filter-btn" onclick="setFilter('trolley', this)">Тролейбуси</button>
-      <button class="filter-btn" onclick="setFilter('metro', this)">Метро</button>
-      <button class="filter-btn" onclick="setFilter('night', this)">Нощни</button>
+        <input class="search" id="searchInput" placeholder="Търсене по линия…" />
 
+        <div class="filters">
+          <button class="filter-btn active" onclick="setFilter(null, this)">Всички</button>
+          <button class="filter-btn" onclick="setFilter('bus', this)">Автобуси</button>
+          <button class="filter-btn" onclick="setFilter('tram', this)">Трамваи</button>
+          <button class="filter-btn" onclick="setFilter('trolley', this)">Тролейбуси</button>
+          <button class="filter-btn" onclick="setFilter('metro', this)">Метро</button>
+          <button class="filter-btn" onclick="setFilter('night', this)">Нощни</button>
+        </div>
+
+        <h3 class="section-title">Линии</h3>
+
+        <div class="lines-grid" id="linesGrid"></div>
+      </aside>
+
+      <main class="content">
+        <div id="contentArea">
+          <div class="empty-state">
+            <div class="promo-card">
+              <div class="empty-text">
+                Изберете линия, за да видите спирките ѝ.
+              </div>
+
+              <img class="promo-logo"
+                   src="https://play-lh.googleusercontent.com/pBKTQQQLS91o7ILAW0_5DiTHgixGWlUZ9ZTCf4V7OaH1ba_yXjjY3hwXv9rymOMDj6vmqyXpWT-dK5C7eHDOlg=w240-h480-rw"
+                   alt="App logo" />
+
+              <div class="promo-title">
+                Разписания и информация в реално време
+              </div>
+
+              <div class="promo-text">
+                Преглеждайте пристигания в реално време, разписания и информация за транспорта с помощта на Sofia Ride. Автор на приложението е Pablito86.
+              </div>
+
+              <a href="https://play.google.com/store/apps/details?id=com.paf.sofiatrafficapp"
+                 target="_blank"
+                 class="promo-badge">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                     alt="Изтегли от Google Play" />
+              </a>
+
+              <a class="promo-btn secondary"
+                 href="https://sofiaride.vercel.app/"
+                 target="_blank">
+                Отворете уеб версията
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
 
-    <h3 class="section-title">Линии</h3>
+    <!-- ROLLING STOCK PAGE -->
+    <div id="rolling-stock-page" class="page">
+      <main class="content">
+        <div class="page-content">
+          <h1>Rolling Stock</h1>
+          <div class="cards-grid">
+            <div class="card">
+              <div class="card-icon">🚌</div>
+              <h3>Buses</h3>
+              <p>Modern fleet of buses serving Sofia's public transportation network</p>
+            </div>
+            <div class="card">
+              <div class="card-icon">🚊</div>
+              <h3>Trams</h3>
+              <p>Reliable tram lines connecting major areas of the city</p>
+            </div>
+            <div class="card">
+              <div class="card-icon">🚎</div>
+              <h3>Trolleybuses</h3>
+              <p>Eco-friendly trolleybus network for sustainable transport</p>
+            </div>
+            <div class="card">
+              <div class="card-icon">🚇</div>
+              <h3>Metro</h3>
+              <p>Comprehensive metro system with multiple lines</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
 
-    <div class="lines-grid" id="linesGrid"></div>
+    <!-- ABOUT PAGE -->
+    <div id="about-page" class="page">
+      <main class="content">
+        <div class="page-content">
+          <h1>About GTSOFIA</h1>
+          <div class="about-section">
+            <h2>About Us</h2>
+            <p>
+              GTSOFIA is a comprehensive public transportation information system for Sofia, Bulgaria. 
+              Our mission is to provide real-time information about buses, trams, trolleybuses, and metro lines 
+              to help residents and visitors navigate the city efficiently.
+            </p>
+          </div>
 
-  </aside>
+          <div class="about-section">
+            <h2>Features</h2>
+            <ul class="features-list">
+              <li>View all public transportation lines in Sofia</li>
+              <li>See detailed stop information for each line</li>
+              <li>Switch between different directions</li>
+              <li>Search for specific lines</li>
+              <li>Filter by transport type (bus, tram, trolley, metro)</li>
+              <li>Responsive design for mobile and desktop</li>
+            </ul>
+          </div>
 
-  <!-- CONTENT -->
-  <main class="content">
-<div id="contentArea">
-  <div class="empty-state">
+          <div class="about-section">
+            <h2>Technology</h2>
+            <p>
+              GTSOFIA is built with modern web technologies including HTML5, CSS3, and JavaScript. 
+              The application provides a responsive user interface that works seamlessly on desktop, tablet, 
+              and mobile devices.
+            </p>
+          </div>
 
-    <div class="promo-card">
+          <div class="about-section">
+            <h2>Data</h2>
+            <p>
+              Our transportation data is maintained and updated regularly to ensure accuracy and relevance. 
+              All line information, stops, and directions are carefully catalogued in our comprehensive database.
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
 
-      <div class="empty-text">
-        Изберете линия, за да видите спирките ѝ.
-      </div>
+    <!-- CONTACTS PAGE -->
+    <div id="contacts-page" class="page">
+      <main class="content">
+        <div class="page-content">
+          <h1>Contacts</h1>
+          
+          <div class="contacts-grid">
+            <div class="contact-card">
+              <h3>📧 Email</h3>
+              <p><a href="mailto:info@gtsofia.com">info@gtsofia.com</a></p>
+              <p class="contact-desc">General inquiries and feedback</p>
+            </div>
 
-      <img class="promo-logo"
-           src="https://play-lh.googleusercontent.com/pBKTQQQLS91o7ILAW0_5DiTHgixGWlUZ9ZTCf4V7OaH1ba_yXjjY3hwXv9rymOMDj6vmqyXpWT-dK5C7eHDOlg=w240-h480-rw"
-           alt="App logo" />
+            <div class="contact-card">
+              <h3>📱 Phone</h3>
+              <p>+359 2 XXXX XXXX</p>
+              <p class="contact-desc">Available Monday - Friday, 9AM - 6PM</p>
+            </div>
 
-      <div class="promo-title">
-        Разписания и информация в реално време
-      </div>
+            <div class="contact-card">
+              <h3>📍 Address</h3>
+              <p>Sofia, Bulgaria</p>
+              <p class="contact-desc">Central Sofia Office</p>
+            </div>
 
-      <div class="promo-text">
-        Преглеждайте пристигания в реално време, разписания и информация за транспорта с помощта на Sofia Ride. Автор на приложението е Pablito86.
-      </div>
+            <div class="contact-card">
+              <h3>🐙 GitHub</h3>
+              <p><a href="https://github.com/ngb1639/gtsofia" target="_blank">ngb1639/gtsofia</a></p>
+              <p class="contact-desc">View source code and contribute</p>
+            </div>
+          </div>
 
-      <a href="https://play.google.com/store/apps/details?id=com.paf.sofiatrafficapp"
-         target="_blank"
-         class="promo-badge">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-             alt="Изтегли от Google Play" />
-      </a>
-
-      <a class="promo-btn secondary"
-         href="https://sofiaride.vercel.app/"
-         target="_blank">
-        Отворете уеб версията
-      </a>
-
+          <div class="contact-form">
+            <h2>Send us a Message</h2>
+            <form onsubmit="handleFormSubmit(event)">
+              <input type="text" placeholder="Your Name" required>
+              <input type="email" placeholder="Your Email" required>
+              <textarea placeholder="Your Message" rows="5" required></textarea>
+              <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </main>
     </div>
 
   </div>
-</div>
-  </main>
 
 </div>
 
 <script src="data.js"></script>
 <script src="app.js"></script>
+<script src="navigation.js"></script>
 
 </body>
 </html>
