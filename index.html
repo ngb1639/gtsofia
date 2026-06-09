@@ -1,92 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GTSOFIA</title>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
-
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTSofia</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="app">
+<nav>
+    <a href="index.html">Начало</a>
+    <a href="lines.html">Транспорт</a>
+</nav>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
+<main>
+    <h1>GTSofia</h1>
 
-    <div class="logo">GTSOFIA</div>
+    <p>
+        Добре долши в GTSOFIA - порталът за градски транспорт на София.
+    </p>
 
-    <input class="search" id="searchInput" placeholder="Търсене по линия…" />
-
-    <div class="filters">
-
-      <button class="filter-btn active" onclick="setFilter(null, this)">Всички</button>
-      <button class="filter-btn" onclick="setFilter('bus', this)">Автобуси</button>
-      <button class="filter-btn" onclick="setFilter('tram', this)">Трамваи</button>
-      <button class="filter-btn" onclick="setFilter('trolley', this)">Тролейбуси</button>
-      <button class="filter-btn" onclick="setFilter('metro', this)">Метро</button>
-      <button class="filter-btn" onclick="setFilter('night', this)">Нощни</button>
-
-    </div>
-
-    <h3 class="section-title">Линии</h3>
-
-    <div class="lines-grid" id="linesGrid"></div>
-
-  </aside>
-
-  <!-- CONTENT -->
-  <main class="content">
-<div id="contentArea">
-  <div class="empty-state">
-
-    <div class="promo-card">
-
-      <div class="empty-text">
-        Изберете линия, за да видите спирките ѝ.
-      </div>
-
-      <img class="promo-logo"
-           src="https://play-lh.googleusercontent.com/pBKTQQQLS91o7ILAW0_5DiTHgixGWlUZ9ZTCf4V7OaH1ba_yXjjY3hwXv9rymOMDj6vmqyXpWT-dK5C7eHDOlg=w240-h480-rw"
-           alt="App logo" />
-
-      <div class="promo-title">
-        Разписания и информация в реално време
-      </div>
-
-      <div class="promo-text">
-        Преглеждайте пристигания в реално време, разписания и информация за транспорта с помощта на Sofia Ride. Автор на приложението е Pablito86.
-      </div>
-
-      <a href="https://play.google.com/store/apps/details?id=com.paf.sofiatrafficapp"
-         target="_blank"
-         class="promo-badge">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-             alt="Изтегли от Google Play" />
-      </a>
-
-      <a class="promo-btn secondary"
-         href="https://sofiaride.vercel.app/"
-         target="_blank">
-        Отворете уеб версията
-      </a>
-
-    </div>
-
-  </div>
-</div>
-  </main>
-
-</div>
-
-<script src="data.js"></script>
-<script src="app.js"></script>
+    <a href="lines.html">
+        Показване на линиите
+    </a>
+</main>
 
 </body>
 </html>
