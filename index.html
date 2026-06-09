@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -15,42 +15,78 @@
 
 <body>
 
-<nav>
-    <a href="index.html">Начало</a>
-    <a href="data.js">Линии</a>
-</nav>
-
 <div class="app">
 
+  <!-- SIDEBAR -->
   <aside class="sidebar">
+
     <div class="logo">GTSOFIA</div>
 
-    <div class="empty-text" style="margin-top:24px;">
-      Градски транспорт София
+    <input class="search" id="searchInput" placeholder="Търсене по линия…" />
+
+    <div class="filters">
+
+      <button class="filter-btn active" onclick="setFilter(null, this)">Всички</button>
+      <button class="filter-btn" onclick="setFilter('bus', this)">Автобуси</button>
+      <button class="filter-btn" onclick="setFilter('tram', this)">Трамваи</button>
+      <button class="filter-btn" onclick="setFilter('trolley', this)">Тролейбуси</button>
+      <button class="filter-btn" onclick="setFilter('metro', this)">Метро</button>
+      <button class="filter-btn" onclick="setFilter('night', this)">Нощни</button>
+
     </div>
+
+    <h3 class="section-title">Линии</h3>
+
+    <div class="lines-grid" id="linesGrid"></div>
+
   </aside>
 
+  <!-- CONTENT -->
   <main class="content">
+<div id="contentArea">
+  <div class="empty-state">
 
     <div class="promo-card">
 
+      <div class="empty-text">
+        Изберете линия, за да видите спирките ѝ.
+      </div>
+
+      <img class="promo-logo"
+           src="https://play-lh.googleusercontent.com/pBKTQQQLS91o7ILAW0_5DiTHgixGWlUZ9ZTCf4V7OaH1ba_yXjjY3hwXv9rymOMDj6vmqyXpWT-dK5C7eHDOlg=w240-h480-rw"
+           alt="App logo" />
+
       <div class="promo-title">
-        Добре дошли
+        Разписания и информация в реално време
       </div>
 
       <div class="promo-text">
-        Система за линии, маршрути и спирки на градския транспорт в София.
+        Преглеждайте пристигания в реално време, разписания и информация за транспорта с помощта на Sofia Ride. Автор на приложението е Pablito86.
       </div>
 
-      <a class="promo-btn" href="lines.html">
-        Влез в линиите
+      <a href="https://play.google.com/store/apps/details?id=com.paf.sofiatrafficapp"
+         target="_blank"
+         class="promo-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+             alt="Изтегли от Google Play" />
+      </a>
+
+      <a class="promo-btn secondary"
+         href="https://sofiaride.vercel.app/"
+         target="_blank">
+        Отворете уеб версията
       </a>
 
     </div>
 
+  </div>
+</div>
   </main>
 
 </div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
