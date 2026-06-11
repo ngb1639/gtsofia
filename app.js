@@ -10,7 +10,8 @@ function showPage(page, el) {
     p.style.display = "none";
   });
 
-  document.getElementById(page + "-page").style.display = "block";
+  const target = document.getElementById(page + "-page");
+  if (target) target.style.display = "block";
 
   document.querySelectorAll(".nav-btn").forEach(b => {
     b.classList.remove("active");
@@ -20,6 +21,17 @@ function showPage(page, el) {
 
   if (page === "transport") renderLines();
   if (page === "fleet") renderFleet();
+}
+
+if (page === "transport") {
+  setTimeout(() => {
+    const input = document.getElementById("searchInput");
+    if (input && !input.dataset.bound) {
+      input.addEventListener("input", renderLines);
+      input.dataset.bound = "true";
+    }
+    renderLines();
+  }, 0);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
