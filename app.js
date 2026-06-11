@@ -4,7 +4,7 @@ let currentFilter = null;
    ROUTER
 ========================= */
 
-function showPage(page) {
+function showPage(page, el) {
 
   document.querySelectorAll(".page").forEach(p => {
     p.style.display = "none";
@@ -16,7 +16,7 @@ function showPage(page) {
     b.classList.remove("active");
   });
 
-  event?.target?.classList.add("active");
+  if (el) el.classList.add("active");
 
   if (page === "transport") renderLines();
   if (page === "fleet") renderFleet();
@@ -90,23 +90,26 @@ function selectLine(line) {
         <div class="destination-name">${direction}</div>
       </div>
 
-      <button class="switch-btn" onclick="switchDirection('${line.type}','${line.number}')">
+      <button class="switch-btn"
+        onclick="switchDirection('${line.type}','${line.number}')">
         Смяна на посоката
       </button>
     </div>
 
     ${line.note ? `<div class="line-note">${line.note}</div>` : ""}
 
-<div class="stops-card">
-  <div class="stops-line">
-    ${stops.map(s => `
-      <div class="stop-item">
-        <div class="stop-dot"></div>
-        <div class="stop-name">${s}</div>
+    <div class="stops-card">
+      <div class="stops-line">
+        ${stops.map(s => `
+          <div class="stop-item">
+            <div class="stop-dot"></div>
+            <div class="stop-name">${s}</div>
+          </div>
+        `).join("")}
       </div>
-    `).join("")}
-  </div>
-</div>
+    </div>
+  `;
+}
 
 function switchDirection(type, number) {
   const line = lines.find(l => l.type === type && l.number === number);
