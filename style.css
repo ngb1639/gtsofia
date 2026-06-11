@@ -7,9 +7,23 @@
 body {
   font-family: "Sofia Sans", sans-serif;
   background: #f3f4f6;
-  height: 100vh;
+  min-height: 100vh;
   overflow: hidden;
   color: #111827;
+}
+
+main {
+  height: calc(100vh - 60px);
+  overflow: hidden;
+}
+
+#transport-page {
+  height: calc(100vh - 60px);
+}
+
+.sidebar {
+  height: 100%;
+  overflow-y: auto;
 }
 
 .app {
