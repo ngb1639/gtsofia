@@ -15,10 +15,18 @@ body {
 main {
   height: calc(100vh - 60px);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 #transport-page {
   height: calc(100vh - 60px);
+}
+
+#contentArea {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .sidebar {
@@ -28,7 +36,7 @@ main {
 
 .app {
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 60px);
 }
 
 .empty-state {
@@ -261,6 +269,15 @@ main {
 
 /* ROUTE HEADER */
 
+.line-header {
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.line-left {
+  flex: 1;
+}
+
 .route-direction {
   display: flex;
   align-items: center;
@@ -316,11 +333,9 @@ main {
   justify-content: center;
 }
 
-.details-pill .metro-pill {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  font-size: 16px;
+.metro-pill,
+.details-number.metro {
+  border-radius: 50% !important;
 }
 
 /* STOPS */
