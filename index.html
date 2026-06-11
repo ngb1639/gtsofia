@@ -16,10 +16,10 @@
   <div class="nav-logo">GTSOFIA</div>
 
   <nav class="nav-links">
-    <button onclick="showPage('home', this)" class="nav-btn">Начало</button>
-    <button onclick="showPage('transport')" class="nav-btn">Транспорт</button>
-    <button onclick="showPage('fleet')" class="nav-btn">Подвижен състав</button>
-    <button onclick="showPage('contacts')" class="nav-btn">Контакти</button>
+    <button onclick="showPage('home', this)" class="nav-btn active">Начало</button>
+    <button onclick="showPage('transport', this)" class="nav-btn">Транспорт</button>
+    <button onclick="showPage('fleet', this)" class="nav-btn">Подвижен състав</button>
+    <button onclick="showPage('contacts', this)" class="nav-btn">Контакти</button>
   </nav>
 </header>
 
@@ -28,47 +28,57 @@
 
   <!-- HOME -->
   <section id="home-page" class="page">
-  <div class="page-center">
-
-    <h1>Добре дошли в GTSOFIA</h1>
-    <p>Система за информация за градски транспорт в София.</p>
-
-    <div class="promo-card" style="margin-top:20px;">
-      <div class="empty-text">
-        Изтеглете мобилното приложение за още по-бърз достъп.
-      </div>
-
-      <img class="promo-logo"
-        src="https://play-lh.googleusercontent.com/kJihhzXg33FMGIpa5Z0FjZaG5wHRpqfv63iG77FD3LmwtSw5SA8unoY0oTt-LDJca0TK2arPOpqpQY8-z-E6PQ=w240-h480-rw"/>
-
-      <div class="promo-title">
-        Разписания и информация в реално време
-      </div>
-
-      <div class="promo-text">
-        Преглеждайте пристигания, разписания и транспортна информация.
-      </div>
-
-      <a class="promo-btn secondary"
-        href="https://sofiaride.vercel.app/"
-        target="_blank">
-        Отворете уеб версията
-      </a>
-    </div>
-
-  </div>
-</section>
     <div class="page-center">
+
       <h1>Добре дошли в GTSOFIA</h1>
       <p>Система за информация за градски транспорт в София.</p>
+
+      <!-- PROMO CARD -->
+      <div class="promo-card" style="margin-top:20px;">
+
+        <div class="empty-text">
+          Изтеглете мобилното приложение за още по-бърз достъп.
+        </div>
+
+        <img class="promo-logo"
+          src="https://play-lh.googleusercontent.com/kJihhzXg33FMGIpa5Z0FjZaG5wHRpqfv63iG77FD3LmwtSw5SA8unoY0oTt-LDJca0TK2arPOpqpQY8-z-E6PQ=w240-h480-rw"
+          alt="App logo"
+        />
+
+        <div class="promo-title">
+          Разписания и информация в реално време
+        </div>
+
+        <div class="promo-text">
+          Преглеждайте пристигания, разписания и транспортна информация в реално време.
+        </div>
+
+        <!-- GOOGLE PLAY BUTTON (RESTORED) -->
+        <a href="https://play.google.com/store/apps/details?id=com.paf.sofiatrafficapp"
+           target="_blank"
+           class="promo-badge">
+
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+               alt="Google Play" />
+        </a>
+
+        <a class="promo-btn secondary"
+           href="https://sofiaride.vercel.app/"
+           target="_blank">
+          Отворете уеб версията
+        </a>
+
+      </div>
+
     </div>
   </section>
 
-  <!-- TRANSPORT (ТВОЯТ СЕГАШЕН UI) -->
+  <!-- TRANSPORT -->
   <section id="transport-page" class="page">
     <div class="app">
 
       <aside class="sidebar">
+
         <input class="search" id="searchInput" placeholder="Търсене по линия…" />
 
         <div class="filters">
@@ -82,14 +92,13 @@
 
         <h3 class="section-title">Линии</h3>
         <div class="lines-grid" id="linesGrid"></div>
+
       </aside>
 
       <main class="content">
-        <div id="contentArea">
-  <div class="empty-state">
-    Изберете линия, за да видите спирките ѝ.
-  </div>
-</div>
+        <div id="contentArea" class="empty-state">
+          Изберете линия, за да видите спирките ѝ.
+        </div>
       </main>
 
     </div>
@@ -103,9 +112,12 @@
   <!-- CONTACTS -->
   <section id="contacts-page" class="page">
     <div class="page-center">
+
       <h2>Контакти</h2>
+
       <p>Email: contact@example.com</p>
       <p>GitHub: https://github.com/ngb1639/gtsofia</p>
+
     </div>
   </section>
 
