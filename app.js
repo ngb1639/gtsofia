@@ -97,16 +97,16 @@ function selectLine(line) {
 
     ${line.note ? `<div class="line-note">${line.note}</div>` : ""}
 
-    <div class="stops-card">
-      ${stops.map(s => `
-        <div class="stop-item">
-          <div class="stop-dot"></div>
-          <div class="stop-name">${s}</div>
-        </div>
-      `).join("")}
-    </div>
-  `;
-}
+<div class="stops-card">
+  <div class="stops-line">
+    ${stops.map(s => `
+      <div class="stop-item">
+        <div class="stop-dot"></div>
+        <div class="stop-name">${s}</div>
+      </div>
+    `).join("")}
+  </div>
+</div>
 
 function switchDirection(type, number) {
   const line = lines.find(l => l.type === type && l.number === number);
