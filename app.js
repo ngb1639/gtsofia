@@ -1,51 +1,9 @@
 let currentFilter = null;
 
-/* =========================
-   ROUTER
-========================= */
-
-function showPage(page, el) {
-
-  document.querySelectorAll(".page").forEach(p => {
-    p.style.display = "none";
-  });
-
-  const target = document.getElementById(page + "-page");
-  if (target) target.style.display = "block";
-
-  document.querySelectorAll(".nav-btn").forEach(b => {
-    b.classList.remove("active");
-  });
-
-  if (el) el.classList.add("active");
-
-  if (page === "transport") renderLines();
-  if (page === "fleet") renderFleet();
-}
-
-if (page === "transport") {
-  setTimeout(() => {
-    const input = document.getElementById("searchInput");
-    if (input && !input.dataset.bound) {
-      input.addEventListener("input", renderLines);
-      input.dataset.bound = "true";
-    }
-    renderLines();
-  }, 0);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  showPage("home");
-});
-
-/* =========================
-   TRANSPORT (ТВОЯ ЛОГИКА)
-========================= */
-
 function renderLines() {
 
   const grid = document.getElementById("linesGrid");
-  const search = document.getElementById("searchInput")?.value?.toLowerCase() || "";
+  const search = document.getElementById("searchInput").value.toLowerCase();
 
   grid.innerHTML = "";
 
@@ -54,22 +12,29 @@ function renderLines() {
     l.number.toLowerCase().includes(search)
   ).forEach(line => {
 
-    const el = document.createElement("div");
-
     if (line.type === "metro") {
+
+      const el = document.createElement("div");
       el.className = "metro-pill";
       el.style.background = line.color;
       el.style.color = line.textColor;
+      el.innerText = line.number;
+      el.onclick = () => selectLine(line);
+      grid.appendChild(el);
+
     } else {
+
+      const el = document.createElement("div");
       el.className = "line-pill";
       el.style.background = line.color;
+      el.innerText = line.number;
+      el.onclick = () => selectLine(line);
+      grid.appendChild(el);
+
     }
 
-    el.innerText = line.number;
-    el.onclick = () => selectLine(line);
-
-    grid.appendChild(el);
   });
+
 }
 
 function selectLine(line) {
@@ -84,31 +49,52 @@ function selectLine(line) {
 
   const content = document.getElementById("contentArea");
 
-  const pill = `
-    <div class="details-pill">
-      <div class="details-icon">
-        <img src="${line.icon}" />
-      </div>
-      <div class="details-number" style="background:${line.color}; color:${line.textColor || 'white'}">
-        ${line.number}
-      </div>
-    </div>`;
+  const pill = line.type === "metro"
+    ? `
+      <div class="details-pill">
+        <div class="details-icon">
+          <img src="${line.icon}" />
+        </div>
+        <div class="metro-pill"
+          style="background:${line.color}; color:${line.textColor};">
+          ${line.number}
+        </div>
+      </div>`
+    : `
+      <div class="details-pill">
+        <div class="details-icon">
+          <img src="${line.icon}" />
+        </div>
+        <div class="details-number" style="background:${line.color}">
+          ${line.number}
+        </div>
+      </div>`;
 
   content.innerHTML = `
     <div class="line-header">
-      <div class="route-direction">
-        ${pill}
-        <img class="direction-arrow" src="https://sofiatraffic.bg/images/next.svg"/>
-        <div class="destination-name">${direction}</div>
+      <div class="line-left">
+
+        <div class="route-direction">
+          ${pill}
+          <img class="direction-arrow" src="https://sofiatraffic.bg/images/next.svg"/>
+          <div class="destination-name">
+            ${direction}
+          </div>
+        </div>
+
       </div>
 
       <button class="switch-btn"
-        onclick="switchDirection('${line.type}','${line.number}')">
+        onclick="switchDirection('${line.type}', '${line.number}')">
         Смяна на посоката
       </button>
     </div>
 
-    ${line.note ? `<div class="line-note">${line.note}</div>` : ""}
+    ${line.note ? `
+      <div class="line-note">
+        ${line.note}
+      </div>
+    ` : ""}
 
     <div class="stops-card">
       <div class="stops-line">
@@ -124,7 +110,11 @@ function selectLine(line) {
 }
 
 function switchDirection(type, number) {
-  const line = lines.find(l => l.type === type && l.number === number);
+
+  const line = lines.find(
+    l => l.type === type && l.number === number
+  );
+
   if (!line) return;
 
   line.activeDirection = line.activeDirection === "A" ? "B" : "A";
@@ -141,39 +131,7 @@ function setFilter(type, el) {
   renderLines();
 }
 
-/* =========================
-   FLEET (НОВО)
-========================= */
+document.getElementById("searchInput")
+  .addEventListener("input", renderLines);
 
-function renderFleet() {
-
-  const container = document.getElementById("fleetContainer");
-  container.innerHTML = "";
-
-  if (!fleet) return;
-
-  fleet.forEach(v => {
-
-    const card = document.createElement("div");
-    card.className = "fleet-card";
-
-    card.innerHTML = `
-      <img src="${v.image}" class="fleet-img"/>
-
-      <div class="fleet-title">
-        ${v.manufacturer} ${v.model}
-      </div>
-
-      <div class="fleet-info">
-        <div>Година: ${v.year}</div>
-        <div>Бройки: ${v.quantity}</div>
-      </div>
-
-      <div class="fleet-routes">
-        ${v.routes.map(r => `<span class="route-badge">${r}</span>`).join("")}
-      </div>
-    `;
-
-    container.appendChild(card);
-  });
-}
+renderLines();
