@@ -22,14 +22,14 @@ const lines = [
 
   {
     type: "bus",
-    number: "1ТБ",
+    number: "1TB",
     color: "#be1e2d",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Метростанция Хаджи Димитър",
     directionB: "Левски Г",
     activeDirection: "A",
-    stopsA: [],
-    stopsB: []
+    stopsA: ["ж.к. Левски Г","бл. 28 ж.к. Левски Г","бл. 10 ж.к. Левски Г","ул. Поп Груйо","ул. Витиня","Стадион Георги Аспарухов","ул. Васил Кънчев","Метростанция Хаджи Димитър"],
+    stopsB: ["Метростанция Хаджи Димитър","ул. Васил Кънчев","Стадион Георги Аспарухов","ул. Витиня","ж.к. Левски В","ул. Поп Груйо","ж.к. Левски Г"]
   },
   
   {
