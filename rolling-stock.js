@@ -61,34 +61,54 @@ RENDER FUNCTION
 
 function renderStock() {
   const grid = document.getElementById("stockGrid");
-
   grid.innerHTML = "";
 
-  rollingStock.forEach(item => {
+  const groups = {
+    bus: "Автобуси",
+    trolley: "Тролеи",
+    tram: "Трамваи",
+    metro: "Метро"
+  };
 
-    const el = document.createElement("div");
-    el.className = "stock-card";
+  Object.keys(groups).forEach(type => {
 
-    el.innerHTML = `
-      <img class="stock-image" src="${item.image}" alt="${item.model}">
+    const sectionItems = rollingStock.filter(s => s.type === type);
 
-      <div class="stock-body">
+    if (!sectionItems.length) return;
 
-        <h3>${item.manufacturer} ${item.model}</h3>
+    const title = document.createElement("h2");
+    title.style.margin = "20px 0 10px";
+    title.textContent = groups[type];
 
-        <p><strong>Година:</strong> ${item.year}</p>
-        <p><strong>Количество:</strong> ${item.quantity}</p>
+    grid.appendChild(title);
 
-        <div class="stock-lines">
-          ${item.lines.map(line => `
-            <div class="stock-pill">${line}</div>
-          `).join("")}
+    sectionItems.forEach(item => {
+
+      const el = document.createElement("div");
+      el.className = "stock-card";
+
+      el.innerHTML = `
+        <img class="stock-image" src="${item.image}" />
+
+        <div class="stock-body">
+
+          <h3>${item.manufacturer} ${item.model}</h3>
+
+          <p><strong>Year:</strong> ${item.year}</p>
+          <p><strong>Quantity:</strong> ${item.quantity}</p>
+
+          <div class="stock-lines">
+            ${item.lines.map(line => `
+              <div class="stock-pill">${line}</div>
+            `).join("")}
+          </div>
+
         </div>
+      `;
 
-      </div>
-    `;
+      grid.appendChild(el);
+    });
 
-    grid.appendChild(el);
   });
 }
 
