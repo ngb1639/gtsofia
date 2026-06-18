@@ -64,7 +64,7 @@ function renderStock() {
   const grid = document.getElementById("stockGrid");
 
   if (!grid) {
-    console.error("stockGrid not found in HTML");
+    console.error("stockGrid not found");
     return;
   }
 
@@ -83,15 +83,15 @@ function renderStock() {
 
     if (items.length === 0) return;
 
-    // SECTION TITLE
+    /* SECTION TITLE */
     const title = document.createElement("h2");
     title.textContent = groups[type];
-    title.style.margin = "20px 0 10px";
+    title.style.margin = "24px 0 12px";
     title.style.fontSize = "20px";
 
     grid.appendChild(title);
 
-    // ITEMS
+    /* CARDS */
     items.forEach(item => {
 
       const card = document.createElement("div");
@@ -115,16 +115,16 @@ function renderStock() {
                   ? lines.find(l => l.number === lineNumber)
                   : null;
 
-              // fallback (no crash)
+              /* fallback if no data */
               if (!lineData) {
-                return `<div class="stock-pill">${lineNumber}</div>`;
+                return `<div class="stock-line-pill">${lineNumber}</div>`;
               }
 
               const isMetro = lineData.type === "metro";
 
               return `
                 <div
-                  class="${isMetro ? 'metro-pill' : 'line-pill stock-small'}"
+                  class="stock-line-pill ${isMetro ? 'stock-metro-pill' : ''}"
                   style="background:${lineData.color}; color:${lineData.textColor || 'white'}"
                 >
                   ${lineNumber}
