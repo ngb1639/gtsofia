@@ -97,11 +97,27 @@ function renderStock() {
           <p><strong>Year:</strong> ${item.year}</p>
           <p><strong>Quantity:</strong> ${item.quantity}</p>
 
-          <div class="stock-lines">
-            ${item.lines.map(line => `
-              <div class="stock-pill">${line}</div>
-            `).join("")}
-          </div>
+<div class="stock-lines">
+  ${item.lines.map(lineNumber => {
+
+    const lineData = lines.find(l => l.number === lineNumber);
+
+    if (!lineData) {
+      return `<div class="stock-pill">${lineNumber}</div>`;
+    }
+
+    const isMetro = lineData.type === "metro";
+
+    return `
+      <div
+        class="${isMetro ? 'metro-pill' : 'line-pill stock-small'}"
+        style="background:${lineData.color}; color:${lineData.textColor || 'white'}"
+      >
+        ${lineNumber}
+      </div>
+    `;
+  }).join("")}
+</div>
 
         </div>
       `;
