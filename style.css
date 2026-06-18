@@ -360,6 +360,7 @@ HOME PAGE
   padding: 32px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 24px;
 }
 
@@ -394,7 +395,7 @@ PROMO CARD (HOME)
   border-radius: 18px;
   padding: 28px;
   border: 1px solid #e5e7eb;
-
+  margin: 0 auto;
   max-width: 480px;
 }
 
@@ -469,16 +470,14 @@ ROLLING STOCK
   height: 24px;
   min-width: 34px;
   padding: 0 8px;
-
   border-radius: 6px;
-
   font-size: 12px;
   font-weight: 700;
-
   display: flex;
   align-items: center;
   justify-content: center;
 
+  background: #111827;   /* FIX: missing before */
   color: white;
 }
 
