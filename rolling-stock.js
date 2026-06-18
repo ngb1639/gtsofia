@@ -1,6 +1,6 @@
+
 /* =========================
 ROLLING STOCK DATA
-(Example entries - expand later)
 ========================= */
 
 const rollingStock = [
@@ -60,7 +60,14 @@ RENDER FUNCTION
 ========================= */
 
 function renderStock() {
+
   const grid = document.getElementById("stockGrid");
+
+  if (!grid) {
+    console.error("stockGrid not found in HTML");
+    return;
+  }
+
   grid.innerHTML = "";
 
   const groups = {
@@ -72,57 +79,64 @@ function renderStock() {
 
   Object.keys(groups).forEach(type => {
 
-    const sectionItems = rollingStock.filter(s => s.type === type);
+    const items = rollingStock.filter(s => s.type === type);
 
-    if (!sectionItems.length) return;
+    if (items.length === 0) return;
 
+    // SECTION TITLE
     const title = document.createElement("h2");
-    title.style.margin = "20px 0 10px";
     title.textContent = groups[type];
+    title.style.margin = "20px 0 10px";
+    title.style.fontSize = "20px";
 
     grid.appendChild(title);
 
-    sectionItems.forEach(item => {
+    // ITEMS
+    items.forEach(item => {
 
-      const el = document.createElement("div");
-      el.className = "stock-card";
+      const card = document.createElement("div");
+      card.className = "stock-card";
 
-      el.innerHTML = `
-        <img class="stock-image" src="${item.image}" />
+      card.innerHTML = `
+        <img class="stock-image" src="${item.image}" alt="${item.model}" />
 
         <div class="stock-body">
 
           <h3>${item.manufacturer} ${item.model}</h3>
 
-          <p><strong>Year:</strong> ${item.year}</p>
-          <p><strong>Quantity:</strong> ${item.quantity}</p>
+          <p><strong>Година:</strong> ${item.year}</p>
+          <p><strong>Количество:</strong> ${item.quantity}</p>
 
-<div class="stock-lines">
-  ${item.lines.map(lineNumber => {
+          <div class="stock-lines">
+            ${item.lines.map(lineNumber => {
 
-    const lineData = lines.find(l => l.number === lineNumber);
+              const lineData =
+                (typeof lines !== "undefined")
+                  ? lines.find(l => l.number === lineNumber)
+                  : null;
 
-    if (!lineData) {
-      return `<div class="stock-pill">${lineNumber}</div>`;
-    }
+              // fallback (no crash)
+              if (!lineData) {
+                return `<div class="stock-pill">${lineNumber}</div>`;
+              }
 
-    const isMetro = lineData.type === "metro";
+              const isMetro = lineData.type === "metro";
 
-    return `
-      <div
-        class="${isMetro ? 'metro-pill' : 'line-pill stock-small'}"
-        style="background:${lineData.color}; color:${lineData.textColor || 'white'}"
-      >
-        ${lineNumber}
-      </div>
-    `;
-  }).join("")}
-</div>
+              return `
+                <div
+                  class="${isMetro ? 'metro-pill' : 'line-pill stock-small'}"
+                  style="background:${lineData.color}; color:${lineData.textColor || 'white'}"
+                >
+                  ${lineNumber}
+                </div>
+              `;
+            }).join("")}
+          </div>
 
         </div>
       `;
 
-      grid.appendChild(el);
+      grid.appendChild(card);
     });
 
   });
@@ -132,4 +146,4 @@ function renderStock() {
 INIT
 ========================= */
 
-renderStock();
+document.addEventListener("DOMContentLoaded", renderStock);
