@@ -127,6 +127,16 @@ const rollingStock = [
   {
     type: "bus",
     manufacturer: "Mercedes",
+    model: "O345G",
+    year: 1998,
+    quantity: 2,
+    image: "https://s1.busphoto.eu/photo/01/94/26/194267.jpg",
+    lines: ["88", "213", "305", "404", "413"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "Mercedes",
     model: "O345 Conecto",
     year: 2002,
     quantity: 2,
@@ -212,6 +222,56 @@ const rollingStock = [
     quantity: 7,
     image: "https://s1.busphoto.eu/photo/06/59/88/659880.jpg",
     lines: ["26", "78", "79", "285"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "Neoplan",
+    model: "N4426/3 Centroliner",
+    year: 2023,
+    quantity: 1,
+    image: "https://s1.busphoto.eu/photo/05/23/35/523356.jpg",
+    lines: ["X43", "120"]
+  },
+
+  {
+    type: "trolley",
+    manufacturer: "Škoda",
+    model: "26Tr Solaris III",
+    year: 2010,
+    quantity: 30,
+    image: "https://transphoto.org/photo/04/04/58/404588.jpg",
+    lines: ["3", "4", "8", "11"]
+  },
+
+  {
+    type: "trolley",
+    manufacturer: "Škoda",
+    model: "27Tr Solaris III",
+    year: 2013,
+    quantity: 50,
+    image: "https://transphoto.org/photo/17/11/92/1711920.jpg",
+    lines: ["1", "2", "3", "5", "6", "7", "9"]
+  },
+
+  {
+    type: "trolley",
+    manufacturer: "Škoda",
+    model: "27Tr Solaris IV",
+    year: 2021,
+    quantity: 30,
+    image: "https://transphoto.org/photo/22/10/96/2210968.jpg",
+    lines: ["1", "6", "7", "9"]
+  },
+
+  {
+    type: "trolley",
+    manufacturer: "Ikarus",
+    model: "280.92T",
+    year: 1985,
+    quantity: 7,
+    image: "https://transphoto.org/photo/21/97/08/2197082.jpg",
+    lines: ["6"]
   },
 ];
 
