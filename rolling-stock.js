@@ -16,43 +16,203 @@ const rollingStock = [
 
   {
     type: "bus",
-    manufacturer: "Mercedes-Benz",
-    model: "Citaro O530",
-    year: 2012,
-    quantity: 85,
-    image: "https://upload.wikimedia.org/wikipedia/commons/1/1e/Mercedes-Benz_Citaro_C2.jpg",
-    lines: ["84", "213", "305", "604"]
+    manufacturer: "BMC",
+    model: "Procity CNG 2017",
+    year: 2017,
+    quantity: 60,
+    image: "https://s1.busphoto.eu/photo/05/33/38/533381.jpg",
+    lines: ["12", "18", "20", "21", "22", "24", "27", "29", "30", "31", "81", "86", "90", "117", "118", "119"]
   },
 
   {
-    type: "tram",
-    manufacturer: "PESA",
-    model: "122NaSF",
-    year: 2014,
-    quantity: 20,
-    image: "https://upload.wikimedia.org/wikipedia/commons/8/8a/PESA_122NaSF_Sofia.jpg",
-    lines: ["5", "7", "20", "22"]
-  },
-
-  {
-    type: "trolley",
-    manufacturer: "Skoda",
-    model: "26Tr Solaris",
-    year: 2010,
-    quantity: 40,
-    image: "https://upload.wikimedia.org/wikipedia/commons/6/6e/Skoda_26Tr_Solaris.jpg",
-    lines: ["1", "2", "5", "9"]
-  },
-
-  {
-    type: "metro",
-    manufacturer: "Siemens",
-    model: "Inspiro",
+    type: "bus",
+    manufacturer: "BMC",
+    model: "Procity CNG 2018",
     year: 2018,
-    quantity: 48,
-    image: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Sofia_Metro_train_Siemens_Inspiro.jpg",
-    lines: ["1", "2", "3", "4"]
-  }
+    quantity: 71,
+    image: "https://s1.busphoto.eu/photo/07/19/52/719526.jpg",
+    lines: ["12", "18", "20", "21", "22", "24", "27", "29", "30", "31", "72", "64", "67", "77", "81", "86", "90", "111", "117", "118", "119", "384", "404", "604"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "Higer",
+    model: "KLQ6125GEV3",
+    year: 2019,
+    quantity: 54,
+    image: "https://s1.busphoto.eu/photo/04/09/27/409276.jpg",
+    lines: ["6", "60", "73", "74", "123", "288"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "Higer",
+    model: "KLQ6832GEV",
+    year: 2022,
+    quantity: 22,
+    image: "https://s1.busphoto.eu/photo/05/09/81/509813.jpg",
+    lines: ["23", "82", "100", "101"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "Karsan",
+    model: "e-Jest",
+    year: 2022,
+    quantity: 35,
+    image: "https://s1.busphoto.eu/photo/07/30/10/730101.jpg",
+    lines: ["103", "801", "802", "803", "804", "805"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "Yutong",
+    model: "E12LF",
+    year: 2018,
+    quantity: 21,
+    image: "https://s1.busphoto.eu/photo/06/21/80/621808.jpg",
+    lines: ["9", "23", "82", "309", "404", "604"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "Yutong",
+    model: "ZK6126HGA",
+    year: 2016,
+    quantity: 110,
+    image: "https://s1.busphoto.eu/photo/03/03/46/303461.jpg",
+    lines: ["1", "3", "4", "5", "7", "8", "10", "14", "26", "42", "64", "67", "68", "69", "70", "72", "75", "77", "98", "111", "150", "314", "404", "604"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "Yutong",
+    model: "ZK6126HGA CNG",
+    year: 2018,
+    quantity: 22,
+    image: "https://s1.busphoto.eu/photo/06/89/49/689499.jpg",
+    lines: ["4", "7", "8", "10", "14", "67", "69", "70", "75", "314", "404", "604"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "Mercedes",
+    model: "Conecto LF",
+    year: 2008,
+    quantity: 35,
+    image: "https://s1.busphoto.eu/photo/03/53/47/353477.jpg",
+    lines: ["42", "56", "58", "59", "77", "108", "260"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "Mercedes",
+    model: "Conecto NG",
+    year: 2008,
+    quantity: 3,
+    image: "https://s1.busphoto.eu/photo/09/14/58/914583.jpg",
+    lines: ["20", "21", "22"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "Mercedes",
+    model: "O345",
+    year: 2000,
+    quantity: 1,
+    image: "https://s1.busphoto.eu/photo/01/62/77/162772.jpg",
+    lines: ["56", "107"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "Mercedes",
+    model: "O345 Conecto",
+    year: 2002,
+    quantity: 2,
+    image: "https://s1.busphoto.eu/photo/03/55/00/355001.jpg",
+    lines: ["107"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "Mercedes",
+    model: "O345 Conecto G",
+    year: 2003,
+    quantity: 37,
+    image: "https://s1.busphoto.eu/photo/07/31/97/731974.jpg",
+    lines: ["11", "54", "76", "77", "78", "79", "83", "88", "108", "213", "285", "305", "404", "413"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "Mercedes",
+    model: "Intouro ME",
+    year: 2018,
+    quantity: 21,
+    image: "https://s1.busphoto.eu/photo/04/67/02/467029.jpg",
+    lines: ["44", "47", "49", "59", "61", "63", "66"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "MAN",
+    model: "Lion's City CNG",
+    year: 2017,
+    quantity: 2,
+    image: "https://s1.busphoto.eu/photo/07/00/17/700178.jpg",
+    lines: ["86"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "MAN",
+    model: "Lion's City DD",
+    year: 2009,
+    quantity: 4,
+    image: "https://s1.busphoto.eu/photo/09/09/06/909062.jpg",
+    lines: ["X43", "120"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "MAN",
+    model: "Lion's City G CNG",
+    year: 2014,
+    quantity: 125,
+    image: "https://s1.busphoto.eu/photo/01/67/69/167691.jpg",
+    lines: ["11", "76", "78", "83", "85", "88", "94", "102", "108", "Х10", "111", "120", "204", "213", "280", "294", "304", "305", "310", "404", "413"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "MAN",
+    model: "Lion's City G CNG",
+    year: 2018,
+    quantity: 60,
+    image: "https://s1.busphoto.eu/photo/05/42/40/542409.jpg",
+    lines: ["11", "76", "78", "83", "85", "88", "94", "102", "108", "Х10", "111", "120", "204", "213", "280", "294", "304", "305", "310", "404", "413"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "MAN",
+    model: "Lion's City LE",
+    year: 2018,
+    quantity: 1,
+    image: "https://nmseniorolympics.org/wp-content/uploads/2025/04/b170870007dfa419295d949814474ab2_t.jpeg",
+    lines: ["20", "21", "22"]
+  },
+
+  {
+    type: "bus",
+    manufacturer: "MAN",
+    model: "SG262",
+    year: 1999,
+    quantity: 7,
+    image: "https://s1.busphoto.eu/photo/06/59/88/659880.jpg",
+    lines: ["26", "78", "79", "285"]
+  },
 ];
 
 /* =========================
