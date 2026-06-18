@@ -472,9 +472,32 @@ ROLLING STOCK
   font-size: 13px;
 }
 
-.metro-pill {
-  width: 28px;
-  height: 28px;
+
+/* SAFE shared pill base for Rolling Stock */
+.stock-line-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 26px;
+  min-width: 34px;
+  padding: 0 8px;
+
+  border-radius: 6px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  color: white;
+
+  transition: 0.2s;
+}
+
+/* Metro version (circle) */
+.stock-metro-pill {
+  width: 26px;
+  height: 26px;
+
   border-radius: 999px;
 }
 
