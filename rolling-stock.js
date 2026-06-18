@@ -6,12 +6,12 @@ ROLLING STOCK DATA
 const rollingStock = [
   {
     type: "bus",
-    manufacturer: "MAN",
-    model: "Lion's City A21",
-    year: 2018,
-    quantity: 60,
-    image: "https://upload.wikimedia.org/wikipedia/commons/3/3b/MAN_Lion%27s_City_bus.jpg",
-    lines: ["72", "76", "204", "305"]
+    manufacturer: "BMC",
+    model: "Belde 220-SLF",
+    year: 2005,
+    quantity: 37,
+    image: "https://s1.busphoto.eu/photo/02/39/61/239613.jpg",
+    lines: ["7", "8", "10", "14", "26", "28", "285"]
   },
 
   {
