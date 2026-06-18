@@ -470,14 +470,14 @@ ROLLING STOCK
   align-items: center;
   justify-content: center;
 
-  height: 26px;
-  width: 35px;
+  height: fit-content;
+  width: fit-content;
   min-width: 35px;
   padding: 0 8px;
 
   border-radius: 6px;
 
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -486,7 +486,7 @@ ROLLING STOCK
   height: 28px;
   min-width: 28px;
   padding: 0;
-  font-size: 14px;
+  font-size: 12px;
   border-radius: 50%;
 }
 
