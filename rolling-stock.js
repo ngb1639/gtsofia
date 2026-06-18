@@ -51,7 +51,7 @@ const rollingStock = [
     year: 2018,
     quantity: 48,
     image: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Sofia_Metro_train_Siemens_Inspiro.jpg",
-    lines: ["M1", "M2", "M3", "M4"]
+    lines: ["1", "2", "3", "4"]
   }
 ];
 
@@ -127,10 +127,10 @@ function renderStock() {
                   break;
 
                 case "metro":
-                  if (line === "M1") meta = { color: "#ec2029", text: "white" };
-                  if (line === "M2") meta = { color: "#1077bc", text: "white" };
-                  if (line === "M3") meta = { color: "#3bb44b", text: "white" };
-                  if (line === "M4") meta = { color: "#fcd403", text: "black" };
+                  if (line === "1") meta = { color: "#ec2029", text: "white" };
+                  if (line === "2") meta = { color: "#1077bc", text: "white" };
+                  if (line === "3") meta = { color: "#3bb44b", text: "white" };
+                  if (line === "4") meta = { color: "#fcd403", text: "black" };
                   break;
 
                 case "night":
