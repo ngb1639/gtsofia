@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GTSOFIA - About</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+
+  <a href="index.html" class="nav-logo">GTSOFIA</a>
+
+  <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+
+  <nav id="navMenu">
+    <a href="index.html">Начало</a>
+    <a href="transport.html">Транспорт</a>
+    <a href="rolling-stock.html">Подвижен състав</a>
+    <a href="about.html" class="active">За проекта</a>
+  </nav>
+
+</header>
+
+<!-- PAGE CONTENT -->
+<main class="content">
+
+  <h1 style="margin-bottom: 20px;">За GTSOFIA</h1>
+
+  <!-- CARD 1 -->
+  <div class="info-card" style="margin-bottom: 16px;">
+    <h2>Какво е GTSOFIA?</h2>
+    <p>
+      GTSOFIA е уеб приложение за градски транспорт в София, което позволява
+      преглед на линии, маршрути и информация за спирки.
+    </p>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="info-card" style="margin-bottom: 16px;">
+    <h2>Цел на проекта</h2>
+    <p>
+      Проектът има за цел да предостави по-бърз, удобен и модерен достъп
+      до информация за обществения транспорт в София.
+    </p>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="info-card" style="margin-bottom: 16px;">
+    <h2>Функции</h2>
+    <p>
+      • Търсене на линии<br>
+      • Филтри по вид транспорт<br>
+      • Детайли за маршрути и спирки<br>
+      • Подвижен състав (автобуси, трамваи, тролеи, метро)
+    </p>
+  </div>
+
+  <!-- CARD 4 -->
+  <div class="info-card">
+    <h2>Технологии</h2>
+    <p>
+      HTML, CSS и JavaScript (vanilla).<br>
+      Без фреймуъркове — бързо и леко приложение.
+    </p>
+  </div>
+
+</main>
+
+<!-- NAVBAR SCRIPT -->
+<script src="navbar.js"></script>
+
+</body>
+</html>
