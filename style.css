@@ -465,21 +465,17 @@ ROLLING STOCK
   margin-top: 10px;
 }
 
-.stock-pill {
-  height: 24px;
-  min-width: 34px;
-  padding: 0 8px;
+/* smaller version for rolling stock */
+.stock-small {
+  width: 44px;
+  height: 26px;
+  font-size: 13px;
+}
 
-  border-radius: 6px;
-
-  font-size: 12px;
-  font-weight: 700;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  color: white;
+.metro-pill {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
 }
 
 /* =========================
