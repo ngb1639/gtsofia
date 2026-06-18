@@ -56,27 +56,6 @@ const rollingStock = [
 ];
 
 /* =========================
-COLOR SYSTEM (YOUR RULES)
-========================= */
-
-const lineColors = {
-
-  // transport categories (fallback if needed)
-  bus: { color: "#be1e2d", text: "white" },
-  tourist: { color: "#006838", text: "white" },
-  trolley: { color: "#2AA9E0", text: "white" },
-  tram: { color: "#F6921E", text: "white" },
-  night: { color: "#000000", text: "white" },
-
-  // metro lines
-  M1: { color: "#ec2029", text: "white" },
-  M2: { color: "#1077bc", text: "white" },
-  M3: { color: "#3bb44b", text: "white" },
-  M4: { color: "#fcd403", text: "black" }
-
-};
-
-/* =========================
 RENDER FUNCTION
 ========================= */
 
@@ -131,12 +110,35 @@ function renderStock() {
           <div class="stock-lines">
             ${item.lines.map(line => {
 
-              const isMetro = line.startsWith("M");
+              let meta = { color: "#111827", text: "white" };
 
-              const meta = lineColors[line] || {
-                color: "#111827",
-                text: "white"
-              };
+              switch (item.type) {
+
+                case "bus":
+                  meta = { color: "#be1e2d", text: "white" };
+                  break;
+
+                case "tram":
+                  meta = { color: "#F6921E", text: "white" };
+                  break;
+
+                case "trolley":
+                  meta = { color: "#2AA9E0", text: "white" };
+                  break;
+
+                case "metro":
+                  if (line === "M1") meta = { color: "#ec2029", text: "white" };
+                  if (line === "M2") meta = { color: "#1077bc", text: "white" };
+                  if (line === "M3") meta = { color: "#3bb44b", text: "white" };
+                  if (line === "M4") meta = { color: "#fcd403", text: "black" };
+                  break;
+
+                case "night":
+                  meta = { color: "#000000", text: "white" };
+                  break;
+              }
+
+              const isMetro = item.type === "metro";
 
               return `
                 <div
