@@ -215,6 +215,17 @@ CONTENT AREA
 LINE DETAILS
 ========================= */
 
+.line-note {
+  background: #fff7ed;
+  border-left: 4px solid #f59e0b;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #92400e;
+  font-weight: 500;
+}
+
 .line-header {
   display: flex;
   justify-content: space-between;
@@ -256,6 +267,41 @@ LINE DETAILS
 .destination-name {
   font-size: 25px;
   font-weight: 700;
+}
+
+.details-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.details-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: transparent;
+}
+
+.details-icon img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.details-number {
+  width: 60px;
+  height: 30px;
+  border-radius: 6px;
+  color: white;
+  font-weight: 700;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* =========================
