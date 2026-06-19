@@ -375,7 +375,7 @@ const rollingStock = [
   },
 
   {
-    type: "tram",
+    type: "metro",
     manufacturer: "Метровагонмаш",
     model: "81-717.4/81-714.4",
     year: 1998,
