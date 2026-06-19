@@ -308,6 +308,7 @@ function renderStock() {
     title.textContent = groups[type];
     title.style.margin = "24px 0 12px";
     title.style.fontSize = "20px";
+    title.style.gridColumn = "1 / -1";
 
     grid.appendChild(title);
 
