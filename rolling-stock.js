@@ -31,7 +31,7 @@ const rollingStock = [
     year: 2018,
     quantity: 71,
     image: "https://s1.busphoto.eu/photo/07/19/52/719526.jpg",
-    lines: ["12", "18", "20", "21", "22", "24", "27", "29", "30", "31", "72", "64", "67", "77", "81", "86", "90", "111", "117", "118", "119", "384", "404", "604"]
+    lines: ["12", "18", "20", "21", "22", "24", "27", "29", "30", "31", "72", "64", "67", "77", "81", "86", "90", "111", "117", "118", "119", "404", "604"]
   },
 
   {
@@ -272,6 +272,56 @@ const rollingStock = [
     quantity: 7,
     image: "https://transphoto.org/photo/21/97/08/2197082.jpg",
     lines: ["6"]
+  },
+
+  {
+    type: "tram",
+    manufacturer: "Tramcar",
+    model: "T8K-503",
+    year: 2000,
+    quantity: 9,
+    image: "https://transphoto.org/photo/13/14/03/1314039.jpg",
+    lines: ["11"]
+  },
+
+  {
+    type: "tram",
+    manufacturer: "Tramcar",
+    model: "T8M-700M",
+    year: 1999,
+    quantity: 5,
+    image: "https://transphoto.org/photo/15/42/96/1542966.jpg",
+    lines: ["11"]
+  },
+
+  {
+    type: "tram",
+    manufacturer: "ČKD Tatra",
+    model: "T6A2B",
+    year: 1990,
+    quantity: 40,
+    image: "https://transphoto.org/photo/20/51/14/2051146.jpg",
+    lines: ["10", "11", "13", "15"]
+  },
+
+  {
+    type: "tram",
+    manufacturer: "ČKD Tatra",
+    model: "T6A2 SF",
+    year: 1999,
+    quantity: 17,
+    image: "https://transphoto.org/photo/17/91/07/1791079.jpg",
+    lines: ["1", "3"]
+  },
+
+  {
+    type: "tram",
+    manufacturer: "Pesa",
+    model: "Swing-122NaSF",
+    year: 2014,
+    quantity: 67,
+    image: "https://transphoto.org/photo/13/14/07/1314079.jpg",
+    lines: ["4", "5", "6", "7", "18", "27"]
   },
 ];
 
