@@ -323,6 +323,66 @@ const rollingStock = [
     image: "https://transphoto.org/photo/13/14/07/1314079.jpg",
     lines: ["4", "5", "6", "7", "18", "27"]
   },
+
+  {
+    type: "tram",
+    manufacturer: "Tramcar",
+    model: "Т8М-700IT (Inekon)",
+    year: 2007,
+    quantity: 18,
+    image: "https://transphoto.org/photo/22/11/27/2211275.jpg",
+    lines: ["6", "11", "12"]
+  },
+
+  {
+    type: "tram",
+    manufacturer: "Schindler",
+    model: "Waggon AG Be 4-6",
+    year: 2017,
+    quantity: 27,
+    image: "https://transphoto.org/photo/10/91/92/1091922.jpg",
+    lines: ["8", "12"]
+  },
+
+  {
+    type: "tram",
+    manufacturer: "ČKD Tatra",
+    model: "T6B5",
+    year: 1989,
+    quantity: 37,
+    image: "https://transphoto.org/photo/10/52/76/1052768.jpg",
+    lines: ["20", "21"]
+  },
+
+  {
+    type: "tram",
+    manufacturer: "ČKD Tatra",
+    model: "T6A5",
+    year: 2016,
+    quantity: 55,
+    image: "https://transphoto.org/photo/11/51/94/1151940.jpg",
+    lines: ["21", "22"]
+  },
+
+  {
+    type: "tram",
+    manufacturer: "Duewag",
+    model: "GT8",
+    year: 1995,
+    quantity: 5,
+    image: "https://transphoto.org/photo/22/08/76/2208767.jpg",
+    lines: ["23"]
+  },
+
+  {
+    type: "tram",
+    manufacturer: "Метровагонмаш",
+    model: "81-717.4/81-714.4",
+    year: 1998,
+    quantity: 12,
+    image: "https://transphoto.org/photo/22/84/16/2284160.jpg",
+    lines: ["1", "2", "4"]
+  },
 ];
 
 /* =========================
