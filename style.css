@@ -260,12 +260,12 @@ LINE DETAILS
 }
 
 .direction-arrow {
-  width: 22px;
+  width: 20px;
   opacity: 0.7;
 }
 
 .destination-name {
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 700;
 }
 
@@ -550,5 +550,15 @@ MOBILE RESPONSIVE
   .switch-btn {
     width: 100%;
   }
+
+  .direction-arrow {
+  width: 20px;
+  opacity: 0.7;
+}
+
+.destination-name {
+  font-size: 20px;
+  font-weight: 700;
+}
 
 }
