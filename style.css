@@ -394,8 +394,10 @@ PROMO CARD (HOME)
   border-radius: 18px;
   padding: 28px;
   border: 1px solid #e5e7eb;
-
-  max-width: 480px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 .promo-logo {
