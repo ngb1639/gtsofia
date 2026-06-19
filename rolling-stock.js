@@ -383,6 +383,56 @@ const rollingStock = [
     image: "https://transphoto.org/photo/22/84/16/2284160.jpg",
     lines: ["1", "2", "4"]
   },
+
+  {
+    type: "metro",
+    manufacturer: "Метровагонмаш",
+    model: "81-717.4К",
+    year: 2021,
+    quantity: 16,
+    image: "https://transphoto.org/photo/19/50/75/1950754.jpg",
+    lines: ["1", "2", "4"]
+  },
+
+  {
+    type: "metro",
+    manufacturer: "Метровагонмаш",
+    model: "81-740.2/81-741.2",
+    year: 2005,
+    quantity: 9,
+    image: "https://transphoto.org/photo/12/14/59/1214597.jpg",
+    lines: ["1", "2", "4"]
+  },
+
+  {
+    type: "metro",
+    manufacturer: "Метровагонмаш",
+    model: "81-740.2Б/81-741.2Б",
+    year: 2010,
+    quantity: 31,
+    image: "https://transphoto.org/photo/18/02/07/1802078.jpg",
+    lines: ["1", "2", "4"]
+  },
+
+  {
+    type: "metro",
+    manufacturer: "Siemens",
+    model: "Inspiro SF",
+    year: 2020,
+    quantity: 30,
+    image: "https://transphoto.org/photo/18/49/45/1849450.jpg",
+    lines: ["3"]
+  },
+
+  {
+    type: "metro",
+    manufacturer: "Škoda",
+    model: "Varsovia",
+    year: 2025,
+    quantity: 32,
+    image: "https://transphoto.org/photo/21/88/37/2188373.jpg",
+    lines: ["1", "2", "4"]
+  },
 ];
 
 /* =========================
