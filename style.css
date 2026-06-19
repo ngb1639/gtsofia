@@ -395,6 +395,9 @@ PROMO CARD (HOME)
   padding: 28px;
   border: 1px solid #e5e7eb;
   width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 .promo-logo {
@@ -559,5 +562,10 @@ MOBILE RESPONSIVE
   font-size: 20px;
   font-weight: 700;
 }
+
+.promo-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
 }
