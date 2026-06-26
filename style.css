@@ -450,6 +450,19 @@ PROMO CARD (HOME)
   background: #d1d5db;
 }
 
+.promo-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 600px;
+  justify-content: center;
+}
+
+.promo-actions .promo-btn {
+  flex: 1;
+  max-width: none;
+}
+
 /* =========================
 ROLLING STOCK
 ========================= */
