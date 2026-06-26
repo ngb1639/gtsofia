@@ -392,7 +392,7 @@ PROMO CARD (HOME)
 .promo-card {
   background: white;
   border-radius: 18px;
-  padding: 20px 28px;
+  padding: 18px 24px;
   border: 1px solid #e5e7eb;
   width: 100%;
   display: flex;
@@ -400,8 +400,7 @@ PROMO CARD (HOME)
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 15px;
-  min-height: 50px;
+  gap: 10px;
 }
 
 .promo-logo {
@@ -425,16 +424,30 @@ PROMO CARD (HOME)
 
 .promo-btn {
   display: block;
-  padding: 12px;
-  border-radius: 12px;
+  width: 100%;
+  max-width: 280px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background: #e5e7eb;
+  color: #111827;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  margin-top: 10px;
   text-align: center;
+  transition: 0.2s;
+}
+
+.promo-btn:hover {
+  background: #d1d5db;
 }
 
 .promo-btn.secondary {
-  background: #f3f4f6;
+  background: #e5e7eb;
+}
+
+.promo-btn.secondary:hover {
+  background: #d1d5db;
 }
 
 /* =========================
