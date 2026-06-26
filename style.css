@@ -401,7 +401,7 @@ PROMO CARD (HOME)
   justify-content: center;
   text-align: center;
   gap: 16px;
-  min-height: 500px;
+  min-height: 200px;
 }
 
 .promo-logo {
