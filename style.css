@@ -392,7 +392,7 @@ PROMO CARD (HOME)
 .promo-card {
   background: white;
   border-radius: 18px;
-  padding: 40px 28px;
+  padding: 20px 28px;
   border: 1px solid #e5e7eb;
   width: 100%;
   display: flex;
@@ -400,8 +400,8 @@ PROMO CARD (HOME)
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 16px;
-  min-height: 100px;
+  gap: 15px;
+  min-height: 50px;
 }
 
 .promo-logo {
