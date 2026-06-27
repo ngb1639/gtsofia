@@ -276,7 +276,7 @@ const rollingStock = [
 
   {
     type: "tram",
-    manufacturer: "Tramcar",
+    manufacturer: "ЗТС",
     model: "T8K-503",
     year: 2000,
     quantity: 9,
@@ -286,7 +286,7 @@ const rollingStock = [
 
   {
     type: "tram",
-    manufacturer: "Tramcar",
+    manufacturer: "ЗТС",
     model: "T8M-700M",
     year: 1999,
     quantity: 5,
@@ -326,7 +326,7 @@ const rollingStock = [
 
   {
     type: "tram",
-    manufacturer: "Tramcar",
+    manufacturer: "ЗТС",
     model: "Т8М-700IT (Inekon)",
     year: 2007,
     quantity: 18,
@@ -376,7 +376,7 @@ const rollingStock = [
 
   {
     type: "metro",
-    manufacturer: "Метровагонмаш",
+    manufacturer: "МВМ",
     model: "81-717.4/81-714.4",
     year: 1998,
     quantity: 12,
@@ -386,7 +386,7 @@ const rollingStock = [
 
   {
     type: "metro",
-    manufacturer: "Метровагонмаш",
+    manufacturer: "МВМ",
     model: "81-717.4К",
     year: 2021,
     quantity: 16,
@@ -396,7 +396,7 @@ const rollingStock = [
 
   {
     type: "metro",
-    manufacturer: "Метровагонмаш",
+    manufacturer: "МВМ",
     model: "81-740.2/81-741.2",
     year: 2005,
     quantity: 9,
@@ -406,7 +406,7 @@ const rollingStock = [
 
   {
     type: "metro",
-    manufacturer: "Метровагонмаш",
+    manufacturer: "МВМ",
     model: "81-740.2Б/81-741.2Б",
     year: 2010,
     quantity: 31,
