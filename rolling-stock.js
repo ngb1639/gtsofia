@@ -452,7 +452,7 @@ function renderStock() {
 
   const groups = {
     bus: "Автобуси",
-    trolley: "Тролеи",
+    trolley: "Тролейбуси",
     tram: "Трамваи",
     metro: "Метро"
   };
