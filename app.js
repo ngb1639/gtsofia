@@ -90,14 +90,8 @@ function selectLine(line) {
       </button>
     </div>
 
-    ${line.note ? `
-      <div class="line-note">
-        ${line.note}
-      </div>
-    ` : ""}
-
-    <!-- 🚧 ALERTS AREA (optional inside line view) -->
-    <div id="lineAlerts"></div>
+   <!-- 🚧 ALERT SLOT (NEW POSITION) -->
+  <div id="lineAlerts"></div>
 
     <div class="stops-card">
       <div class="stops-line">
