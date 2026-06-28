@@ -162,7 +162,7 @@ async function loadHomeAlerts() {
 }
 
 /* =========================
-TRANSPORT PAGE ALERTS (MERGED STYLE)
+TRANSPORT PAGE ALERTS
 ========================= */
 
 async function showLineAlerts(lineNumber) {
@@ -191,10 +191,6 @@ async function showLineAlerts(lineNumber) {
       color:#92400e;
       font-weight:500;
     ">
-
-      <div style="font-weight:700;margin-bottom:6px;">
-        ${a.title}
-      </div>
 
       <div style="margin-bottom:6px;">
         ${a.text}
