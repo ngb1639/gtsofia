@@ -47,7 +47,7 @@ function getIcon(type) {
 }
 
 /* =========================
-HOME PAGE ALERTS (ICON + PILL)
+HOME PAGE ALERTS
 ========================= */
 
 async function loadHomeAlerts() {
@@ -63,12 +63,13 @@ async function loadHomeAlerts() {
 
   container.innerHTML = alerts.map(alert => {
 
-    const linesHTML = (alert.lines || []).map(l => {
+    const linesHTML = (alert.lines || []).map(line => {
 
       const isMetro = alert.type === "metro";
-      const color = isMetro ? getMetroColor(l.number || l) : getTypeColor(alert.type);
+      const color = isMetro ? getMetroColor(line) : getTypeColor(alert.type);
       const icon = getIcon(alert.type);
 
+      // METRO = round badge
       if (isMetro) {
         return `
           <div style="display:flex;align-items:center;gap:10px;margin:6px 0;">
@@ -97,13 +98,14 @@ async function loadHomeAlerts() {
               align-items:center;
               justify-content:center;
             ">
-              ${l.number || l}
+              ${line}
             </div>
 
           </div>
         `;
       }
 
+      // NORMAL = pill
       return `
         <div style="display:flex;align-items:center;gap:8px;margin:4px 0;">
 
@@ -132,7 +134,7 @@ async function loadHomeAlerts() {
             align-items:center;
             justify-content:center;
           ">
-            ${l.number || l}
+            ${line}
           </div>
 
         </div>
@@ -162,7 +164,7 @@ async function loadHomeAlerts() {
 }
 
 /* =========================
-TRANSPORT PAGE ALERTS (FIXED FILTERING)
+TRANSPORT PAGE ALERTS (FIXED BUG)
 ========================= */
 
 async function showLineAlerts(lineNumber, lineType) {
@@ -172,10 +174,8 @@ async function showLineAlerts(lineNumber, lineType) {
   const alerts = await getAlerts();
 
   const filtered = alerts.filter(alert =>
-    (alert.lines || []).some(l =>
-      l.number === String(lineNumber) &&
-      l.type === lineType
-    )
+    alert.type === lineType &&
+    (alert.lines || []).includes(String(lineNumber))
   );
 
   if (!filtered.length) {
@@ -196,7 +196,7 @@ async function showLineAlerts(lineNumber, lineType) {
     ">
 
       <div style="font-weight:700;margin-bottom:6px;">
-        ${a.title}
+        ${a.title || ""}
       </div>
 
       <div style="margin-bottom:6px;">
