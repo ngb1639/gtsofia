@@ -96,6 +96,9 @@ function selectLine(line) {
       </div>
     ` : ""}
 
+    <!-- 🚧 ALERTS AREA (optional inside line view) -->
+    <div id="lineAlerts"></div>
+
     <div class="stops-card">
       <div class="stops-line">
         ${stops.map(s => `
@@ -107,6 +110,11 @@ function selectLine(line) {
       </div>
     </div>
   `;
+
+  // 🚀 NEW: load alerts for this line (safe call)
+  if (typeof showLineAlerts === "function") {
+    showLineAlerts(line.number);
+  }
 }
 
 function switchDirection(type, number) {
