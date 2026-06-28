@@ -147,7 +147,7 @@ async function loadHomeAlerts() {
             background:${color};
             color:white;
             padding:6px 12px;
-            border-radius:8px;
+            border-radius:6px;
             font-weight:700;
             font-size:17px;
             width:60px;
