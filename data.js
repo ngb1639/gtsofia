@@ -1,10 +1,10 @@
 const lines = [
   
-{
+/*  {
     type: "bus",
     number: "У1",
-    color: "#C7C7C7",
-    icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/ec9a9ee0e6230cdda7a7be9f96acc03c86c87f5e/Icons/Inactive%20icons/bus-inactive.svg",
+    color: "#be1e2d",
+    icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "32 СУ Св. Климент Охридски",
     activeDirection: "A",
     stopsA: ["Балканкар АД","ж.к. Красна поляна","ул. Добротич","бул. Вардар","Първа АГ болница Света София","10-ти ДКЦ","бул. Ал. Стамболийски","метростанция Вардар","ул. Хайдут Сидер","ул. Хайдут Сидер","ул. Зографски манастир","ул. Цар Симеон","ул. Одрин","134 СУ Димчо Дебелянов","18 СУ Уилям Гладстон","32 СУ Св. Климент Охридски"]
@@ -13,12 +13,12 @@ const lines = [
   {
     type: "bus",
     number: "У2",
-    color: "#C7C7C7",
-    icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/ec9a9ee0e6230cdda7a7be9f96acc03c86c87f5e/Icons/Inactive%20icons/bus-inactive.svg",
+    color: "#be1e2d",
+    icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "18 СУ Уилям Гладстон",
     activeDirection: "A",
     stopsA: ["ж.к. Люлин 5","ул. Поручик Гр. Загорски","ул. кап. Васил Данаджиев","Магазин Витоша","Община Люлин","Търговски център Люлин","метростанция Люлин","ул. Луи Пастьор","метростанция Западен парк","ул. Гоце Делчев","бл. 135 ж.к. Люлин 10","ул. Орион","Западен парк","ул. Оряхово","ул. Пловдив","Надлез Надежда","бул. Ген. Н. Столетов","Пета градска болница","бул. Княгиня Мария Луиза","ул. Охрид","ул. Опълченска","46 ОУ Константин Фотинов","32 СУ Св. Климент Охридски","18 СУ Уилям Гладстон"]
-  },
+  },*/
 
   {
     type: "bus",
