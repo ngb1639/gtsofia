@@ -13,7 +13,7 @@ const ICONS = {
   night: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/night-bus.svg",
   trolley: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/trolley.svg",
   tram: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
-  metro: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active icons/metro.svg"
+  metro: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/metro.svg"
 };
 
 /* =========================
@@ -47,7 +47,7 @@ function getIcon(type) {
 }
 
 /* =========================
-HOME PAGE ALERTS (FULL UI)
+HOME PAGE ALERTS
 ========================= */
 
 async function loadHomeAlerts() {
@@ -69,10 +69,44 @@ async function loadHomeAlerts() {
       const color = isMetro ? getMetroColor(line) : getTypeColor(alert.type);
       const icon = getIcon(alert.type);
 
-      return `
-        <div style="display:flex;align-items:center;gap:10px;margin:6px 0;">
+      if (isMetro) {
+        return `
+          <div style="display:flex;align-items:center;gap:10px;margin:6px 0;">
 
-          <!-- ICON -->
+            <div style="
+              width:30px;
+              height:30px;
+              border-radius:50%;
+              background:${color};
+              display:flex;
+              align-items:center;
+              justify-content:center;
+            ">
+              <img src="${icon}" style="width:30px;height:30px;" />
+            </div>
+
+            <div style="
+              width:30px;
+              height:30px;
+              border-radius:50%;
+              background:${color};
+              color:white;
+              font-weight:700;
+              font-size:14px;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+            ">
+              ${line}
+            </div>
+
+          </div>
+        `;
+      }
+
+      return `
+        <div style="display:flex;align-items:center;gap:8px;margin:4px 0;">
+
           <div style="
             width:30px;
             height:30px;
@@ -85,14 +119,13 @@ async function loadHomeAlerts() {
             <img src="${icon}" style="width:30px;height:30px;" />
           </div>
 
-          <!-- BADGE -->
           <div style="
             background:${color};
             color:white;
             padding:6px 12px;
             border-radius:6px;
             font-weight:700;
-            font-size:16px;
+            font-size:17px;
             width:60px;
             height:30px;
             display:flex;
@@ -113,12 +146,12 @@ async function loadHomeAlerts() {
           ${linesHTML}
         </div>
 
-        <div style="font-size:16px; color:#374151; margin-bottom:10px;">
+        <div style="margin-bottom:10px;font-size:15px;color:#374151;">
           ${alert.text}
         </div>
 
         ${alert.to ? `
-          <div style="font-size:14px; color:#6b7280;">
+          <div style="font-size:14px;color:#6b7280;">
             До: ${alert.to}
           </div>
         ` : ""}
@@ -129,7 +162,7 @@ async function loadHomeAlerts() {
 }
 
 /* =========================
-TRANSPORT PAGE ALERTS (SAME CARD STYLE)
+TRANSPORT PAGE ALERTS (FIXED)
 ========================= */
 
 async function showLineAlerts(lineNumber, lineType) {
@@ -139,8 +172,8 @@ async function showLineAlerts(lineNumber, lineType) {
   const alerts = await getAlerts();
 
   const filtered = alerts.filter(alert =>
-    (alert.lines || []).includes(String(lineNumber)) &&
-    alert.type === lineType
+    alert.type === lineType &&
+    (alert.lines || []).includes(String(lineNumber))
   );
 
   if (!filtered.length) {
@@ -148,23 +181,30 @@ async function showLineAlerts(lineNumber, lineType) {
     return;
   }
 
-  container.innerHTML = filtered.map(alert => `
-    <div class="info-card" style="margin:10px 0;">
-
-      <div style="font-weight:700;font-size:16px;margin-bottom:6px;">
-        ${alert.title || ""}
+  container.innerHTML = filtered.map(a => `
+    <div style="
+      background:#fff7ed;
+      border-left:4px solid #f59e0b;
+      padding:12px 16px;
+      border-radius:10px;
+      margin-bottom:12px;
+      font-size:15px;
+      color:#92400e;
+      font-weight:500;
+    ">
+      <div style="font-weight:700;margin-bottom:6px;">
+        ${a.title || ""}
       </div>
 
-      <div style="font-size:16px;color:#374151;margin-bottom:8px;">
-        ${alert.text}
+      <div style="margin-bottom:6px;">
+        ${a.text}
       </div>
 
-      ${alert.to ? `
-        <div style="font-size:14px;color:#6b7280;">
-          До: ${alert.to}
+      ${a.to ? `
+        <div style="font-size:13px;opacity:0.8;">
+          До: ${a.to}
         </div>
       ` : ""}
-
     </div>
   `).join("");
 }
