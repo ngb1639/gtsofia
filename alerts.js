@@ -69,7 +69,6 @@ async function loadHomeAlerts() {
       const color = isMetro ? getMetroColor(line) : getTypeColor(alert.type);
       const icon = getIcon(alert.type);
 
-      // METRO = round badge
       if (isMetro) {
         return `
           <div style="display:flex;align-items:center;gap:10px;margin:6px 0;">
@@ -105,7 +104,6 @@ async function loadHomeAlerts() {
         `;
       }
 
-      // NORMAL = pill
       return `
         <div style="display:flex;align-items:center;gap:8px;margin:4px 0;">
 
@@ -164,7 +162,7 @@ async function loadHomeAlerts() {
 }
 
 /* =========================
-TRANSPORT PAGE ALERTS (FIXED BUG)
+TRANSPORT PAGE ALERTS (FIXED)
 ========================= */
 
 async function showLineAlerts(lineNumber, lineType) {
@@ -194,7 +192,6 @@ async function showLineAlerts(lineNumber, lineType) {
       color:#92400e;
       font-weight:500;
     ">
-
       <div style="font-weight:700;margin-bottom:6px;">
         ${a.title || ""}
       </div>
@@ -208,7 +205,6 @@ async function showLineAlerts(lineNumber, lineType) {
           До: ${a.to}
         </div>
       ` : ""}
-
     </div>
   `).join("");
 }
