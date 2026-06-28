@@ -77,7 +77,7 @@ async function loadHomeAlerts() {
               width:30px;
               height:30px;
               border-radius:50%;
-              background:${color};
+              background:transparent;
               display:flex;
               align-items:center;
               justify-content:center;
@@ -183,13 +183,11 @@ async function showLineAlerts(lineNumber, lineType) {
 
   container.innerHTML = filtered.map(a => `
     <div style="
-      background:#fff7ed;
-      border-left:4px solid #f59e0b;
+      border:4px solid #D3D3D3;
       padding:12px 16px;
       border-radius:10px;
       margin-bottom:12px;
       font-size:15px;
-      color:#92400e;
       font-weight:500;
     ">
       <div style="font-weight:700;margin-bottom:6px;">
