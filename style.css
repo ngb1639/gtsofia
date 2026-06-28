@@ -20,13 +20,15 @@ img {
 }
 
 /* =========================
-NAVBAR (NEW)
+NAVBAR
 ========================= */
 
 .navbar {
   height: 70px;
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(229, 231, 235, 0.7);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34,6 +36,17 @@ NAVBAR (NEW)
   position: sticky;
   top: 0;
   z-index: 1000;
+  transition:
+    background 0.3s ease,
+    backdrop-filter 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
 .nav-logo {
