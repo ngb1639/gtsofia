@@ -186,15 +186,7 @@ async function showLineAlerts(lineNumber, lineType) {
   }
 
   container.innerHTML = filtered.map(a => `
-    <div style="
-      border:1px solid #e5e7eb;
-      background:white;
-      padding:12px 16px;
-      border-radius:10px;
-      margin-bottom:12px;
-      font-size:15px;
-      font-weight:500;
-    ">
+  <div class="info-card" style="margin-bottom:10px;">
       <div style="font-weight:700;margin-bottom:6px;">
         ${a.title || ""}
       </div>
