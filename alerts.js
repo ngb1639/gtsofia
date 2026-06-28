@@ -85,7 +85,7 @@ async function loadHomeAlerts() {
             align-items:center;
             justify-content:center;
           ">
-            <img src="${icon}" style="width:16px;height:16px;" />
+            <img src="${icon}" style="width:30px;height:30px;" />
           </div>
 
           <!-- PILL -->
@@ -95,8 +95,9 @@ async function loadHomeAlerts() {
             padding:6px 12px;
             border-radius:8px;
             font-weight:700;
-            font-size:16px;
-            min-width:42px;
+            font-size:17px;
+            width:60px;
+            height:30px;
             text-align:center;
           ">
             ${line}
@@ -119,13 +120,13 @@ async function loadHomeAlerts() {
         </div>
 
         <!-- MESSAGE -->
-        <div style="margin-bottom:10px; font-size:14px; color:#374151;">
+        <div style="margin-bottom:10px; font-size:18px; color:#374151;">
           ${alert.text}
         </div>
 
         <!-- DATE -->
         ${alert.to ? `
-          <div style="font-size:13px; color:#6b7280;">
+          <div style="font-size:15px; color:#6b7280;">
             До: ${alert.to}
           </div>
         ` : ""}
