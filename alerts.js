@@ -25,9 +25,13 @@ function getMetroColor(line) {
     case "1": return "#ec2029";
     case "2": return "#1077bc";
     case "3": return "#3bb44b";
-    case "4": return "#fcd403", text: "black";
+    case "4": return "#fcd403";
     default: return "#111827";
   }
+}
+
+function getMetroTextColor(line) {
+  return String(line) === "4" ? "black" : "white";
 }
 
 function getTypeColor(type) {
@@ -90,7 +94,7 @@ async function loadHomeAlerts() {
               height:30px;
               border-radius:50%;
               background:${color};
-              color:white;
+              color:${getMetroTextColor(line)};
               font-weight:700;
               font-size:14px;
               display:flex;
