@@ -95,7 +95,7 @@ async function loadHomeAlerts() {
               align-items:center;
               justify-content:center;
             ">
-              <img src="${icon}" style="width:18px;height:18px;" />
+              <img src="${icon}" style="width:30px;height:30px;" />
             </div>
 
             <!-- METRO BADGE (CIRCLE) -->
@@ -139,7 +139,7 @@ async function loadHomeAlerts() {
             align-items:center;
             justify-content:center;
           ">
-            <img src="${icon}" style="width:22px;height:22px;" />
+            <img src="${icon}" style="width:30px;height:30px;" />
           </div>
 
           <!-- PILL -->
@@ -174,12 +174,12 @@ async function loadHomeAlerts() {
           ${linesHTML}
         </div>
 
-        <div style="margin-bottom:10px; font-size:18px; color:#374151;">
+        <div style="margin-bottom:10px; font-size:15px; color:#374151;">
           ${alert.text}
         </div>
 
         ${alert.to ? `
-          <div style="font-size:15px; color:#6b7280;">
+          <div style="font-size:14px; color:#6b7280;">
             До: ${alert.to}
           </div>
         ` : ""}
