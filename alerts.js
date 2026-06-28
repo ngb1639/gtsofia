@@ -47,7 +47,7 @@ function getIcon(type) {
 }
 
 /* =========================
-HOME PAGE ALERTS
+HOME PAGE ALERTS (ICON + PILL)
 ========================= */
 
 async function loadHomeAlerts() {
@@ -63,10 +63,10 @@ async function loadHomeAlerts() {
 
   container.innerHTML = alerts.map(alert => {
 
-    const linesHTML = (alert.lines || []).map(line => {
+    const linesHTML = (alert.lines || []).map(l => {
 
       const isMetro = alert.type === "metro";
-      const color = isMetro ? getMetroColor(line) : getTypeColor(alert.type);
+      const color = isMetro ? getMetroColor(l.number || l) : getTypeColor(alert.type);
       const icon = getIcon(alert.type);
 
       if (isMetro) {
@@ -97,7 +97,7 @@ async function loadHomeAlerts() {
               align-items:center;
               justify-content:center;
             ">
-              ${line}
+              ${l.number || l}
             </div>
 
           </div>
@@ -132,7 +132,7 @@ async function loadHomeAlerts() {
             align-items:center;
             justify-content:center;
           ">
-            ${line}
+            ${l.number || l}
           </div>
 
         </div>
@@ -162,17 +162,20 @@ async function loadHomeAlerts() {
 }
 
 /* =========================
-TRANSPORT PAGE ALERTS
+TRANSPORT PAGE ALERTS (FIXED FILTERING)
 ========================= */
 
-async function showLineAlerts(lineNumber) {
+async function showLineAlerts(lineNumber, lineType) {
   const container = document.getElementById("lineAlerts");
   if (!container) return;
 
   const alerts = await getAlerts();
 
-  const filtered = alerts.filter(a =>
-    a.lines.includes(String(lineNumber))
+  const filtered = alerts.filter(alert =>
+    (alert.lines || []).some(l =>
+      l.number === String(lineNumber) &&
+      l.type === lineType
+    )
   );
 
   if (!filtered.length) {
@@ -191,6 +194,10 @@ async function showLineAlerts(lineNumber) {
       color:#92400e;
       font-weight:500;
     ">
+
+      <div style="font-weight:700;margin-bottom:6px;">
+        ${a.title}
+      </div>
 
       <div style="margin-bottom:6px;">
         ${a.text}
