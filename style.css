@@ -104,7 +104,7 @@ SIDEBAR
 }
 
 .search {
-  width: 90%;
+  width: auto;
   height: 44px;
   border: none;
   border-radius: 12px;
@@ -117,7 +117,7 @@ SIDEBAR
 }
 
 .filters {
-  width: 90%;
+  width: auto;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -210,17 +210,6 @@ CONTENT AREA
 /* =========================
 LINE DETAILS
 ========================= */
-
-.line-note {
-  background: #fff7ed;
-  border-left: 4px solid #f59e0b;
-  padding: 12px 16px;
-  margin-bottom: 18px;
-  border-radius: 10px;
-  font-size: 14px;
-  color: #92400e;
-  font-weight: 500;
-}
 
 .line-header {
   display: flex;
@@ -525,8 +514,7 @@ ABOUT PAGE
   background: white;
   padding: 24px;
   border-radius: 18px;
-  /* border: 1px solid #e5e7eb;*/
-  border: 1px solid #FFCC00;
+  border: 1px solid #e5e7eb;
   width: 100%;
   transition: 0.2s;
 }
