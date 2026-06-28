@@ -25,7 +25,7 @@ function getMetroColor(line) {
     case "1": return "#ec2029";
     case "2": return "#1077bc";
     case "3": return "#3bb44b";
-    case "4": return "#fcd403";
+    case "4": return "#fcd403", text: "black";
     default: return "#111827";
   }
 }
@@ -183,7 +183,7 @@ async function showLineAlerts(lineNumber, lineType) {
 
   container.innerHTML = filtered.map(a => `
     <div style="
-      border:4px solid #D3D3D3;
+      border:1px solid #e5e7eb;
       padding:12px 16px;
       border-radius:10px;
       margin-bottom:12px;
