@@ -103,12 +103,12 @@ async function loadHomeAlerts() {
             padding:6px 10px;
             border-radius:6px;
             font-weight:700;
-            font-size:15px;
+            font-size:17px;
             display:flex;
             align-items:center;
             justify-content:center;
-            width:30px;
             height:30px;
+            width:60px;
           ">
             ${line}
           </div>
@@ -120,8 +120,8 @@ async function loadHomeAlerts() {
 
           <!-- ONE ICON ONLY -->
           <div style="
-            height:60px;
             width:30px;
+            height:30px;
             border-radius:50%;
             display:flex;
             align-items:center;
