@@ -4,10 +4,10 @@ async function getAlerts() {
 }
 
 /* =========================
-ICONS + COLORS
+ICON + COLOR CONFIG
 ========================= */
 
-const iconMap = {
+const ICONS = {
   bus: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
   tourist: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/torist-bus.svg",
   night: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/night-bus.svg",
@@ -16,23 +16,36 @@ const iconMap = {
   metro: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/metro.svg"
 };
 
-const typeColors = {
-  bus: "#be1e2d",
-  tourist: "#006838",
-  night: "#000000",
-  trolley: "#2AA9E0",
-  tram: "#F6921E"
-};
+/* метро цветове */
+function getMetroColor(line) {
+  switch (String(line)) {
+    case "1": return "#ec2029";
+    case "2": return "#1077bc";
+    case "3": return "#3bb44b";
+    case "4": return "#fcd403";
+    default: return "#111827";
+  }
+}
 
-const metroColors = {
-  "1": "#ec2029",
-  "2": "#1077bc",
-  "3": "#3bb44b",
-  "4": "#fcd403"
-};
+/* транспортни цветове */
+function getTypeColor(type) {
+  switch (type) {
+    case "bus": return "#be1e2d";
+    case "tourist": return "#006838";
+    case "night": return "#000000";
+    case "trolley": return "#2AA9E0";
+    case "tram": return "#F6921E";
+    case "metro": return "#111827";
+    default: return "#111827";
+  }
+}
+
+function getIcon(type) {
+  return ICONS[type] || ICONS.bus;
+}
 
 /* =========================
-HOME PAGE ALERTS (NEW UI)
+HOME PAGE (ICON + PILL UI)
 ========================= */
 
 async function loadHomeAlerts() {
@@ -46,55 +59,74 @@ async function loadHomeAlerts() {
     return;
   }
 
-  container.innerHTML = alerts.map(a => {
+  container.innerHTML = alerts.map(alert => {
 
-    const type = a.type || "bus";
-    const icon = iconMap[type] || iconMap.bus;
+    const linesHTML = (alert.lines || []).map(line => {
+
+      const isMetro = alert.type === "metro";
+      const bgColor = isMetro ? getMetroColor(line) : getTypeColor(alert.type);
+      const icon = getIcon(alert.type);
+
+      return `
+        <div style="
+          display:flex;
+          align-items:center;
+          gap:8px;
+          margin:4px 0;
+        ">
+
+          <!-- ICON -->
+          <div style="
+            width:30px;
+            height:30px;
+            border-radius:50%;
+            background:${bgColor};
+            display:flex;
+            align-items:center;
+            justify-content:center;
+          ">
+            <img src="${icon}" style="width:16px;height:16px;" />
+          </div>
+
+          <!-- PILL -->
+          <div style="
+            background:${bgColor};
+            color:white;
+            padding:6px 12px;
+            border-radius:8px;
+            font-weight:700;
+            font-size:16px;
+            min-width:42px;
+            text-align:center;
+          ">
+            ${line}
+          </div>
+
+        </div>
+      `;
+    }).join("");
 
     return `
-      <div class="info-card" style="margin-bottom:12px;">
+      <div class="info-card" style="margin-bottom:10px;">
 
-        <!-- TOP ROW: ICON + LINE PILL -->
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+        <div style="margin-bottom:10px; font-weight:700; font-size:16px;">
+          ${alert.title}
+        </div>
 
-          <img src="${icon}" style="width:28px;height:28px;" />
-
-          ${a.lines.map(l => {
-
-            let color = "#111827";
-
-            if (type === "metro") {
-              color = metroColors[l] || "#1077bc";
-            }
-
-            return `
-              <span style="
-                background:${color};
-                color:white;
-                font-weight:700;
-                padding:4px 10px;
-                border-radius:999px;
-                font-size:13px;
-                display:flex;
-                align-items:center;
-                gap:4px;
-              ">
-                ⚠ ${l}
-              </span>
-            `;
-          }).join("")}
-
+        <!-- LINES -->
+        <div style="margin-bottom:10px;">
+          ${linesHTML}
         </div>
 
         <!-- MESSAGE -->
-        <div style="font-size:14px; margin-bottom:8px; color:#111827;">
-          ${a.text}
+        <div style="margin-bottom:10px; font-size:14px; color:#374151;">
+          ${alert.text}
         </div>
 
-        <!-- END DATE -->
-        ${a.to ? `
-          <div style="font-size:12px; color:#6b7280;">
-            До: ${a.to}
+        <!-- DATE -->
+        ${alert.to ? `
+          <div style="font-size:13px; color:#6b7280;">
+            До: ${alert.to}
           </div>
         ` : ""}
 
