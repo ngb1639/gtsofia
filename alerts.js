@@ -16,7 +16,10 @@ const ICONS = {
   metro: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/metro.svg"
 };
 
-/* метро цветове */
+/* =========================
+COLORS
+========================= */
+
 function getMetroColor(line) {
   switch (String(line)) {
     case "1": return "#ec2029";
@@ -27,7 +30,6 @@ function getMetroColor(line) {
   }
 }
 
-/* транспортни цветове */
 function getTypeColor(type) {
   switch (type) {
     case "bus": return "#be1e2d";
@@ -45,7 +47,7 @@ function getIcon(type) {
 }
 
 /* =========================
-HOME PAGE (ICON + PILL UI)
+HOME PAGE ALERTS
 ========================= */
 
 async function loadHomeAlerts() {
@@ -64,9 +66,61 @@ async function loadHomeAlerts() {
     const linesHTML = (alert.lines || []).map(line => {
 
       const isMetro = alert.type === "metro";
-      const bgColor = isMetro ? getMetroColor(line) : getTypeColor(alert.type);
+
+      const color = isMetro
+        ? getMetroColor(line)
+        : getTypeColor(alert.type);
+
       const icon = getIcon(alert.type);
 
+      /* =========================
+      METRO STYLE (CIRCLE BADGE)
+      ========================= */
+      if (isMetro) {
+        return `
+          <div style="
+            display:flex;
+            align-items:center;
+            gap:10px;
+            margin:6px 0;
+          ">
+
+            <!-- ICON -->
+            <div style="
+              width:30px;
+              height:30px;
+              border-radius:50%;
+              background:${color};
+              display:flex;
+              align-items:center;
+              justify-content:center;
+            ">
+              <img src="${icon}" style="width:18px;height:18px;" />
+            </div>
+
+            <!-- METRO BADGE (CIRCLE) -->
+            <div style="
+              width:30px;
+              height:30px;
+              border-radius:50%;
+              background:${color};
+              color:white;
+              font-weight:700;
+              font-size:14px;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+            ">
+              ${line}
+            </div>
+
+          </div>
+        `;
+      }
+
+      /* =========================
+      NORMAL TRANSPORT STYLE
+      ========================= */
       return `
         <div style="
           display:flex;
@@ -80,17 +134,17 @@ async function loadHomeAlerts() {
             width:30px;
             height:30px;
             border-radius:50%;
-            background:${bgColor};
+            background:${color};
             display:flex;
             align-items:center;
             justify-content:center;
           ">
-            <img src="${icon}" style="width:30px;height:30px;" />
+            <img src="${icon}" style="width:22px;height:22px;" />
           </div>
 
           <!-- PILL -->
           <div style="
-            background:${bgColor};
+            background:${color};
             color:white;
             padding:6px 12px;
             border-radius:8px;
@@ -98,7 +152,9 @@ async function loadHomeAlerts() {
             font-size:17px;
             width:60px;
             height:30px;
-            text-align:center;
+            display:flex;
+            align-items:center;
+            justify-content:center;
           ">
             ${line}
           </div>
@@ -114,17 +170,14 @@ async function loadHomeAlerts() {
           ${alert.title}
         </div>
 
-        <!-- LINES -->
         <div style="margin-bottom:10px;">
           ${linesHTML}
         </div>
 
-        <!-- MESSAGE -->
         <div style="margin-bottom:10px; font-size:18px; color:#374151;">
           ${alert.text}
         </div>
 
-        <!-- DATE -->
         ${alert.to ? `
           <div style="font-size:15px; color:#6b7280;">
             До: ${alert.to}
@@ -137,7 +190,7 @@ async function loadHomeAlerts() {
 }
 
 /* =========================
-TRANSPORT PAGE ALERTS (UNCHANGED)
+TRANSPORT PAGE ALERTS
 ========================= */
 
 async function showLineAlerts(lineNumber) {
