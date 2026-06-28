@@ -66,26 +66,13 @@ async function loadHomeAlerts() {
     const linesHTML = (alert.lines || []).map(line => {
 
       const isMetro = alert.type === "metro";
-
-      const color = isMetro
-        ? getMetroColor(line)
-        : getTypeColor(alert.type);
-
+      const color = isMetro ? getMetroColor(line) : getTypeColor(alert.type);
       const icon = getIcon(alert.type);
 
-      /* =========================
-      METRO STYLE (CIRCLE BADGE)
-      ========================= */
       if (isMetro) {
         return `
-          <div style="
-            display:flex;
-            align-items:center;
-            gap:10px;
-            margin:6px 0;
-          ">
+          <div style="display:flex;align-items:center;gap:10px;margin:6px 0;">
 
-            <!-- ICON -->
             <div style="
               width:30px;
               height:30px;
@@ -98,7 +85,6 @@ async function loadHomeAlerts() {
               <img src="${icon}" style="width:30px;height:30px;" />
             </div>
 
-            <!-- METRO BADGE (CIRCLE) -->
             <div style="
               width:30px;
               height:30px;
@@ -118,18 +104,9 @@ async function loadHomeAlerts() {
         `;
       }
 
-      /* =========================
-      NORMAL TRANSPORT STYLE
-      ========================= */
       return `
-        <div style="
-          display:flex;
-          align-items:center;
-          gap:8px;
-          margin:4px 0;
-        ">
+        <div style="display:flex;align-items:center;gap:8px;margin:4px 0;">
 
-          <!-- ICON -->
           <div style="
             width:30px;
             height:30px;
@@ -142,7 +119,6 @@ async function loadHomeAlerts() {
             <img src="${icon}" style="width:30px;height:30px;" />
           </div>
 
-          <!-- PILL -->
           <div style="
             background:${color};
             color:white;
@@ -170,12 +146,12 @@ async function loadHomeAlerts() {
           ${linesHTML}
         </div>
 
-        <div style="margin-bottom:10px; font-size:15px; color:#374151;">
+        <div style="margin-bottom:10px;font-size:15px;color:#374151;">
           ${alert.text}
         </div>
 
         ${alert.to ? `
-          <div style="font-size:14px; color:#6b7280;">
+          <div style="font-size:14px;color:#6b7280;">
             До: ${alert.to}
           </div>
         ` : ""}
@@ -186,7 +162,7 @@ async function loadHomeAlerts() {
 }
 
 /* =========================
-TRANSPORT PAGE ALERTS
+TRANSPORT PAGE ALERTS (MERGED STYLE)
 ========================= */
 
 async function showLineAlerts(lineNumber) {
@@ -204,17 +180,32 @@ async function showLineAlerts(lineNumber) {
     return;
   }
 
-  container.innerHTML = `
-    <div class="line-note">
-      ⚠ Има активни маршрутни промени за тази линия
-    </div>
+  container.innerHTML = filtered.map(a => `
+    <div style="
+      background:#fff7ed;
+      border-left:4px solid #f59e0b;
+      padding:12px 16px;
+      border-radius:10px;
+      margin-bottom:12px;
+      font-size:15px;
+      color:#92400e;
+      font-weight:500;
+    ">
 
-    ${filtered.map(a => `
-      <div class="info-card" style="margin-bottom:10px;">
-        <strong>${a.title}</strong>
-        <p>${a.text}</p>
-        ${a.to ? `<small>До: ${a.to}</small>` : ""}
+      <div style="font-weight:700;margin-bottom:6px;">
+        ${a.title}
       </div>
-    `).join("")}
-  `;
+
+      <div style="margin-bottom:6px;">
+        ${a.text}
+      </div>
+
+      ${a.to ? `
+        <div style="font-size:13px;opacity:0.8;">
+          До: ${a.to}
+        </div>
+      ` : ""}
+
+    </div>
+  `).join("");
 }
