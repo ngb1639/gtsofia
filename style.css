@@ -529,11 +529,6 @@ ABOUT PAGE
   border-radius: 18px;
   border: 1px solid #e5e7eb;
   width: 100%;
-  transition: 0.2s;
-}
-
-.info-card:hover {
-  transform: translateY(-3px);
 }
 
 /* =========================
