@@ -116,7 +116,7 @@ async function loadHomeAlerts() {
       }).join("");
 
       return `
-        <div style="display:flex;align-items:center;gap:10px;margin:6px 0;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:6px;margin:6px 0;flex-wrap:wrap;">
 
           <!-- ONE ICON ONLY -->
           <div style="
