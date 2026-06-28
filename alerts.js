@@ -84,7 +84,6 @@ async function loadHomeAlerts() {
               background:${getMetroColor(line)};
               color:${getMetroTextColor(line)};
               font-weight:700;
-              font-size:17px;
               display:flex;
               align-items:center;
               justify-content:center;
@@ -103,7 +102,6 @@ async function loadHomeAlerts() {
             padding:6px 10px;
             border-radius:6px;
             font-weight:700;
-            font-size:17px;
             display:flex;
             align-items:center;
             justify-content:center;
