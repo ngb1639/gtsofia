@@ -4,7 +4,7 @@ async function getAlerts() {
 }
 
 /* =========================
-HELPER: ICONS + COLORS
+ICONS + COLORS
 ========================= */
 
 const iconMap = {
@@ -13,7 +13,7 @@ const iconMap = {
   night: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/night-bus.svg",
   trolley: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/trolley.svg",
   tram: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
-  metro: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%icons/metro.svg"
+  metro: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/metro.svg"
 };
 
 const typeColors = {
@@ -32,7 +32,7 @@ const metroColors = {
 };
 
 /* =========================
-HOME PAGE ALERTS
+HOME PAGE ALERTS (NEW UI)
 ========================= */
 
 async function loadHomeAlerts() {
@@ -52,30 +52,12 @@ async function loadHomeAlerts() {
     const icon = iconMap[type] || iconMap.bus;
 
     return `
-      <div class="info-card" style="margin-bottom:10px;">
+      <div class="info-card" style="margin-bottom:12px;">
 
-        <!-- HEADER -->
-        <div style="display:flex; align-items:center; gap:10px;">
+        <!-- TOP ROW: ICON + LINE PILL -->
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
 
           <img src="${icon}" style="width:28px;height:28px;" />
-
-          <h3 style="margin:0;">
-            ⚠ ${a.title}
-          </h3>
-
-        </div>
-
-        <p style="margin-top:8px;">${a.text}</p>
-
-        ${a.to ? `<small>До: ${a.to}</small>` : ""}
-
-        <!-- BADGES -->
-        <div style="
-          margin-top:10px;
-          display:flex;
-          gap:6px;
-          flex-wrap:wrap;
-        ">
 
           ${a.lines.map(l => {
 
@@ -89,10 +71,10 @@ async function loadHomeAlerts() {
               <span style="
                 background:${color};
                 color:white;
-                font-size:12px;
-                padding:3px 8px;
+                font-weight:700;
+                padding:4px 10px;
                 border-radius:999px;
-                font-weight:600;
+                font-size:13px;
                 display:flex;
                 align-items:center;
                 gap:4px;
@@ -104,13 +86,25 @@ async function loadHomeAlerts() {
 
         </div>
 
+        <!-- MESSAGE -->
+        <div style="font-size:14px; margin-bottom:8px; color:#111827;">
+          ${a.text}
+        </div>
+
+        <!-- END DATE -->
+        ${a.to ? `
+          <div style="font-size:12px; color:#6b7280;">
+            До: ${a.to}
+          </div>
+        ` : ""}
+
       </div>
     `;
   }).join("");
 }
 
 /* =========================
-TRANSPORT PAGE ALERTS
+TRANSPORT PAGE ALERTS (UNCHANGED)
 ========================= */
 
 async function showLineAlerts(lineNumber) {
