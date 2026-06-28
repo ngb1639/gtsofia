@@ -14,23 +14,46 @@ async function loadHomeAlerts() {
     const isMetro = alert.type === "metro";
     const icon = getIcon(alert.type);
 
-    // Create all badges
-    const badgesHTML = (alert.lines || []).map(line => {
+    let linesHTML = "";
 
-      const color = isMetro
-        ? getMetroColor(line)
-        : getTypeColor(alert.type);
+    // MULTIPLE LINES
+    if ((alert.lines || []).length > 1) {
 
-      if (isMetro) {
+      const badgesHTML = (alert.lines || []).map(line => {
+
+        const color = isMetro
+          ? getMetroColor(line)
+          : getTypeColor(alert.type);
+
+        if (isMetro) {
+          return `
+            <div style="
+              width:30px;
+              height:30px;
+              border-radius:50%;
+              background:${color};
+              color:${getMetroTextColor(line)};
+              font-weight:700;
+              font-size:17px;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+            ">
+              ${line}
+            </div>
+          `;
+        }
+
         return `
           <div style="
-            width:30px;
-            height:30px;
-            border-radius:50%;
             background:${color};
-            color:${getMetroTextColor(line)};
+            color:white;
+            padding:6px 12px;
+            border-radius:6px;
             font-weight:700;
             font-size:17px;
+            width:60px;
+            height:30px;
             display:flex;
             align-items:center;
             justify-content:center;
@@ -38,58 +61,121 @@ async function loadHomeAlerts() {
             ${line}
           </div>
         `;
-      }
+      }).join("");
 
-      return `
-        <div style="
-          background:${color};
-          color:white;
-          padding:6px 12px;
-          border-radius:6px;
-          font-weight:700;
-          font-size:17px;
-          width:60px;
-          height:30px;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-        ">
-          ${line}
+      linesHTML = `
+        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;">
+
+          <div style="
+            width:30px;
+            height:30px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-shrink:0;
+          ">
+            <img src="${icon}" style="width:30px;height:30px;" />
+          </div>
+
+          <div style="
+            display:flex;
+            flex-wrap:wrap;
+            gap:6px;
+            align-items:center;
+          ">
+            ${badgesHTML}
+          </div>
+
         </div>
       `;
-    }).join("");
 
-    // One icon + all badges
-    const linesHTML = `
-      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;">
+    } else {
 
-        <div style="
-          width:30px;
-          height:30px;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          flex-shrink:0;
-        ">
-          <img src="${icon}" style="width:30px;height:30px;" />
-        </div>
+      // SINGLE LINE (your original design)
 
-        <div style="
-          display:flex;
-          flex-wrap:wrap;
-          gap:6px;
-          align-items:center;
-        ">
-          ${badgesHTML}
-        </div>
+      const line = alert.lines[0];
+      const color = isMetro
+        ? getMetroColor(line)
+        : getTypeColor(alert.type);
 
-      </div>
-    `;
+      if (isMetro) {
+
+        linesHTML = `
+          <div style="display:flex;align-items:center;gap:10px;margin:6px 0;">
+
+            <div style="
+              width:30px;
+              height:30px;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+            ">
+              <img src="${icon}" style="width:30px;height:30px;" />
+            </div>
+
+            <div style="
+              width:30px;
+              height:30px;
+              border-radius:50%;
+              background:${color};
+              color:${getMetroTextColor(line)};
+              font-weight:700;
+              font-size:17px;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+            ">
+              ${line}
+            </div>
+
+          </div>
+        `;
+
+      } else {
+
+        linesHTML = `
+          <div style="display:flex;align-items:center;gap:8px;margin:4px 0;">
+
+            <div style="
+              width:30px;
+              height:30px;
+              border-radius:50%;
+              background:${color};
+              display:flex;
+              align-items:center;
+              justify-content:center;
+            ">
+              <img src="${icon}" style="width:30px;height:30px;" />
+            </div>
+
+            <div style="
+              background:${color};
+              color:white;
+              padding:6px 12px;
+              border-radius:6px;
+              font-weight:700;
+              font-size:17px;
+              width:60px;
+              height:30px;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+            ">
+              ${line}
+            </div>
+
+          </div>
+        `;
+
+      }
+    }
 
     return `
       <div class="info-card" style="margin-bottom:10px;">
 
-        ${linesHTML}
+        <div style="margin-bottom:10px;">
+          ${linesHTML}
+        </div>
 
         <div style="margin-bottom:10px;font-size:15px;color:#374151;">
           ${alert.text}
