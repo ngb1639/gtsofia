@@ -96,7 +96,7 @@ async function loadHomeAlerts() {
               background:${color};
               color:${getMetroTextColor(line)};
               font-weight:700;
-              font-size:14px;
+              font-size:17px;
               display:flex;
               align-items:center;
               justify-content:center;
@@ -188,6 +188,7 @@ async function showLineAlerts(lineNumber, lineType) {
   container.innerHTML = filtered.map(a => `
     <div style="
       border:1px solid #e5e7eb;
+      background:white;
       padding:12px 16px;
       border-radius:10px;
       margin-bottom:12px;
