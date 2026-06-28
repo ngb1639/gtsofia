@@ -113,7 +113,7 @@ function selectLine(line) {
 
   // 🚀 NEW: load alerts for this line (safe call)
   if (typeof showLineAlerts === "function") {
-    showLineAlerts(line.number);
+    showLineAlerts(line.number, line.type);
   }
 }
 
