@@ -166,10 +166,6 @@ async function loadHomeAlerts() {
     return `
       <div class="info-card" style="margin-bottom:10px;">
 
-        <div style="margin-bottom:10px; font-weight:700; font-size:16px;">
-          ${alert.title}
-        </div>
-
         <div style="margin-bottom:10px;">
           ${linesHTML}
         </div>
