@@ -141,7 +141,7 @@ const rollingStock = [
     year: 2002,
     quantity: 2,
     image: "https://s1.busphoto.eu/photo/03/55/00/355001.jpg",
-    lines: ["64"]
+    lines: ["77", "150"]
   },
 
   {
