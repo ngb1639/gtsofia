@@ -68,11 +68,12 @@ CORE MATCHING LOGIC
 function matchesAlert(alert, lineType, lineNumber) {
   const targets = alert.targets;
 
-  // OLD FORMAT
+  // OLD FORMAT SUPPORT
   if (!targets) {
     if (alert.type !== lineType) return false;
 
     const lines = alert.lines || [];
+
     const isAll =
       lines.includes("all") ||
       lines.includes("Всички линии");
@@ -82,7 +83,7 @@ function matchesAlert(alert, lineType, lineNumber) {
     return lines.includes(String(lineNumber));
   }
 
-  // NEW FORMAT
+  // NEW FORMAT SUPPORT
   return targets.some(t => {
     if (t.type !== lineType) return false;
 
@@ -130,30 +131,20 @@ async function loadHomeAlerts() {
         (Array.isArray(t.lines) && t.lines.includes("all")) ||
         (Array.isArray(t.lines) && t.lines.includes("Всички линии"));
 
-      const linesToShow = isAll
-        ? getAllLinesByType(t.type)
-        : (t.lines || []);
+      const linesToShow = isAll ? [] : (t.lines || []);
 
       const badgesHTML = isAll
         ? (t.type === "metro"
             ? `
-              <div style="display:flex;gap:6px;align-items:center;">
-                ${getAllLinesByType("metro").map(line => `
-                  <div style="
-                    width:30px;
-                    height:30px;
-                    border-radius:50%;
-                    background:${getMetroColor(line)};
-                    color:${getMetroTextColor(line)};
-                    font-weight:700;
-                    font-size:17px;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                  ">
-                    ${line}
-                  </div>
-                `).join("")}
+              <div style="
+                width:30px;
+                height:30px;
+                border-radius:50%;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+              ">
+                <img src="${getIcon("metro")}" style="width:30px;height:30px;" />
               </div>
             `
             : `
