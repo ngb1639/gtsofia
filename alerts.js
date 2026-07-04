@@ -12,8 +12,8 @@ const ICONS = {
   tourist: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/torist-bus.svg",
   night: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/night-bus.svg",
   trolley: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/trolley.svg",
-  tram: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
-  metro: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/metro.svg"
+  tram: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active icons/tram.svg",
+  metro: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active icons/metro.svg"
 };
 
 /* =========================
@@ -51,6 +51,72 @@ function getIcon(type) {
 }
 
 /* =========================
+CORE MATCHING LOGIC (NEW)
+========================= */
+
+/*
+NEW FORMAT SUPPORTED:
+
+{
+  "targets": [
+    { "type": "tram", "lines": ["11", "12"] },
+    { "type": "bus", "lines": "all" }
+  ]
+}
+
+LEGACY FORMAT STILL WORKS:
+
+{
+  "type": "tram",
+  "lines": ["11", "12"]
+}
+*/
+
+function matchesAlert(alert, lineType, lineNumber) {
+  const targets = alert.targets;
+
+  // OLD FORMAT SUPPORT (backwards compatibility)
+  if (!targets) {
+    const typeMatch = (alert.type === lineType);
+    if (!typeMatch) return false;
+
+    const lines = alert.lines || [];
+    const isAll = lines.includes("all") || lines.includes("Всички линии");
+
+    if (isAll) return true;
+
+    return lines.includes(String(lineNumber));
+  }
+
+  // NEW FORMAT
+  return targets.some(t => {
+    if (t.type !== lineType) return false;
+
+    const lines = t.lines || [];
+
+    const isAll =
+      lines === "all" ||
+      (Array.isArray(lines) && lines.includes("all")) ||
+      (Array.isArray(lines) && lines.includes("Всички линии"));
+
+    if (isAll) return true;
+
+    return Array.isArray(lines) && lines.includes(String(lineNumber));
+  });
+}
+
+/* =========================
+GET ALL LINES BY TYPE
+========================= */
+
+function getAllLinesByType(type) {
+  if (typeof lines === "undefined") return [];
+  return lines
+    .filter(l => l.type === type)
+    .map(l => String(l.number));
+}
+
+/* =========================
 HOME PAGE ALERTS
 ========================= */
 
@@ -67,15 +133,25 @@ async function loadHomeAlerts() {
 
   container.innerHTML = alerts.map(alert => {
 
-    const linesHTML = (() => {
-      const lines = alert.lines || [];
-      if (!lines.length) return "";
+    const targets = alert.targets || [{
+      type: alert.type,
+      lines: alert.lines || []
+    }];
 
-      const isMetro = alert.type === "metro";
-      const icon = getIcon(alert.type);
+    const blocks = targets.map(t => {
 
-      const badges = lines.map(line => {
-        if (isMetro) {
+      const icon = getIcon(t.type);
+      const isAll = t.lines === "all" ||
+        (Array.isArray(t.lines) && t.lines.includes("all")) ||
+        (Array.isArray(t.lines) && t.lines.includes("Всички линии"));
+
+      const linesToShow = isAll
+        ? getAllLinesByType(t.type)
+        : (t.lines || []);
+
+      const badges = linesToShow.map(line => {
+
+        if (t.type === "metro") {
           return `
             <div style="
               width:30px;
@@ -94,7 +170,7 @@ async function loadHomeAlerts() {
           `;
         }
 
-        const color = getTypeColor(alert.type);
+        const color = getTypeColor(t.type);
 
         return `
           <div style="
@@ -118,7 +194,6 @@ async function loadHomeAlerts() {
       return `
         <div style="display:flex;align-items:center;gap:6px;margin:6px 0;flex-wrap:wrap;">
 
-          <!-- ONE ICON ONLY -->
           <div style="
             width:30px;
             height:30px;
@@ -130,20 +205,19 @@ async function loadHomeAlerts() {
             <img src="${icon}" style="width:30px;height:30px;" />
           </div>
 
-          <!-- MULTIPLE LINE BADGES -->
           <div style="display:flex;gap:6px;flex-wrap:wrap;">
             ${badges}
           </div>
 
         </div>
       `;
-    })();
+    }).join("");
 
     return `
       <div class="info-card" style="margin-bottom:10px;">
 
         <div style="margin-bottom:10px;">
-          ${linesHTML}
+          ${blocks}
         </div>
 
         <div style="margin-bottom:10px;font-size:15px;color:#374151;">
@@ -172,8 +246,7 @@ async function showLineAlerts(lineNumber, lineType) {
   const alerts = await getAlerts();
 
   const filtered = alerts.filter(alert =>
-    alert.type === lineType &&
-    (alert.lines || []).includes(String(lineNumber))
+    matchesAlert(alert, lineType, lineNumber)
   );
 
   if (!filtered.length) {
