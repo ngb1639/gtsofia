@@ -62,34 +62,28 @@ function getAllLinesByType(type) {
 }
 
 /* =========================
-NORMALIZE ALERT
-========================= */
-
-function normalizeAlert(alert) {
-  if (!alert.targets) {
-    return {
-      text: alert.text,
-      to: alert.to,
-      targets: [
-        {
-          type: alert.type,
-          lines: alert.lines || []
-        }
-      ]
-    };
-  }
-
-  return alert;
-}
-
-/* =========================
-MATCH LOGIC
+CORE MATCHING LOGIC
 ========================= */
 
 function matchesAlert(alert, lineType, lineNumber) {
-  const a = normalizeAlert(alert);
+  const targets = alert.targets;
 
-  return a.targets.some(t => {
+  // OLD FORMAT
+  if (!targets) {
+    if (alert.type !== lineType) return false;
+
+    const lines = alert.lines || [];
+    const isAll =
+      lines.includes("all") ||
+      lines.includes("Всички линии");
+
+    if (isAll) return true;
+
+    return lines.includes(String(lineNumber));
+  }
+
+  // NEW FORMAT
+  return targets.some(t => {
     if (t.type !== lineType) return false;
 
     const lines = t.lines || [];
@@ -101,7 +95,7 @@ function matchesAlert(alert, lineType, lineNumber) {
 
     if (isAll) return true;
 
-    return lines.includes(String(lineNumber));
+    return Array.isArray(lines) && lines.includes(String(lineNumber));
   });
 }
 
@@ -113,24 +107,21 @@ async function loadHomeAlerts() {
   const container = document.getElementById("alertsContainer");
   if (!container) return;
 
-  let alerts;
-  try {
-    alerts = await getAlerts();
-  } catch (e) {
-    container.innerHTML = "<p>Грешка при зареждане на данни.</p>";
-    return;
-  }
+  const alerts = await getAlerts();
 
   if (!alerts.length) {
     container.innerHTML = "<p>Няма активни маршрутни промени.</p>";
     return;
   }
 
-  container.innerHTML = alerts.map(raw => {
+  container.innerHTML = alerts.map(alert => {
 
-    const alert = normalizeAlert(raw);
+    const targets = alert.targets || [{
+      type: alert.type,
+      lines: alert.lines || []
+    }];
 
-    const blocks = alert.targets.map(t => {
+    const blocks = targets.map(t => {
 
       const icon = getIcon(t.type);
 
@@ -144,21 +135,43 @@ async function loadHomeAlerts() {
         : (t.lines || []);
 
       const badgesHTML = isAll
-        ? `
-          <div style="
-            display:flex;
-            align-items:center;
-            gap:6px;
-            background:#111827;
-            color:white;
-            padding:6px 10px;
-            border-radius:6px;
-            font-weight:700;
-            font-size:14px;
-          ">
-            Всички линии
-          </div>
-        `
+        ? (t.type === "metro"
+            ? `
+              <div style="display:flex;gap:6px;align-items:center;">
+                ${getAllLinesByType("metro").map(line => `
+                  <div style="
+                    width:30px;
+                    height:30px;
+                    border-radius:50%;
+                    background:${getMetroColor(line)};
+                    color:${getMetroTextColor(line)};
+                    font-weight:700;
+                    font-size:17px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                  ">
+                    ${line}
+                  </div>
+                `).join("")}
+              </div>
+            `
+            : `
+              <div style="
+                display:flex;
+                align-items:center;
+                gap:6px;
+                background:${getTypeColor(t.type)};
+                color:white;
+                padding:6px 10px;
+                border-radius:6px;
+                font-weight:700;
+                font-size:14px;
+              ">
+                Всички линии
+              </div>
+            `
+          )
         : linesToShow.map(line => {
 
             if (t.type === "metro") {
@@ -205,6 +218,7 @@ async function loadHomeAlerts() {
           <div style="
             width:30px;
             height:30px;
+            border-radius:50%;
             display:flex;
             align-items:center;
             justify-content:center;
@@ -250,16 +264,10 @@ async function showLineAlerts(lineNumber, lineType) {
   const container = document.getElementById("lineAlerts");
   if (!container) return;
 
-  let alerts;
-  try {
-    alerts = await getAlerts();
-  } catch {
-    container.innerHTML = "";
-    return;
-  }
+  const alerts = await getAlerts();
 
-  const filtered = alerts.filter(a =>
-    matchesAlert(a, lineType, lineNumber)
+  const filtered = alerts.filter(alert =>
+    matchesAlert(alert, lineType, lineNumber)
   );
 
   if (!filtered.length) {
@@ -267,23 +275,19 @@ async function showLineAlerts(lineNumber, lineType) {
     return;
   }
 
-  container.innerHTML = filtered.map(a => {
-    const alert = normalizeAlert(a);
+  container.innerHTML = filtered.map(a => `
+    <div class="info-card" style="margin-bottom:10px;">
 
-    return `
-      <div class="info-card" style="margin-bottom:10px;">
-
-        <div style="margin-bottom:6px;">
-          ${alert.text}
-        </div>
-
-        ${alert.to ? `
-          <div style="font-size:13px;opacity:0.8;">
-            До: ${alert.to}
-          </div>
-        ` : ""}
-
+      <div style="margin-bottom:6px;">
+        ${a.text}
       </div>
-    `;
-  }).join("");
+
+      ${a.to ? `
+        <div style="font-size:13px;opacity:0.8;">
+          До: ${a.to}
+        </div>
+      ` : ""}
+
+    </div>
+  `).join("");
 }
