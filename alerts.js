@@ -12,8 +12,8 @@ const ICONS = {
   tourist: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/torist-bus.svg",
   night: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/night-bus.svg",
   trolley: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/trolley.svg",
-  tram: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active icons/tram.svg",
-  metro: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active icons/metro.svg"
+  tram: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
+  metro: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/metro.svg"
 };
 
 /* =========================
@@ -51,44 +51,38 @@ function getIcon(type) {
 }
 
 /* =========================
-CORE MATCHING LOGIC (NEW)
+HELPERS
 ========================= */
 
-/*
-NEW FORMAT SUPPORTED:
-
-{
-  "targets": [
-    { "type": "tram", "lines": ["11", "12"] },
-    { "type": "bus", "lines": "all" }
-  ]
+function getAllLinesByType(type) {
+  if (typeof lines === "undefined") return [];
+  return lines
+    .filter(l => l.type === type)
+    .map(l => String(l.number));
 }
 
-LEGACY FORMAT STILL WORKS:
-
-{
-  "type": "tram",
-  "lines": ["11", "12"]
-}
-*/
+/* =========================
+CORE MATCHING LOGIC
+========================= */
 
 function matchesAlert(alert, lineType, lineNumber) {
   const targets = alert.targets;
 
-  // OLD FORMAT SUPPORT (backwards compatibility)
+  // OLD FORMAT SUPPORT
   if (!targets) {
-    const typeMatch = (alert.type === lineType);
-    if (!typeMatch) return false;
+    if (alert.type !== lineType) return false;
 
     const lines = alert.lines || [];
-    const isAll = lines.includes("all") || lines.includes("Всички линии");
+    const isAll =
+      lines.includes("all") ||
+      lines.includes("Всички линии");
 
     if (isAll) return true;
 
     return lines.includes(String(lineNumber));
   }
 
-  // NEW FORMAT
+  // NEW FORMAT SUPPORT
   return targets.some(t => {
     if (t.type !== lineType) return false;
 
@@ -103,17 +97,6 @@ function matchesAlert(alert, lineType, lineNumber) {
 
     return Array.isArray(lines) && lines.includes(String(lineNumber));
   });
-}
-
-/* =========================
-GET ALL LINES BY TYPE
-========================= */
-
-function getAllLinesByType(type) {
-  if (typeof lines === "undefined") return [];
-  return lines
-    .filter(l => l.type === type)
-    .map(l => String(l.number));
 }
 
 /* =========================
@@ -141,7 +124,9 @@ async function loadHomeAlerts() {
     const blocks = targets.map(t => {
 
       const icon = getIcon(t.type);
-      const isAll = t.lines === "all" ||
+
+      const isAll =
+        t.lines === "all" ||
         (Array.isArray(t.lines) && t.lines.includes("all")) ||
         (Array.isArray(t.lines) && t.lines.includes("Всички линии"));
 
