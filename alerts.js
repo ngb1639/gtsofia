@@ -13,7 +13,7 @@ const ICONS = {
   night: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/night-bus.svg",
   trolley: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/trolley.svg",
   tram: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
-  metro: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/metro.svg"
+  metro: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active icons/metro.svg"
 };
 
 /* =========================
@@ -73,7 +73,6 @@ function matchesAlert(alert, lineType, lineNumber) {
     if (alert.type !== lineType) return false;
 
     const lines = alert.lines || [];
-
     const isAll =
       lines.includes("all") ||
       lines.includes("Всички линии");
@@ -136,15 +135,40 @@ async function loadHomeAlerts() {
       const badgesHTML = isAll
         ? (t.type === "metro"
             ? `
-              <div style="
-                width:30px;
-                height:30px;
-                border-radius:50%;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-              ">
-                <img src="${getIcon("metro")}" style="width:30px;height:30px;" />
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+
+                <!-- ICON -->
+                <div style="
+                  width:30px;
+                  height:30px;
+                  border-radius:50%;
+                  display:flex;
+                  align-items:center;
+                  justify-content:center;
+                ">
+                  <img src="${getIcon("metro")}" style="width:30px;height:30px;" />
+                </div>
+
+                <!-- LINES 1-4 -->
+                <div style="display:flex;gap:6px;align-items:center;">
+                  ${getAllLinesByType("metro").map(line => `
+                    <div style="
+                      width:30px;
+                      height:30px;
+                      border-radius:50%;
+                      background:${getMetroColor(line)};
+                      color:${getMetroTextColor(line)};
+                      font-weight:700;
+                      font-size:17px;
+                      display:flex;
+                      align-items:center;
+                      justify-content:center;
+                    ">
+                      ${line}
+                    </div>
+                  `).join("")}
+                </div>
+
               </div>
             `
             : `
