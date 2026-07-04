@@ -13,7 +13,7 @@ const ICONS = {
   night: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/night-bus.svg",
   trolley: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/trolley.svg",
   tram: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
-  metro: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active icons/metro.svg"
+  metro: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/metro.svg"
 };
 
 /* =========================
@@ -51,55 +51,6 @@ function getIcon(type) {
 }
 
 /* =========================
-HELPERS
-========================= */
-
-function getAllLinesByType(type) {
-  if (typeof lines === "undefined") return [];
-  return lines
-    .filter(l => l.type === type)
-    .map(l => String(l.number));
-}
-
-/* =========================
-CORE MATCHING LOGIC
-========================= */
-
-function matchesAlert(alert, lineType, lineNumber) {
-  const targets = alert.targets;
-
-  // OLD FORMAT SUPPORT
-  if (!targets) {
-    if (alert.type !== lineType) return false;
-
-    const lines = alert.lines || [];
-    const isAll =
-      lines.includes("all") ||
-      lines.includes("Всички линии");
-
-    if (isAll) return true;
-
-    return lines.includes(String(lineNumber));
-  }
-
-  // NEW FORMAT SUPPORT
-  return targets.some(t => {
-    if (t.type !== lineType) return false;
-
-    const lines = t.lines || [];
-
-    const isAll =
-      lines === "all" ||
-      (Array.isArray(lines) && lines.includes("all")) ||
-      (Array.isArray(lines) && lines.includes("Всички линии"));
-
-    if (isAll) return true;
-
-    return Array.isArray(lines) && lines.includes(String(lineNumber));
-  });
-}
-
-/* =========================
 HOME PAGE ALERTS
 ========================= */
 
@@ -116,120 +67,58 @@ async function loadHomeAlerts() {
 
   container.innerHTML = alerts.map(alert => {
 
-    const targets = alert.targets || [{
-      type: alert.type,
-      lines: alert.lines || []
-    }];
+    const linesHTML = (() => {
+      const lines = alert.lines || [];
+      if (!lines.length) return "";
 
-    const blocks = targets.map(t => {
+      const isMetro = alert.type === "metro";
+      const icon = getIcon(alert.type);
 
-      const icon = getIcon(t.type);
+      const badges = lines.map(line => {
+        if (isMetro) {
+          return `
+            <div style="
+              width:30px;
+              height:30px;
+              border-radius:50%;
+              background:${getMetroColor(line)};
+              color:${getMetroTextColor(line)};
+              font-weight:700;
+              font-size:17px;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+            ">
+              ${line}
+            </div>
+          `;
+        }
 
-      const isAll =
-        t.lines === "all" ||
-        (Array.isArray(t.lines) && t.lines.includes("all")) ||
-        (Array.isArray(t.lines) && t.lines.includes("Всички линии"));
+        const color = getTypeColor(alert.type);
 
-      const linesToShow = isAll ? [] : (t.lines || []);
-
-      const badgesHTML = isAll
-        ? (t.type === "metro"
-            ? `
-              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-
-                <!-- ICON -->
-                <div style="
-                  width:30px;
-                  height:30px;
-                  border-radius:50%;
-                  display:flex;
-                  align-items:center;
-                  justify-content:center;
-                ">
-                  <img src="${getIcon("metro")}" style="width:30px;height:30px;" />
-                </div>
-
-                <!-- LINES 1-4 -->
-                <div style="display:flex;gap:6px;align-items:center;">
-                  ${getAllLinesByType("metro").map(line => `
-                    <div style="
-                      width:30px;
-                      height:30px;
-                      border-radius:50%;
-                      background:${getMetroColor(line)};
-                      color:${getMetroTextColor(line)};
-                      font-weight:700;
-                      font-size:17px;
-                      display:flex;
-                      align-items:center;
-                      justify-content:center;
-                    ">
-                      ${line}
-                    </div>
-                  `).join("")}
-                </div>
-
-              </div>
-            `
-            : `
-              <div style="
-                display:flex;
-                align-items:center;
-                gap:6px;
-                background:${getTypeColor(t.type)};
-                color:white;
-                padding:6px 10px;
-                border-radius:6px;
-                font-weight:700;
-                font-size:14px;
-              ">
-                Всички линии
-              </div>
-            `
-          )
-        : linesToShow.map(line => {
-
-            if (t.type === "metro") {
-              return `
-                <div style="
-                  width:30px;
-                  height:30px;
-                  border-radius:50%;
-                  background:${getMetroColor(line)};
-                  color:${getMetroTextColor(line)};
-                  font-weight:700;
-                  font-size:17px;
-                  display:flex;
-                  align-items:center;
-                  justify-content:center;
-                ">
-                  ${line}
-                </div>
-              `;
-            }
-
-            return `
-              <div style="
-                background:${getTypeColor(t.type)};
-                color:white;
-                padding:6px 10px;
-                border-radius:6px;
-                font-weight:700;
-                font-size:17px;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                height:30px;
-                width:60px;
-              ">
-                ${line}
-              </div>
-            `;
-          }).join("");
+        return `
+          <div style="
+            background:${color};
+            color:white;
+            padding:6px 10px;
+            border-radius:6px;
+            font-weight:700;
+            font-size:17px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            height:30px;
+            width:60px;
+          ">
+            ${line}
+          </div>
+        `;
+      }).join("");
 
       return `
         <div style="display:flex;align-items:center;gap:6px;margin:6px 0;flex-wrap:wrap;">
 
+          <!-- ONE ICON ONLY -->
           <div style="
             width:30px;
             height:30px;
@@ -241,19 +130,20 @@ async function loadHomeAlerts() {
             <img src="${icon}" style="width:30px;height:30px;" />
           </div>
 
+          <!-- MULTIPLE LINE BADGES -->
           <div style="display:flex;gap:6px;flex-wrap:wrap;">
-            ${badgesHTML}
+            ${badges}
           </div>
 
         </div>
       `;
-    }).join("");
+    })();
 
     return `
       <div class="info-card" style="margin-bottom:10px;">
 
         <div style="margin-bottom:10px;">
-          ${blocks}
+          ${linesHTML}
         </div>
 
         <div style="margin-bottom:10px;font-size:15px;color:#374151;">
@@ -282,7 +172,8 @@ async function showLineAlerts(lineNumber, lineType) {
   const alerts = await getAlerts();
 
   const filtered = alerts.filter(alert =>
-    matchesAlert(alert, lineType, lineNumber)
+    alert.type === lineType &&
+    (alert.lines || []).includes(String(lineNumber))
   );
 
   if (!filtered.length) {
@@ -292,6 +183,9 @@ async function showLineAlerts(lineNumber, lineType) {
 
   container.innerHTML = filtered.map(a => `
     <div class="info-card" style="margin-bottom:10px;">
+      <div style="font-weight:700;margin-bottom:6px;">
+        ${a.title || ""}
+      </div>
 
       <div style="margin-bottom:6px;">
         ${a.text}
@@ -302,7 +196,6 @@ async function showLineAlerts(lineNumber, lineType) {
           До: ${a.to}
         </div>
       ` : ""}
-
     </div>
   `).join("");
 }
