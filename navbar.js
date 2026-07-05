@@ -28,3 +28,29 @@ document.addEventListener("click", (e) => {
     nav.classList.remove("open");
   }
 });
+
+function applyTheme(theme) {
+  document.body.classList.toggle("dark", theme === "dark");
+  localStorage.setItem("theme", theme);
+}
+
+function toggleTheme() {
+  const isDark = document.body.classList.contains("dark");
+  applyTheme(isDark ? "light" : "dark");
+}
+
+// Auto init theme
+document.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem("theme");
+
+  if (saved) {
+    applyTheme(saved);
+    return;
+  }
+
+  // system preference fallback
+  const prefersDark = window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  applyTheme(prefersDark ? "dark" : "light");
+});
