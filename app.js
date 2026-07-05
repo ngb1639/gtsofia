@@ -113,11 +113,15 @@ function selectLine(line) {
   // MOBILE: auto-scroll to route when line is selected
 if (window.innerWidth <= 900) {
   setTimeout(() => {
-    document.querySelector(".content").scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  }, 50);
+    const stops = document.querySelector(".stops-card");
+
+    if (stops) {
+      stops.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  }, 100);
 }
 }
 
