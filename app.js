@@ -76,7 +76,7 @@ function selectLine(line) {
 
         <div class="route-direction">
           ${pill}
-          <img class="direction-arrow" src="https://sofiatraffic.bg/images/next.svg"/>
+          <img class="direction-arrow" src="https://raw.githubusercontent.com/ngb1639/gtsofia/03b985e9342c60d21a83135f675ba3446480d31c/Icons/destinationarrow.svg"/>
           <div class="destination-name">
             ${direction}
           </div>
