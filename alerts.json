@@ -18,7 +18,7 @@
       { "type": "trolley", "number": "1" },
       { "type": "trolley", "number": "5" },
       { "type": "metro", "number": "1" },
-      { "type": "metro", "number": "4" },
+      { "type": "metro", "number": "4" }
     ],
     "to": "2026-08-13"
   },
