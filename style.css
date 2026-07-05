@@ -2,6 +2,27 @@
 BASE RESET
 ========================= */
 
+:root {
+  --bg: #f3f4f6;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --nav-bg: rgba(255, 255, 255, 0.88);
+  --nav-border: rgba(229, 231, 235, 0.7);
+}
+
+/* DARK THEME */
+body.dark {
+  --bg: #0f172a;
+  --card: #111827;
+  --text: #f9fafb;
+  --muted: #9ca3af;
+  --border: #1f2937;
+  --nav-bg: rgba(17, 24, 39, 0.85);
+  --nav-border: rgba(31, 41, 55, 0.7);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -10,9 +31,9 @@ BASE RESET
 
 body {
   font-family: "Sofia Sans", sans-serif;
-  background: #f3f4f6;
+  background: var(--bg);
   min-height: 100vh;
-  color: #111827;
+  color: var(--text);
 }
 
 img {
@@ -25,10 +46,10 @@ NAVBAR
 
 .navbar {
   height: 70px;
-  background: rgba(255, 255, 255, 0.88);
+  background: var(--nav-bg);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(229, 231, 235, 0.7);
+  border-bottom: 1px solid var(--nav-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -308,7 +329,7 @@ STOPS
 ========================= */
 
 .stops-card {
-  background: white;
+  background: var(--card);
   border-radius: 18px;
   padding: 28px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
@@ -369,14 +390,14 @@ HOME PAGE
 }
 
 .home-card {
-  background: white;
+  background: var(--card);
   border-radius: 18px;
   padding: 24px;
 
   text-decoration: none;
   color: inherit;
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   transition: 0.2s;
 }
 
@@ -389,10 +410,10 @@ PROMO CARD (HOME)
 ========================= */
 
 .promo-card {
-  background: white;
+  background: var(--card);
   border-radius: 18px;
   padding: 18px 24px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -417,7 +438,7 @@ PROMO CARD (HOME)
 
 .promo-text {
   font-size: 14px;
-  color: #6b7280;
+  color: var(--muted);
   margin-bottom: 16px;
 }
 
@@ -473,10 +494,10 @@ ROLLING STOCK
 }
 
 .stock-card {
-  background: white;
+  background: var(--card);
   border-radius: 18px;
   overflow: hidden;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
 }
 
 .stock-image {
@@ -524,10 +545,10 @@ ABOUT PAGE
 ========================= */
 
 .info-card {
-  background: white;
+  background: var(--card);
   padding: 24px;
   border-radius: 18px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   width: 100%;
 }
 
@@ -543,6 +564,7 @@ MOBILE RESPONSIVE
   }
 
   .sidebar {
+    background: var(--card);
     width: 100%;
     border-right: none;
     border-bottom: 1px solid #e5e7eb;
