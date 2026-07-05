@@ -585,7 +585,6 @@ MOBILE RESPONSIVE
   .details-pill {
   display: flex;
   justify-content: center;
-  width: 100%;
   align-items: center;
   gap: 8px;
 }
