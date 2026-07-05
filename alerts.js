@@ -80,13 +80,14 @@ async function loadHomeAlerts() {
 
       // RENDER GROUPS
       return Object.entries(grouped).map(([type, numbers]) => {
+
         const icon = getIcon(type);
-        const color = getTypeColor(type);
+        const isMetro = type === "metro";
 
         return `
           <div style="display:flex;align-items:center;gap:6px;margin:6px 0;flex-wrap:wrap;">
 
-            <!-- ONE ICON PER TYPE -->
+            <!-- ICON -->
             <div style="
               width:30px;
               height:30px;
@@ -100,28 +101,55 @@ async function loadHomeAlerts() {
 
             <!-- BADGES -->
             <div style="display:flex;gap:6px;flex-wrap:wrap;">
-              ${numbers.map(num => `
-                <div style="
-                  background:${color};
-                  color:white;
-                  padding:6px 10px;
-                  border-radius:6px;
-                  font-weight:700;
-                  font-size:17px;
-                  display:flex;
-                  align-items:center;
-                  justify-content:center;
-                  height:30px;
-                  width:60px;
-                ">
-                  ${num}
-                </div>
-              `).join("")}
+
+              ${numbers.map(num => {
+
+                if (isMetro) {
+                  return `
+                    <div style="
+                      width:30px;
+                      height:30px;
+                      border-radius:50%;
+                      background:${getMetroColor(num)};
+                      color:${getMetroTextColor(num)};
+                      font-weight:700;
+                      font-size:17px;
+                      display:flex;
+                      align-items:center;
+                      justify-content:center;
+                    ">
+                      ${num}
+                    </div>
+                  `;
+                }
+
+                const color = getTypeColor(type);
+
+                return `
+                  <div style="
+                    background:${color};
+                    color:white;
+                    padding:6px 10px;
+                    border-radius:6px;
+                    font-weight:700;
+                    font-size:17px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    height:30px;
+                    width:60px;
+                  ">
+                    ${num}
+                  </div>
+                `;
+              }).join("")}
+
             </div>
 
           </div>
         `;
       }).join("");
+
     })();
 
     return `
