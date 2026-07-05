@@ -93,7 +93,7 @@ function selectLine(line) {
    <!-- 🚧 ALERT SLOT (NEW POSITION) -->
   <div id="lineAlerts"></div>
 
-    <div class="stops-card" id="stopsSection">
+    <div class="stops-card">
       <div class="stops-line">
         ${stops.map(s => `
           <div class="stop-item">
@@ -109,20 +109,6 @@ function selectLine(line) {
   if (typeof showLineAlerts === "function") {
     showLineAlerts(line.number, line.type);
   }
-
-  // MOBILE: auto-scroll to route when line is selected
-if (window.innerWidth <= 900) {
-  setTimeout(() => {
-    const target = document.getElementById("stopsSection");
-
-    if (target) {
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }
-  }, 100);
-}
 }
 
 function switchDirection(type, number) {
