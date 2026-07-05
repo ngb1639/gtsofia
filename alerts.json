@@ -28,7 +28,8 @@
     "id": 4,
     "text": "Частично е променен маршрутът на автобус X43.",
     "lines": [
-      { "type": "tourist", "number": "X43" }
+      { "type": "tourist", "number": "X43" },
+      { "type": "bus", "number": "X43" }
     ],
     "to": "2028-01-11"
   }
