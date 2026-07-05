@@ -578,6 +578,7 @@ MOBILE RESPONSIVE
   align-items: center;
   text-align: center;
   gap: 14px;
+  flex-direction: column;
   margin-bottom: 32px;
   }
 
