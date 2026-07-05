@@ -26,16 +26,9 @@
   },
   {
     "id": 4,
-    "text": "Тестово съобщение за линии.",
+    "text": "Считано от 12.07.2025 г. автобусна линия X50 се закрива.",
     "lines": [
-      { "type": "bus", "number": "84" },
-      { "type": "bus", "number": "384" },
-      { "type": "trolley", "number": "1" },
-      { "type": "trolley", "number": "5" },
-      { "type": "tram", "number": "21" },
-      { "type": "tram", "number": "22" },
-      { "type": "metro", "number": "1" }
+      { "type": "tourist", "number": "X50" }
     ],
-    "to": "2028-01-01"
   }
 ]
