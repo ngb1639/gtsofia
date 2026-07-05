@@ -3,7 +3,7 @@ const lines = [
 /*  {
     type: "bus",
     number: "У1",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "32 СУ Св. Климент Охридски",
     activeDirection: "A",
@@ -13,7 +13,7 @@ const lines = [
   {
     type: "bus",
     number: "У2",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "18 СУ Уилям Гладстон",
     activeDirection: "A",
@@ -23,7 +23,7 @@ const lines = [
   {
     type: "bus",
     number: "1TB",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Метростанция Хаджи Димитър",
     directionB: "Левски Г",
@@ -35,7 +35,7 @@ const lines = [
   {
     type: "bus",
     number: "9",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Автобаза Искър",
     directionB: "Ул. ген. Гурко",
@@ -47,7 +47,7 @@ const lines = [
   {
     type: "bus",
     number: "10",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Бусманци",
     directionB: "Димитър Миленков",
@@ -59,7 +59,7 @@ const lines = [
   {
     type: "bus",
     number: "11",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Овча Купел II",
     directionB: "Автостанция Гео Милев",
@@ -71,7 +71,7 @@ const lines = [
   {
     type: "bus",
     number: "12",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Автостанция Изток",
     directionB: "Долни Богров",
@@ -83,7 +83,7 @@ const lines = [
   {
     type: "bus",
     number: "14",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Гара Искър",
     directionB: "Автостанция Изток",
@@ -95,7 +95,7 @@ const lines = [
   {
     type: "bus",
     number: "18",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Мелницата Чепинци",
     directionB: "Автостанция Орландовци",
@@ -107,7 +107,7 @@ const lines = [
   {
     type: "bus",
     number: "20",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Лъвов мост",
     directionB: "Локорско",
@@ -119,7 +119,7 @@ const lines = [
   {
     type: "bus",
     number: "21",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Войнеговци",
     directionB: "Централна гара",
@@ -131,7 +131,7 @@ const lines = [
   {
     type: "bus",
     number: "22",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Подгумер",
     directionB: "Централна гара",
@@ -143,7 +143,7 @@ const lines = [
   {
     type: "bus",
     number: "23",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Гара Курило",
     directionB: "Автостанция Орландовци",
@@ -155,7 +155,7 @@ const lines = [
   {
     type: "bus",
     number: "24",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Автостанция Орландовци",
     directionB: "Манастир Св. Мина",
@@ -167,7 +167,7 @@ const lines = [
   {
     type: "bus",
     number: "26",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Обеля I",
     directionB: "Гниляне",
@@ -179,7 +179,7 @@ const lines = [
   {
     type: "bus",
     number: "27",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Метростанция Княгиня М. Луиза",
     directionB: "Кътина",
@@ -191,7 +191,7 @@ const lines = [
   {
     type: "bus",
     number: "28",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Мрамор",
     directionB: "Локорско",
@@ -203,7 +203,7 @@ const lines = [
   {
     type: "bus",
     number: "29",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Балша",
     directionB: "Гара София Север",
@@ -215,7 +215,7 @@ const lines = [
   {
     type: "bus",
     number: "30",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Балша",
     directionB: "Обеля",
@@ -227,7 +227,7 @@ const lines = [
   {
     type: "bus",
     number: "31",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Голяновци",
     directionB: "Метростанция Сливница",
@@ -239,7 +239,7 @@ const lines = [
   {
     type: "bus",
     number: "42",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Люлин VIII",
     directionB: "Края на Михайлово",
@@ -263,7 +263,7 @@ const lines = [
   {
     type: "bus",
     number: "44",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Иваняне",
     directionB: "Автостанция Банкя",
@@ -275,7 +275,7 @@ const lines = [
   {
     type: "bus",
     number: "46",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Манастир Св. Петка",
     directionB: "Автостанция Банкя",
@@ -287,7 +287,7 @@ const lines = [
   {
     type: "bus",
     number: "47",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Градоман",
     directionB: "Метростанция Сливница",
@@ -299,7 +299,7 @@ const lines = [
   {
     type: "bus",
     number: "49",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Клисура",
     directionB: "Метростанция Сливница",
@@ -311,7 +311,7 @@ const lines = [
   {
     type: "bus",
     number: "54",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Пътен възел Калотина",
     directionB: "Метростанция Сливница",
@@ -323,7 +323,7 @@ const lines = [
   {
     type: "bus",
     number: "56",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Мало Бучино",
     directionB: "Гара Захарна фабрика",
@@ -335,7 +335,7 @@ const lines = [
   {
     type: "bus",
     number: "58",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Гара Владая",
     directionB: "Автостанция Княжево",
@@ -347,7 +347,7 @@ const lines = [
   {
     type: "bus",
     number: "59",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Мърчаево – Толумска махала",
     directionB: "Метростанция Мизия",
@@ -359,7 +359,7 @@ const lines = [
   {
     type: "bus",
     number: "60",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Овча Купел II",
     directionB: "Централна гара",
@@ -395,7 +395,7 @@ const lines = [
   {
     type: "bus",
     number: "64",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Зоопарка",
     directionB: "Център по хигиена",
@@ -407,7 +407,7 @@ const lines = [
   {
     type: "bus",
     number: "65",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Красно село",
     directionB: "Боянска църква",
@@ -431,7 +431,7 @@ const lines = [
   {
     type: "bus",
     number: "67",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Духовна Семинария",
     directionB: "Симеоново",
@@ -443,7 +443,7 @@ const lines = [
   {
     type: "bus",
     number: "68",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Симеоново",
     directionB: "Зоопарка",
@@ -455,7 +455,7 @@ const lines = [
   {
     type: "bus",
     number: "69",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Местност Ярема",
     directionB: "СБАЛ по онкология",
@@ -467,7 +467,7 @@ const lines = [
   {
     type: "bus",
     number: "70",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Плана",
     directionB: "СБАЛ по онкология",
@@ -479,7 +479,7 @@ const lines = [
   {
     type: "bus",
     number: "72",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Западен парк",
     directionB: "Хотел Плиска",
@@ -491,7 +491,7 @@ const lines = [
   {
     type: "bus",
     number: "73",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Младост I",
     directionB: "Овча Купел II",
@@ -503,7 +503,7 @@ const lines = [
   {
     type: "bus",
     number: "74",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Централна гара",
     directionB: "Гоце Делчев",
@@ -515,7 +515,7 @@ const lines = [
   {
     type: "bus",
     number: "75",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Автостанция Гео Милев",
     directionB: "Орлов мост",
@@ -527,7 +527,7 @@ const lines = [
   {
     type: "bus",
     number: "76",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Младост IV",
     directionB: "Гоце Делчев",
@@ -539,7 +539,7 @@ const lines = [
   {
     type: "bus",
     number: "77",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Западен парк",
     directionB: "Централна гара",
@@ -551,7 +551,7 @@ const lines = [
   {
     type: "bus",
     number: "78",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Враждебна",
     directionB: "Централна гара",
@@ -563,7 +563,7 @@ const lines = [
   {
     type: "bus",
     number: "79",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Христо Ботев",
     directionB: "СТИНД 2",
@@ -575,7 +575,7 @@ const lines = [
   {
     type: "bus",
     number: "81",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Северна промишлена зона",
     directionB: "Иваняне",
@@ -587,7 +587,7 @@ const lines = [
   {
     type: "bus",
     number: "82",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Централна гара",
     directionB: "Люлин V",
@@ -599,7 +599,7 @@ const lines = [
   {
     type: "bus",
     number: "83",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Стадион Локомотив",
     directionB: "Зоопарка",
@@ -611,7 +611,7 @@ const lines = [
   {
     type: "bus",
     number: "84",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Ул. ген. Гурко",
     directionB: "Летище София",
@@ -623,7 +623,7 @@ const lines = [
   {
     type: "bus",
     number: "85",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Хаджи Димитър",
     directionB: "Връбница II",
@@ -635,7 +635,7 @@ const lines = [
   {
     type: "bus",
     number: "86",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "АП Малашевци",
     directionB: "Свобода",
@@ -647,7 +647,7 @@ const lines = [
   {
     type: "bus",
     number: "88",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Зоопарка",
     directionB: "Дружба II",
@@ -659,7 +659,7 @@ const lines = [
   {
     type: "bus",
     number: "90",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Бухово",
     directionB: "АП Малашевци",
@@ -671,7 +671,7 @@ const lines = [
   {
     type: "bus",
     number: "94",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "СУ Св. Климент Охридски",
     directionB: "Студентски град",
@@ -683,7 +683,7 @@ const lines = [
   {
     type: "bus",
     number: "95",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Студентски град",
     directionB: "Манастирски ливади",
@@ -695,7 +695,7 @@ const lines = [
   {
     type: "bus",
     number: "97",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Малинова долина",
     directionB: "Метростанция Жолио Кюри",
@@ -707,7 +707,7 @@ const lines = [
   {
     type: "bus",
     number: "98",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Железница",
     directionB: "Зоопарка",
@@ -719,7 +719,7 @@ const lines = [
   {
     type: "bus",
     number: "100",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Бенковски",
     directionB: "Пътностроителна техника",
@@ -731,7 +731,7 @@ const lines = [
   {
     type: "bus",
     number: "101",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Централна гара",
     directionB: "Фондови жилища",
@@ -743,7 +743,7 @@ const lines = [
   {
     type: "bus",
     number: "102",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Студентски град",
     directionB: "Овча Купел II",
@@ -767,7 +767,7 @@ const lines = [
   {
     type: "bus",
     number: "107",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Карпузица",
     directionB: "Овча Купел",
@@ -779,7 +779,7 @@ const lines = [
   {
     type: "bus",
     number: "108",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Стадион Локомотив",
     directionB: "Люлин V",
@@ -791,7 +791,7 @@ const lines = [
   {
     type: "bus",
     number: "X9",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Метростанция Александър Теодоров – Балан",
     directionB: "Лозенец",
@@ -803,7 +803,7 @@ const lines = [
   {
     type: "bus",
     number: "X10",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Бъкстон",
     directionB: "Младост I",
@@ -815,7 +815,7 @@ const lines = [
   {
     type: "bus",
     number: "111",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Люлин I, II",
     directionB: "Младост I",
@@ -827,7 +827,7 @@ const lines = [
   {
     type: "bus",
     number: "117",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Автостанция Изток",
     directionB: "Бухово",
@@ -839,7 +839,7 @@ const lines = [
   {
     type: "bus",
     number: "118",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Автостанция Изток",
     directionB: "Желява",
@@ -851,7 +851,7 @@ const lines = [
   {
     type: "bus",
     number: "119",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Ботунец",
     directionB: "Автостанция Изток",
@@ -863,7 +863,7 @@ const lines = [
   {
     type: "bus",
     number: "120",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Левски Г",
     directionB: "Зоопарка",
@@ -875,7 +875,7 @@ const lines = [
   {
     type: "bus",
     number: "123",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Лифта Симеоново",
     directionB: "Автостанция Гео Милев",
@@ -887,7 +887,7 @@ const lines = [
   {
     type: "bus",
     number: "150",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Метростанция Сливница",
     directionB: "Волуяк",
@@ -899,7 +899,7 @@ const lines = [
   {
     type: "bus",
     number: "180",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Метростанция Бизнес парк",
     activeDirection: "A",
@@ -909,7 +909,7 @@ const lines = [
   {
     type: "bus",
     number: "181",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Автостанция Гео Милев",
     directionB: "Кокаляне",
@@ -921,7 +921,7 @@ const lines = [
   {
     type: "bus",
     number: "182",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Метростанция Бизнес парк",
     activeDirection: "A",
@@ -931,7 +931,7 @@ const lines = [
   {
     type: "bus",
     number: "183",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Ул. ген. Гурко",
     directionB: "Долни Пасарел",
@@ -943,7 +943,7 @@ const lines = [
   {
     type: "bus",
     number: "184",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Младост I",
     directionB: "Кокалянско ханче",
@@ -955,7 +955,7 @@ const lines = [
   {
     type: "bus",
     number: "185",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Автостанция Гео Милев",
     directionB: "Долни Лозен",
@@ -967,7 +967,7 @@ const lines = [
   {
     type: "bus",
     number: "186",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Автостанция Гео Милев",
     directionB: "Герман",
@@ -979,7 +979,7 @@ const lines = [
   {
     type: "bus",
     number: "187",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Гара Искър",
     directionB: "Гара Верила",
@@ -991,7 +991,7 @@ const lines = [
   {
     type: "bus",
     number: "188",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Кривина",
     directionB: "Герман",
@@ -1003,7 +1003,7 @@ const lines = [
   {
     type: "bus",
     number: "204",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Дружба II",
     directionB: "Гоце Делчев",
@@ -1015,7 +1015,7 @@ const lines = [
   {
     type: "bus",
     number: "213",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Младост IV",
     directionB: "Централна гара",
@@ -1027,7 +1027,7 @@ const lines = [
   {
     type: "bus",
     number: "260",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Бул. Прага",
     directionB: "Горна баня",
@@ -1039,7 +1039,7 @@ const lines = [
   {
     type: "bus",
     number: "280",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "СУ Св. Климент Охридски",
     directionB: "Студентски град",
@@ -1051,7 +1051,7 @@ const lines = [
   {
     type: "bus",
     number: "285",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Връбница II",
     directionB: "Хаджи Димитър",
@@ -1063,7 +1063,7 @@ const lines = [
   {
     type: "bus",
     number: "288",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Гоце Делчев",
     directionB: "Автостанция Гео Милев",
@@ -1075,7 +1075,7 @@ const lines = [
    {
     type: "bus",
     number: "294",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Метростанция Г. М. Димитров",
     directionB: "Студентски град",
@@ -1087,7 +1087,7 @@ const lines = [
   {
     type: "bus",
     number: "304",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Национален исторически музей",
     directionB: "Дружба II",
@@ -1099,7 +1099,7 @@ const lines = [
   {
     type: "bus",
     number: "305",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Кулинарен к–т Пейфил",
     directionB: "Централна гара",
@@ -1111,7 +1111,7 @@ const lines = [
   {
     type: "bus",
     number: "309",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Бул. Илиянци – подлеза",
     directionB: "Люлин I, II",
@@ -1123,7 +1123,7 @@ const lines = [
   {
     type: "bus",
     number: "310",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Люлин V",
     directionB: "Сточна гара",
@@ -1135,7 +1135,7 @@ const lines = [
   {
     type: "bus",
     number: "314",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Бистрица",
     directionB: "Младост II",
@@ -1147,7 +1147,7 @@ const lines = [
   {
     type: "bus",
     number: "404",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "АП Дружба",
     directionB: "Централна гара",
@@ -1159,7 +1159,7 @@ const lines = [
   {
     type: "bus",
     number: "413",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Технополис Младост IV",
     directionB: "Гара София Север",
@@ -1171,7 +1171,7 @@ const lines = [
   {
     type: "bus",
     number: "604",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "УМБАЛСМ Пирогов",
     directionB: "Гара Искър",
@@ -1183,7 +1183,7 @@ const lines = [
   {
     type: "bus",
     number: "801",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Красно село",
     directionB: "Манастирски ливади",
@@ -1195,7 +1195,7 @@ const lines = [
   {
     type: "bus",
     number: "802",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Метростанция Горна баня",
     activeDirection: "A",
@@ -1205,7 +1205,7 @@ const lines = [
   {
     type: "bus",
     number: "803",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Вилна зона Люлин",
     directionB: "Метростанция Горна баня",
@@ -1217,7 +1217,7 @@ const lines = [
   {
     type: "bus",
     number: "804",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Автостанция Княжево",
     directionB: "Метростанция Горна баня",
@@ -1229,7 +1229,7 @@ const lines = [
   {
     type: "bus",
     number: "806",
-    color: "#be1e2d",
+    color: "#BD202E",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/bus.svg",
     directionA: "Метростанция Горна баня",
     activeDirection: "A",
@@ -1407,7 +1407,7 @@ const lines = [
   {
     type: "tram",
     number: "1",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Западен парк",
     directionB: "Иван Вазов",
@@ -1419,7 +1419,7 @@ const lines = [
   {
     type: "tram",
     number: "3",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Орландовци",
     directionB: "Гара Захарна фабрика",
@@ -1431,7 +1431,7 @@ const lines = [
   {
     type: "tram",
     number: "4",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Бул. Никола Петков",
     directionB: "Орландовци",
@@ -1443,7 +1443,7 @@ const lines = [
   {
     type: "tram",
     number: "5",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Княжево",
     directionB: "Съдебна палата",
@@ -1455,7 +1455,7 @@ const lines = [
   {
     type: "tram",
     number: "6",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Обеля II",
     directionB: "Иван Вазов",
@@ -1467,7 +1467,7 @@ const lines = [
   {
     type: "tram",
     number: "7",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Централна гара",
     directionB: "Манастирски ливади – запад",
@@ -1479,7 +1479,7 @@ const lines = [
   {
     type: "tram",
     number: "8",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Съдебна палата",
     directionB: "Люлин V",
@@ -1491,7 +1491,7 @@ const lines = [
   {
     type: "tram",
     number: "10",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Метростанция Витоша",
     directionB: "Западен парк",
@@ -1503,7 +1503,7 @@ const lines = [
   {
     type: "tram",
     number: "11",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Илиянци",
     directionB: "Княжево",
@@ -1515,7 +1515,7 @@ const lines = [
   {
     type: "tram",
     number: "12",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Журналист",
     directionB: "Централна автогара",
@@ -1527,7 +1527,7 @@ const lines = [
   {
     type: "tram",
     number: "13",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Метростанция Витоша",
     directionB: "Гара Захарна фабрика",
@@ -1539,7 +1539,7 @@ const lines = [
   {
     type: "tram",
     number: "15",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Метростанция Витоша",
     directionB: "Бъкстон",
@@ -1551,7 +1551,7 @@ const lines = [
   {
     type: "tram",
     number: "18",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Орландовци",
     directionB: "Журналист",
@@ -1563,7 +1563,7 @@ const lines = [
   {
     type: "tram",
     number: "20",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Депо Искър",
     directionB: "Метростанция Опълченска",
@@ -1575,7 +1575,7 @@ const lines = [
   {
     type: "tram",
     number: "21",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Метростанция Опълченска",
     directionB: "Гео Милев",
@@ -1587,7 +1587,7 @@ const lines = [
   {
     type: "tram",
     number: "22",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Автостанция Изток",
     directionB: "Красна поляна",
@@ -1599,7 +1599,7 @@ const lines = [
   {
     type: "tram",
     number: "23",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Дружба II",
     directionB: "Гео Милев",
@@ -1611,7 +1611,7 @@ const lines = [
   {
     type: "tram",
     number: "27",
-    color: "#F6921E",
+    color: "#F7941F",
     icon: "https://raw.githubusercontent.com/ngb1639/gtsofia/refs/heads/main/Icons/Active%20icons/tram.svg",
     directionA: "Централна гара",
     directionB: "Манастирски ливади – запад",
