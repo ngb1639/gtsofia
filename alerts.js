@@ -71,78 +71,71 @@ async function loadHomeAlerts() {
       const lines = alert.lines || [];
       if (!lines.length) return "";
 
-      const isMetro = alert.type === "metro";
-      const icon = getIcon(alert.type);
+      return lines.map(l => {
+        const icon = getIcon(l.type);
 
-      const badges = lines.map(line => {
-        if (isMetro) {
+        if (l.type === "metro") {
           return `
             <div style="
               width:30px;
               height:30px;
               border-radius:50%;
-              background:${getMetroColor(line)};
-              color:${getMetroTextColor(line)};
+              background:${getMetroColor(l.number)};
+              color:${getMetroTextColor(l.number)};
               font-weight:700;
               font-size:17px;
               display:flex;
               align-items:center;
               justify-content:center;
             ">
-              ${line}
+              ${l.number}
             </div>
           `;
         }
 
-        const color = getTypeColor(alert.type);
+        const color = getTypeColor(l.type);
 
         return `
           <div style="
-            background:${color};
-            color:white;
-            padding:6px 10px;
-            border-radius:6px;
-            font-weight:700;
-            font-size:17px;
             display:flex;
             align-items:center;
-            justify-content:center;
-            height:30px;
-            width:60px;
+            gap:6px;
           ">
-            ${line}
+            <div style="
+              width:30px;
+              height:30px;
+              border-radius:50%;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+            ">
+              <img src="${icon}" style="width:30px;height:30px;" />
+            </div>
+
+            <div style="
+              background:${color};
+              color:white;
+              padding:6px 10px;
+              border-radius:6px;
+              font-weight:700;
+              font-size:17px;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              height:30px;
+              width:60px;
+            ">
+              ${l.number}
+            </div>
           </div>
         `;
       }).join("");
-
-      return `
-        <div style="display:flex;align-items:center;gap:6px;margin:6px 0;flex-wrap:wrap;">
-
-          <!-- ONE ICON ONLY -->
-          <div style="
-            width:30px;
-            height:30px;
-            border-radius:50%;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-          ">
-            <img src="${icon}" style="width:30px;height:30px;" />
-          </div>
-
-          <!-- MULTIPLE LINE BADGES -->
-          <div style="display:flex;gap:6px;flex-wrap:wrap;">
-            ${badges}
-          </div>
-
-        </div>
-      `;
     })();
 
     return `
       <div class="info-card" style="margin-bottom:10px;">
 
-        <div style="margin-bottom:10px;">
+        <div style="margin-bottom:10px;display:flex;gap:6px;flex-wrap:wrap;">
           ${linesHTML}
         </div>
 
@@ -172,8 +165,10 @@ async function showLineAlerts(lineNumber, lineType) {
   const alerts = await getAlerts();
 
   const filtered = alerts.filter(alert =>
-    alert.type === lineType &&
-    (alert.lines || []).includes(String(lineNumber))
+    (alert.lines || []).some(l =>
+      l.type === lineType &&
+      String(l.number) === String(lineNumber)
+    )
   );
 
   if (!filtered.length) {
@@ -183,6 +178,7 @@ async function showLineAlerts(lineNumber, lineType) {
 
   container.innerHTML = filtered.map(a => `
     <div class="info-card" style="margin-bottom:10px;">
+
       <div style="font-weight:700;margin-bottom:6px;">
         ${a.title || ""}
       </div>
@@ -196,6 +192,7 @@ async function showLineAlerts(lineNumber, lineType) {
           До: ${a.to}
         </div>
       ` : ""}
+
     </div>
   `).join("");
 }
