@@ -30,5 +30,6 @@
     "lines": [
       { "type": "tourist", "number": "X50" }
     ],
+    "to": ""
   }
 ]
