@@ -12,13 +12,7 @@
     "text": "Считано от 10.06. маршрутът на линията е скъсен до Централна гара.",
     "lines": [
       { "type": "tram", "number": "7" },
-      { "type": "tram", "number": "27" },
-      { "type": "bus", "number": "84" },
-      { "type": "tram", "number": "384" },
-      { "type": "trolley", "number": "1" },
-      { "type": "trolley", "number": "5" },
-      { "type": "metro", "number": "1" },
-      { "type": "metro", "number": "4" }
+      { "type": "tram", "number": "27" }
     ],
     "to": "2026-08-13"
   },
@@ -29,5 +23,19 @@
       { "type": "tram", "number": "12" }
     ],
     "to": "2026-08-13"
+  },
+  {
+    "id": 4,
+    "text": "Тестово съобщение за линии.",
+    "lines": [
+      { "type": "bus", "number": "84" },
+      { "type": "bus", "number": "384" },
+      { "type": "trolley", "number": "1" },
+      { "type": "trolley", "number": "5" },
+      { "type": "tram", "number": "21" },
+      { "type": "tram", "number": "22" },
+      { "type": "metro", "number": "1" }
+    ],
+    "to": "2028-01-01"
   }
 ]
