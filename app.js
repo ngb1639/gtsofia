@@ -86,7 +86,7 @@ function selectLine(line) {
 
       <button class="switch-btn"
         onclick="switchDirection('${line.type}', '${line.number}')">
-        ⇆
+        Промяна на посоката
       </button>
     </div>
 
