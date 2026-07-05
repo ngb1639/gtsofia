@@ -575,6 +575,8 @@ MOBILE RESPONSIVE
 
   .line-header {
   display: flex;
+  align-items: center;
+  text-align: center;
   flex-direction: column;
   align-items: flex-start;
   gap: 14px;
@@ -582,6 +584,8 @@ MOBILE RESPONSIVE
 
   .details-pill {
   display: flex;
+  justify-content: center;
+  width: 100%;
   align-items: center;
   gap: 8px;
 }
@@ -589,7 +593,7 @@ MOBILE RESPONSIVE
   .route-direction {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
   gap: 6px;
 }
@@ -603,6 +607,8 @@ MOBILE RESPONSIVE
   }
 
 .destination-name {
+  text-align: center;
+  width: 100%;
   font-size: 20px;
   font-weight: 700;
   line-height: 1.2;
