@@ -496,11 +496,11 @@ function renderStock() {
               switch (item.type) {
 
                 case "bus":
-                  meta = { color: "#be1e2d", text: "white" };
+                  meta = { color: "#BD202E", text: "white" };
                   break;
 
                 case "tram":
-                  meta = { color: "#F6921E", text: "white" };
+                  meta = { color: "#F7941F", text: "white" };
                   break;
 
                 case "trolley":
