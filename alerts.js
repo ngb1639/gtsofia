@@ -36,11 +36,11 @@ function getMetroTextColor(line) {
 
 function getTypeColor(type) {
   switch (type) {
-    case "bus": return "#be1e2d";
+    case "bus": return "#BD202E";
     case "tourist": return "#006838";
     case "night": return "#000000";
     case "trolley": return "#2AA9E0";
-    case "tram": return "#F6921E";
+    case "tram": return "#F7941F";
     case "metro": return "#111827";
     default: return "#111827";
   }
