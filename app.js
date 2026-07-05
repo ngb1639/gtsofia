@@ -109,6 +109,16 @@ function selectLine(line) {
   if (typeof showLineAlerts === "function") {
     showLineAlerts(line.number, line.type);
   }
+
+  // MOBILE: auto-scroll to route when line is selected
+if (window.innerWidth <= 900) {
+  setTimeout(() => {
+    document.querySelector(".content").scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }, 50);
+}
 }
 
 function switchDirection(type, number) {
