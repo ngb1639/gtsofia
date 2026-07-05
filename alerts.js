@@ -71,36 +71,22 @@ async function loadHomeAlerts() {
       const lines = alert.lines || [];
       if (!lines.length) return "";
 
-      return lines.map(l => {
-        const icon = getIcon(l.type);
+      // GROUP BY TYPE
+      const grouped = lines.reduce((acc, l) => {
+        if (!acc[l.type]) acc[l.type] = [];
+        acc[l.type].push(l.number);
+        return acc;
+      }, {});
 
-        if (l.type === "metro") {
-          return `
-            <div style="
-              width:30px;
-              height:30px;
-              border-radius:50%;
-              background:${getMetroColor(l.number)};
-              color:${getMetroTextColor(l.number)};
-              font-weight:700;
-              font-size:17px;
-              display:flex;
-              align-items:center;
-              justify-content:center;
-            ">
-              ${l.number}
-            </div>
-          `;
-        }
-
-        const color = getTypeColor(l.type);
+      // RENDER GROUPS
+      return Object.entries(grouped).map(([type, numbers]) => {
+        const icon = getIcon(type);
+        const color = getTypeColor(type);
 
         return `
-          <div style="
-            display:flex;
-            align-items:center;
-            gap:6px;
-          ">
+          <div style="display:flex;align-items:center;gap:6px;margin:6px 0;flex-wrap:wrap;">
+
+            <!-- ONE ICON PER TYPE -->
             <div style="
               width:30px;
               height:30px;
@@ -112,21 +98,27 @@ async function loadHomeAlerts() {
               <img src="${icon}" style="width:30px;height:30px;" />
             </div>
 
-            <div style="
-              background:${color};
-              color:white;
-              padding:6px 10px;
-              border-radius:6px;
-              font-weight:700;
-              font-size:17px;
-              display:flex;
-              align-items:center;
-              justify-content:center;
-              height:30px;
-              width:60px;
-            ">
-              ${l.number}
+            <!-- BADGES -->
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              ${numbers.map(num => `
+                <div style="
+                  background:${color};
+                  color:white;
+                  padding:6px 10px;
+                  border-radius:6px;
+                  font-weight:700;
+                  font-size:17px;
+                  display:flex;
+                  align-items:center;
+                  justify-content:center;
+                  height:30px;
+                  width:60px;
+                ">
+                  ${num}
+                </div>
+              `).join("")}
             </div>
+
           </div>
         `;
       }).join("");
@@ -135,7 +127,7 @@ async function loadHomeAlerts() {
     return `
       <div class="info-card" style="margin-bottom:10px;">
 
-        <div style="margin-bottom:10px;display:flex;gap:6px;flex-wrap:wrap;">
+        <div style="margin-bottom:10px;">
           ${linesHTML}
         </div>
 
