@@ -180,11 +180,32 @@ async function showLineAlerts(lineNumber, lineType) {
 
   const alerts = await getAlerts();
 
+  // Bus lines that should also match "tourist" alerts
+  const touristLines = ["X43", "61", "63", "66", "103"];
+
   const filtered = alerts.filter(alert =>
-    (alert.lines || []).some(l =>
-      l.type === lineType &&
-      String(l.number) === String(lineNumber)
-    )
+    (alert.lines || []).some(l => {
+
+      // Exact type match
+      if (
+        l.type === lineType &&
+        String(l.number) === String(lineNumber)
+      ) {
+        return true;
+      }
+
+      // Tourist alerts should also appear on the corresponding bus pages
+      if (
+        l.type === "tourist" &&
+        lineType === "bus" &&
+        touristLines.includes(String(lineNumber)) &&
+        String(l.number) === String(lineNumber)
+      ) {
+        return true;
+      }
+
+      return false;
+    })
   );
 
   if (!filtered.length) {
