@@ -78,6 +78,7 @@ function initRouteMap() {
     document.getElementById("routeMap");
 
 
+
   if (!container) {
     return false;
   }
@@ -146,192 +147,6 @@ function initRouteMap() {
 
 /*
 =========================
-FETCH ROUTE DATA
-=========================
-*/
-async function fetchRouteData(relationID) {
-
-
-  const query = `
-    [out:json];
-
-    relation(${relationID});
-
-    >;
-
-    out geom;
-  `;
-
-
-
-  const response =
-    await fetch(
-      "https://overpass.kumi.systems/api/interpreter",
-      {
-        method:"POST",
-        body:query
-      }
-    );
-
-
-
-  if (!response.ok) {
-
-    throw new Error(
-      `Overpass ${response.status}`
-    );
-
-  }
-
-
-
-
-  const data =
-    await response.json();
-
-
-
-
-  const segments = [];
-
-
-
-
-
-  data.elements.forEach(
-    el => {
-
-
-      if (
-        el.type !== "way" ||
-        !el.geometry
-      ) {
-
-        return;
-
-      }
-
-
-
-
-      if (
-        el.geometry.length < 2
-      ) {
-
-        return;
-
-      }
-
-
-
-
-
-      segments.push(
-        el.geometry.map(
-          p =>
-          [
-            p.lat,
-            p.lon
-          ]
-        )
-      );
-
-
-
-    }
-  );
-
-
-
-
-  return segments;
-
-}
-
-
-
-
-
-/*
-=========================
-PRELOAD BOTH DIRECTIONS
-=========================
-*/
-async function preloadRoute(line) {
-
-
-  const relations = [
-    line.relationA,
-    line.relationB
-  ];
-
-
-
-
-  for (const relationID of relations) {
-
-
-    if (!relationID) {
-      continue;
-    }
-
-
-
-
-    if (routeCache[relationID]) {
-      continue;
-    }
-
-
-
-
-
-    try {
-
-
-      const segments =
-        await fetchRouteData(
-          relationID
-        );
-
-
-
-      routeCache[relationID] =
-        segments;
-
-
-
-      console.log(
-        "Preloaded:",
-        relationID
-      );
-
-
-
-
-    } catch(error) {
-
-
-      console.warn(
-        "Preload failed:",
-        relationID,
-        error
-      );
-
-
-    }
-
-
-  }
-
-}
-
-
-
-
-
-/*
-=========================
 LOAD ROUTE
 =========================
 */
@@ -355,7 +170,6 @@ async function loadRouteMap(
 
 
 
-
   const relationID =
     direction === "A"
       ? line.relationA
@@ -364,11 +178,9 @@ async function loadRouteMap(
 
 
 
-
   if (!relationID) {
     return;
   }
-
 
 
 
@@ -384,13 +196,13 @@ async function loadRouteMap(
   try {
 
 
-    let segments;
+    let data;
 
 
 
     /*
     =========================
-    USE CACHE
+    CHECK CACHE
     =========================
     */
 
@@ -401,12 +213,12 @@ async function loadRouteMap(
 
 
       console.log(
-        "Using cache:",
+        "Using cached route:",
         relationID
       );
 
 
-      segments =
+      data =
         routeCache[relationID];
 
 
@@ -414,28 +226,83 @@ async function loadRouteMap(
     } else {
 
 
-
       console.log(
-        "Loading:",
+        "Loading from Overpass:",
         relationID
       );
 
 
 
-      segments =
-        await fetchRouteData(
-          relationID
+      const query = `
+        [out:json];
+
+        relation(${relationID});
+
+        >;
+
+        out geom;
+      `;
+
+
+
+      const response =
+        await fetch(
+          "https://overpass-api.de/api/interpreter",
+          {
+            method:"POST",
+            body:query
+          }
         );
 
 
 
+
+      if (!response.ok) {
+
+        throw new Error(
+          `Overpass error ${response.status}`
+        );
+
+      }
+
+
+
+
+      data =
+        await response.json();
+
+
+
       routeCache[relationID] =
-        segments;
+        data;
+
 
     }
 
 
 
+
+
+    if (
+      !data.elements ||
+      data.elements.length === 0
+    ) {
+
+      throw new Error(
+        "No route data"
+      );
+
+    }
+
+
+
+
+
+    /*
+    =========================
+    CREATE ROUTE LAYER
+    =========================
+    */
 
 
     routePolyline =
@@ -450,8 +317,36 @@ async function loadRouteMap(
 
 
 
-    segments.forEach(
-      coords => {
+    data.elements.forEach(
+      el => {
+
+
+        if (
+          el.type !== "way" ||
+          !el.geometry
+        ) {
+
+          return;
+
+        }
+
+
+
+
+        const coords =
+          el.geometry.map(
+            p =>
+            [
+
+              p.lat,
+
+              p.lon
+
+            ]
+          );
+
+
+
 
 
         coords.forEach(
@@ -468,34 +363,38 @@ async function loadRouteMap(
 
 
 
-        L.polyline(
-          coords,
-          {
-
-            color:
-              getTransportColor(
-                line
-              ),
+        if (
+          coords.length > 1
+        ) {
 
 
-            weight:5,
+          L.polyline(
+            coords,
+            {
 
+              color:
+                getTransportColor(
+                  line
+                ),
 
-            opacity:1,
+              weight:5,
 
+              opacity:1,
 
-            smoothFactor:2
+              smoothFactor:1
 
-          }
+            }
 
-        ).addTo(
-          routePolyline
-        );
+          ).addTo(
+            routePolyline
+          );
 
+        }
 
 
       }
     );
+
 
 
 
@@ -538,8 +437,9 @@ async function loadRouteMap(
         }
 
 
+
       },
-      100
+      200
     );
 
 
