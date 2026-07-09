@@ -200,6 +200,10 @@ function selectLine(line) {
       line.activeDirection
     );
 
+    if (typeof preloadRoute === "function") {
+
+  preloadRoute(line);
+
   }
 
 
