@@ -162,7 +162,7 @@ function selectLine(line) {
     <div class="stops-card" style="margin-top:20px;">
 
       <h2 style="margin-bottom:15px;">
-        Карта
+        Карта на линията
       </h2>
 
 
