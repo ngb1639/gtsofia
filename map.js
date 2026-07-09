@@ -40,10 +40,38 @@ function getTransportColor(line) {
 
 /*
 =========================
+DESTROY MAP
+=========================
+*/
+function destroyRouteMap() {
+
+
+  if (routePolyline) {
+
+    routePolyline = null;
+
+  }
+
+
+  if (routeMap) {
+
+    routeMap.remove();
+
+    routeMap = null;
+
+  }
+
+}
+
+
+
+/*
+=========================
 INIT MAP
 =========================
 */
 function initRouteMap() {
+
 
   const container =
     document.getElementById("routeMap");
@@ -55,43 +83,48 @@ function initRouteMap() {
 
 
 
-  // вече има карта
-  if (routeMap) {
-    return true;
-  }
-
-
-
   try {
 
 
-    routeMap = L.map(
-      "routeMap",
-      {
-        center: [
-          42.6977,
-          23.3219
-        ],
+    container.innerHTML = "";
 
-        zoom: 13
-      }
-    );
+
+
+    routeMap =
+      L.map(
+        "routeMap",
+        {
+          center:
+          [
+            42.6977,
+            23.3219
+          ],
+
+          zoom:13
+        }
+      );
 
 
 
     L.tileLayer(
       "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       {
+
         attribution:
           "&copy; OpenStreetMap contributors",
 
-        maxZoom: 19
+        maxZoom:19
+
       }
-    ).addTo(routeMap);
+
+    ).addTo(
+      routeMap
+    );
 
 
 
     return true;
+
 
 
   } catch(error) {
@@ -130,9 +163,11 @@ async function loadRouteMap(
     );
 
 
+
   if (!container) {
     return;
   }
+
 
 
 
@@ -143,40 +178,28 @@ async function loadRouteMap(
 
 
 
-  console.log(
-    "Loading:",
-    relationID,
-    direction
-  );
-
-
 
   if (!relationID) {
-
-    console.warn(
-      "Missing relation"
-    );
 
     return;
 
   }
+
+
 
 
 
   if (!initRouteMap()) {
+
     return;
+
   }
 
 
 
+
+
   try {
-
-
-    /*
-    =========================
-    LOAD OSM DATA
-    =========================
-    */
 
 
     const query = `
@@ -195,10 +218,11 @@ async function loadRouteMap(
       await fetch(
         "https://overpass-api.de/api/interpreter",
         {
-          method: "POST",
-          body: query
+          method:"POST",
+          body:query
         }
       );
+
 
 
 
@@ -212,8 +236,10 @@ async function loadRouteMap(
 
 
 
+
     const data =
       await response.json();
+
 
 
 
@@ -223,43 +249,13 @@ async function loadRouteMap(
     ) {
 
       throw new Error(
-        "No geometry"
+        "No route data"
       );
 
     }
 
 
 
-
-
-    /*
-    =========================
-    REMOVE OLD ROUTE ONLY
-    =========================
-    */
-
-
-    if (routePolyline) {
-
-      routePolyline.clearLayers();
-
-      routeMap.removeLayer(
-        routePolyline
-      );
-
-      routePolyline = null;
-
-    }
-
-
-
-
-
-    /*
-    =========================
-    CREATE NEW ROUTE LAYER
-    =========================
-    */
 
 
     routePolyline =
@@ -273,87 +269,87 @@ async function loadRouteMap(
 
 
 
-    data.elements.forEach(el => {
+
+    data.elements.forEach(
+      el => {
 
 
-      if (
-        el.type !== "way" ||
-        !el.geometry
-      ) {
+        if (
+          el.type !== "way" ||
+          !el.geometry
+        ) {
 
-        return;
+          return;
 
-      }
-
-
+        }
 
 
-      const coords =
-        el.geometry.map(
-          p => {
 
 
-            const point =
+        const coords =
+          el.geometry.map(
+            p =>
+            {
+
+              const point =
               [
                 p.lat,
                 p.lon
               ];
 
 
-            bounds.extend(
-              point
-            );
+              bounds.extend(
+                point
+              );
 
 
-            return point;
+              return point;
 
-          }
-        );
-
-
+            }
+          );
 
 
-      if (
-        coords.length > 1
-      ) {
 
 
-        L.polyline(
-          coords,
-          {
 
-            color:
-              getTransportColor(
-                line
-              ),
+        if (
+          coords.length > 1
+        ) {
 
-            weight:5,
 
-            opacity:1,
+          L.polyline(
+            coords,
+            {
 
-            smoothFactor:1
+              color:
+                getTransportColor(
+                  line
+                ),
 
-          }
 
-        ).addTo(
-          routePolyline
-        );
+              weight:5,
+
+
+              opacity:1,
+
+
+              smoothFactor:1
+
+            }
+
+          ).addTo(
+            routePolyline
+          );
+
+
+        }
+
 
       }
-
-
-    });
-
+    );
 
 
 
-
-
-    /*
-    =========================
-    ADD ROUTE
-    =========================
-    */
 
 
     routePolyline.addTo(
@@ -362,39 +358,39 @@ async function loadRouteMap(
 
 
 
-    /*
-    IMPORTANT FOR LEAFLET
-    */
 
 
-    setTimeout(() => {
+    setTimeout(
+      () => {
 
 
-      routeMap.invalidateSize(
-        true
-      );
-
-
-      if (
-        bounds.isValid()
-      ) {
-
-
-        routeMap.fitBounds(
-          bounds,
-          {
-            padding:
-            [
-              50,
-              50
-            ]
-          }
+        routeMap.invalidateSize(
+          true
         );
 
-      }
+
+        if (
+          bounds.isValid()
+        ) {
 
 
-    }, 300);
+          routeMap.fitBounds(
+            bounds,
+            {
+              padding:
+              [
+                50,
+                50
+              ]
+            }
+          );
+
+        }
+
+
+      },
+      200
+    );
 
 
 
@@ -404,7 +400,7 @@ async function loadRouteMap(
 
 
     console.error(
-      "Route loading error:",
+      "Route error:",
       error
     );
 
