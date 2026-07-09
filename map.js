@@ -35,19 +35,23 @@ function getTransportColor(line) {
 
     default:
       return "#111827";
+
   }
 
 }
 
 
 
+
+
 /*
 =========================
-CLEAR ROUTE ONLY
+CLEAR ROUTE LAYER
 =========================
 */
 
 function clearRouteLayer() {
+
 
   if (
     routePolyline &&
@@ -66,6 +70,10 @@ function clearRouteLayer() {
 
 
 
+
+
+
+
 /*
 =========================
 INIT MAP
@@ -81,15 +89,19 @@ function initRouteMap() {
     );
 
 
+
   if (!container) {
     return false;
   }
 
 
 
+
+
   // reuse existing map
 
   if (routeMap) {
+
 
     setTimeout(
       () => {
@@ -102,9 +114,12 @@ function initRouteMap() {
       50
     );
 
+
     return true;
 
   }
+
+
 
 
 
@@ -134,6 +149,7 @@ function initRouteMap() {
 
 
 
+
     L.tileLayer(
       "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       {
@@ -148,6 +164,7 @@ function initRouteMap() {
     ).addTo(
       routeMap
     );
+
 
 
 
@@ -166,9 +183,13 @@ function initRouteMap() {
 
     return false;
 
+
   }
 
 }
+
+
+
 
 
 
@@ -186,6 +207,7 @@ async function loadRouteMap(
 ) {
 
 
+
   const container =
     document.getElementById(
       "routeMap"
@@ -200,10 +222,14 @@ async function loadRouteMap(
 
 
 
+
+
+
   const relationID =
     direction === "A"
       ? line.relationA
       : line.relationB;
+
 
 
 
@@ -215,15 +241,20 @@ async function loadRouteMap(
 
 
 
+
   if (!initRouteMap()) {
     return;
   }
 
 
 
-  // remove only old route
 
+
+
+  // махаме само старата линия
   clearRouteLayer();
+
+
 
 
 
@@ -237,9 +268,10 @@ async function loadRouteMap(
 
 
 
+
     /*
     =========================
-    CHECK CACHE
+    CACHE
     =========================
     */
 
@@ -272,6 +304,7 @@ async function loadRouteMap(
 
 
 
+
       const query = `
         [out:json];
 
@@ -281,6 +314,7 @@ async function loadRouteMap(
 
         out geom;
       `;
+
 
 
 
@@ -321,11 +355,14 @@ async function loadRouteMap(
 
 
 
+
       routeCache[relationID] =
         data;
 
 
     }
+
+
 
 
 
@@ -346,14 +383,24 @@ async function loadRouteMap(
 
 
 
+
+
     /*
     =========================
-    CREATE SINGLE POLYLINE
+    CREATE ROUTE LAYERS
     =========================
+
+    ВАЖНО:
+    Не обединяваме way-овете,
+    защото OSM relation order
+    не е гарантиран.
     */
 
 
-    const allCoords = [];
+
+
+    routePolyline =
+      L.layerGroup();
 
 
 
@@ -375,81 +422,61 @@ async function loadRouteMap(
 
 
 
-        el.geometry.forEach(
-          p => {
+
+        const coords =
+          el.geometry.map(
+            p => [
+
+              p.lat,
+
+              p.lon
+
+            ]
+          );
 
 
-            allCoords.push(
-              [
-                p.lat,
-                p.lon
-              ]
-            );
 
 
-          }
-        );
+
+
+
+
+        if (
+          coords.length > 1
+        ) {
+
+
+
+          L.polyline(
+            coords,
+            {
+
+              color:
+                getTransportColor(
+                  line
+                ),
+
+              weight:5,
+
+              opacity:1,
+
+              smoothFactor:1
+
+            }
+
+          ).addTo(
+            routePolyline
+          );
+
+
+        }
+
 
 
       }
     );
 
 
-
-
-
-    if (
-      allCoords.length < 2
-    ) {
-
-      throw new Error(
-        "Not enough coordinates"
-      );
-
-    }
-
-
-
-
-
-
-    /*
-    =========================
-    SIMPLIFY GEOMETRY
-    =========================
-    */
-
-
-    const simplified =
-      L.LineUtil.simplify(
-        allCoords,
-        0.00005
-      );
-
-
-
-
-
-
-
-    routePolyline =
-      L.polyline(
-        simplified,
-        {
-
-          color:
-            getTransportColor(
-              line
-            ),
-
-          weight:5,
-
-          opacity:1,
-
-          smoothFactor:1
-
-        }
-      );
 
 
 
@@ -464,9 +491,11 @@ async function loadRouteMap(
 
 
 
+
+
     /*
     =========================
-    FIT MAP
+    FIT BOUNDS
     =========================
     */
 
@@ -481,32 +510,39 @@ async function loadRouteMap(
 
 
 
-        const bounds =
-          routePolyline.getBounds();
-
-
-
-
         if (
-          bounds.isValid()
+          routePolyline
         ) {
 
 
-          routeMap.fitBounds(
-            bounds,
-            {
+          const bounds =
+            routePolyline.getBounds();
 
-              padding:
-              [
-                50,
-                50
-              ]
 
-            }
-          );
 
+          if (
+            bounds.isValid()
+          ) {
+
+
+            routeMap.fitBounds(
+              bounds,
+              {
+
+                padding:
+                [
+                  50,
+                  50
+                ]
+
+              }
+            );
+
+
+          }
 
         }
+
 
 
 
@@ -530,5 +566,6 @@ async function loadRouteMap(
 
 
   }
+
 
 }
