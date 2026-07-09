@@ -35,12 +35,12 @@ function initRouteMap() {
 
   if (!routeMap) {
     try {
-      // Очисти контейнера преди инициализация
       container.innerHTML = "";
       
       routeMap = L.map("routeMap", {
-        center: [42.6977, 23.3219], // Sofia coordinates as default
-        zoom: 13
+        center: [42.6977, 23.3219],
+        zoom: 13,
+        zoomControl: true
       });
 
       L.tileLayer(
@@ -71,7 +71,12 @@ async function loadRouteMap(line, direction) {
   
   if (!container) return;
 
-  container.innerHTML = '<div class="empty-state">Loading map...</div>';
+  const relationID = direction === "A" ? line.relationA : line.relationB;
+
+  if (!relationID) {
+    container.innerHTML = '<div class="empty-state">No map available</div>';
+    return;
+  }
 
   if (!initRouteMap()) {
     container.innerHTML = '<div class="empty-state">Failed to initialize map</div>';
@@ -83,74 +88,49 @@ async function loadRouteMap(line, direction) {
     routePolyline = null;
   }
 
-  const relationID = direction === "A" ? line.relationA : line.relationB;
-
-  if (!relationID) {
-    container.innerHTML = '<div class="empty-state">No map available</div>';
-    return;
-  }
-
   try {
-    const query = `
-    [out:json];
-    relation(${relationID});
-    (._;>;);
-    out geom;
-    `;
+    const query = `[out:json];relation(${relationID});(._;>;);out geom;`;
 
-    let response;
-    let retries = 3;
-    
-    while (retries > 0) {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000);
-
-        response = await fetch(
-          "https://overpass-api.de/api/interpreter",
-          {
-            method: "POST",
-            body: query,
-            signal: controller.signal
-          }
-        );
-
-        clearTimeout(timeoutId);
-        break;
-      } catch (error) {
-        retries--;
-        if (retries === 0) throw error;
-        await new Promise(resolve => setTimeout(resolve, 2000));
+    const response = await fetch(
+      "https://overpass-api.de/api/interpreter",
+      {
+        method: "POST",
+        body: query,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
       }
+    );
+
+    if (response.status === 429) {
+      throw new Error("Too many requests. Please wait and try again.");
     }
 
     if (!response.ok) {
-      throw new Error(`API returned ${response.status}`);
+      throw new Error(`API error: ${response.status}`);
     }
 
     const data = await response.json();
 
     if (!data.elements || data.elements.length === 0) {
-      throw new Error("No elements returned from API");
+      throw new Error("No route data found");
     }
 
     let points = [];
 
     data.elements.forEach(el => {
-      if (!el.geometry) return;
-
-      el.geometry.forEach(p => {
-        if (p.lat && p.lon) {
-          points.push([p.lat, p.lon]);
-        }
-      });
+      if (el.geometry && Array.isArray(el.geometry)) {
+        el.geometry.forEach(p => {
+          if (p.lat && p.lon) {
+            points.push([p.lat, p.lon]);
+          }
+        });
+      }
     });
 
     if (!points.length) {
-      throw new Error("No valid points found");
+      throw new Error("No valid points");
     }
-
-    container.innerHTML = "";
 
     routePolyline = L.polyline(points, {
       color: getTransportColor(line.type),
@@ -163,17 +143,10 @@ async function loadRouteMap(line, direction) {
     const bounds = routePolyline.getBounds();
     if (bounds.isValid()) {
       routeMap.fitBounds(bounds, { padding: [50, 50] });
-    } else {
-      throw new Error("Invalid bounds");
     }
 
   } catch(error) {
     console.error("Error loading route:", error);
-    container.innerHTML = `
-    <div class="empty-state">
-      No map available<br>
-      <small>${error.message || 'Please try again'}</small>
-    </div>
-    `;
+    container.innerHTML = `<div class="empty-state">No map available</div>`;
   }
 }
