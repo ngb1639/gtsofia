@@ -42,7 +42,7 @@ function selectLine(line) {
 
     if (typeof destroyRouteMap === "function") {
 
-    destroyRouteMap();
+    clearRouteLayer();
 
   }
 
