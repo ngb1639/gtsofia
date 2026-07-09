@@ -84,7 +84,7 @@ async function loadRouteMap(line, direction) {
   }
 
   try {
-    const query = `[out:json];relation(${relationID});(._;>;);out geom;`;
+    const query = `[out:json];relation(${relationID});out geom;`;
 
     const response = await fetch(
       "https://overpass-api.de/api/interpreter",
@@ -105,26 +105,18 @@ async function loadRouteMap(line, direction) {
     }
 
     let points = [];
-    let routeRelation = null;
 
-    for (let el of data.elements) {
-      if (el.type === "relation" && el.tags && el.tags.type === "route") {
-        routeRelation = el;
-        break;
+    data.elements.forEach(el => {
+      if (el.type === "relation" && el.members) {
+        el.members.forEach(member => {
+          if (member.geometry) {
+            member.geometry.forEach(p => {
+              points.push([p.lat, p.lon]);
+            });
+          }
+        });
       }
-    }
-
-    if (!routeRelation || !routeRelation.members) {
-      throw new Error("No route relation found");
-    }
-
-    for (let member of routeRelation.members) {
-      if (member.geometry) {
-        for (let p of member.geometry) {
-          points.push([p.lat, p.lon]);
-        }
-      }
-    }
+    });
 
     if (!points.length) {
       throw new Error("No valid points");
