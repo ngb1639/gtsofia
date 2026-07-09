@@ -7,18 +7,31 @@ let routePolyline = null;
 TRANSPORT COLORS
 =========================
 */
-function getTransportColor(type) {
-  switch(type) {
+function getTransportColor(line) {
+
+  // Използва цвета от данните на линията
+  if (line.color) {
+    return line.color;
+  }
+
+
+  switch(line.type) {
+
     case "bus":
       return "#BD202E";
+
     case "trolley":
       return "#2AA9E0";
+
     case "tram":
       return "#F7941F";
-    case "metro":
-      return "#111827";
+
     case "night":
       return "#000000";
+
+    case "tourist":
+      return "#006838";
+
     default:
       return "#111827";
   }
@@ -199,7 +212,7 @@ async function loadRouteMap(line, direction) {
 
     /*
     =========================
-    DRAW OSM WAYS
+    DRAW ROUTE
     =========================
     */
 
@@ -217,6 +230,7 @@ async function loadRouteMap(line, direction) {
     data.elements.forEach(el => {
 
 
+      // взимаме само way-овете
       if (
         el.type !== "way" ||
         !el.geometry
@@ -225,10 +239,6 @@ async function loadRouteMap(line, direction) {
       }
 
 
-
-      /*
-      Ignore tiny non-route ways
-      */
 
       if (
         el.geometry.length < 2
@@ -261,16 +271,16 @@ async function loadRouteMap(line, direction) {
       L.polyline(
         coords,
         {
+
           color:
-            getTransportColor(
-              line.type
-            ),
+            getTransportColor(line),
 
           weight: 5,
 
           opacity: 1,
 
           smoothFactor: 1
+
         }
 
       ).addTo(
