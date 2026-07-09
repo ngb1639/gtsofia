@@ -1,108 +1,38 @@
-let routeMap = null;
-let routePolyline = null;
+let map;
+let polyline;
 
 
-/*
-=========================
-TRANSPORT COLORS
-=========================
-*/
+function transportColor(type) {
 
-function getTransportColor(type) {
+  const colors = {
+    bus: "#BD202E",
+    trolley: "#2AA9E0",
+    tram: "#F7941F",
+    metro: "#111827",
+    night: "#000000"
+  };
 
-  switch(type) {
-
-    case "bus":
-      return "#BD202E";
-
-    case "trolley":
-      return "#2AA9E0";
-
-    case "tram":
-      return "#F7941F";
-
-    case "metro":
-      return "#111827";
-
-    case "night":
-      return "#000000";
-
-    default:
-      return "#111827";
-  }
-
+  return colors[type] || "#111827";
 }
 
 
-/*
-=========================
-INIT MAP
-=========================
-*/
 
-function initRouteMap() {
+function showRouteMap(line) {
 
   const container = document.getElementById("routeMap");
 
   if (!container) return;
 
 
-  if (!routeMap) {
-
-    routeMap = L.map("routeMap");
-
-    L.tileLayer(
-      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      {
-        attribution:
-        '&copy; OpenStreetMap contributors'
-      }
-    ).addTo(routeMap);
-
-  }
-
-}
+  container.innerHTML = "";
 
 
-/*
-=========================
-LOAD ROUTE
-=========================
-*/
-
-async function loadRouteMap(line, direction) {
-
-
-  const container = document.getElementById("routeMap");
-
-  if (!container) return;
-
-
-  initRouteMap();
-
-
-  if (routePolyline) {
-    routeMap.removeLayer(routePolyline);
-    routePolyline = null;
-  }
-
-
-  /*
-  direction contains relation IDs
-  */
-
-  const relationID =
-    direction === "A"
-      ? line.relationA
-      : line.relationB;
-
-
-  if (!relationID) {
+  if (!line.route) {
 
     container.innerHTML =
       `
       <div class="empty-state">
-        No map available
+        Няма налична карта
       </div>
       `;
 
@@ -111,99 +41,38 @@ async function loadRouteMap(line, direction) {
   }
 
 
-  try {
+  if (map) {
+    map.remove();
+  }
 
 
-    const query = `
-    [out:json];
-    relation(${relationID});
-    (._;>;);
-    out geom;
-    `;
+  map = L.map("routeMap");
 
 
-    const response =
-      await fetch(
-        "https://overpass-api.de/api/interpreter",
-        {
-          method:"POST",
-          body: query
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    let points = [];
-
-
-    data.elements.forEach(el => {
-
-      if (!el.geometry)
-        return;
-
-
-      el.geometry.forEach(p => {
-
-        points.push([
-          p.lat,
-          p.lon
-        ]);
-
-      });
-
-    });
-
-
-    if (!points.length) {
-
-      container.innerHTML =
-      `
-      <div class="empty-state">
-        No map available
-      </div>
-      `;
-
-      return;
-
+  L.tileLayer(
+    "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      attribution:
+      "&copy; OpenStreetMap contributors"
     }
+  ).addTo(map);
 
 
 
-    routePolyline =
-      L.polyline(
-        points,
-        {
-          color:
-          getTransportColor(line.type),
-
-          weight: 6
-        }
-      )
-      .addTo(routeMap);
+  polyline =
+    L.polyline(
+      line.route,
+      {
+        color: transportColor(line.type),
+        weight: 6
+      }
+    )
+    .addTo(map);
 
 
 
-    routeMap.fitBounds(
-      routePolyline.getBounds()
-    );
-
-
-  }
-
-  catch(error) {
-
-    console.error(error);
-
-    container.innerHTML =
-    `
-    <div class="empty-state">
-      No map available
-    </div>
-    `;
-
-  }
+  map.fitBounds(
+    polyline.getBounds()
+  );
 
 }
