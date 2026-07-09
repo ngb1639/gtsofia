@@ -1,6 +1,8 @@
 let routeMap = null;
 let routePolyline = null;
 
+const routeCache = {};
+
 
 /*
 =========================
@@ -34,6 +36,7 @@ function getTransportColor(line) {
     default:
       return "#111827";
   }
+
 }
 
 
@@ -46,13 +49,6 @@ DESTROY MAP
 function destroyRouteMap() {
 
 
-  if (routePolyline) {
-
-    routePolyline = null;
-
-  }
-
-
   if (routeMap) {
 
     routeMap.remove();
@@ -61,7 +57,12 @@ function destroyRouteMap() {
 
   }
 
+
+  routePolyline = null;
+
 }
+
+
 
 
 
@@ -77,6 +78,7 @@ function initRouteMap() {
     document.getElementById("routeMap");
 
 
+
   if (!container) {
     return false;
   }
@@ -84,10 +86,6 @@ function initRouteMap() {
 
 
   try {
-
-
-    container.innerHTML = "";
-
 
 
     routeMap =
@@ -103,6 +101,7 @@ function initRouteMap() {
           zoom:13
         }
       );
+
 
 
 
@@ -180,19 +179,14 @@ async function loadRouteMap(
 
 
   if (!relationID) {
-
     return;
-
   }
 
 
 
 
-
   if (!initRouteMap()) {
-
     return;
-
   }
 
 
@@ -202,43 +196,89 @@ async function loadRouteMap(
   try {
 
 
-    const query = `
-      [out:json];
-
-      relation(${relationID});
-
-      >;
-
-      out geom;
-    `;
+    let data;
 
 
 
-    const response =
-      await fetch(
-        "https://overpass-api.de/api/interpreter",
-        {
-          method:"POST",
-          body:query
-        }
+    /*
+    =========================
+    CHECK CACHE
+    =========================
+    */
+
+
+    if (
+      routeCache[relationID]
+    ) {
+
+
+      console.log(
+        "Using cached route:",
+        relationID
+      );
+
+
+      data =
+        routeCache[relationID];
+
+
+
+    } else {
+
+
+      console.log(
+        "Loading from Overpass:",
+        relationID
       );
 
 
 
+      const query = `
+        [out:json];
 
-    if (!response.ok) {
+        relation(${relationID});
 
-      throw new Error(
-        response.status
-      );
+        >;
+
+        out geom;
+      `;
+
+
+
+      const response =
+        await fetch(
+          "https://overpass-api.de/api/interpreter",
+          {
+            method:"POST",
+            body:query
+          }
+        );
+
+
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          `Overpass error ${response.status}`
+        );
+
+      }
+
+
+
+
+      data =
+        await response.json();
+
+
+
+      routeCache[relationID] =
+        data;
+
 
     }
 
-
-
-
-    const data =
-      await response.json();
 
 
 
@@ -256,6 +296,13 @@ async function loadRouteMap(
 
 
 
+
+
+    /*
+    =========================
+    CREATE ROUTE LAYER
+    =========================
+    */
 
 
     routePolyline =
@@ -289,24 +336,28 @@ async function loadRouteMap(
         const coords =
           el.geometry.map(
             p =>
-            {
+            [
 
-              const point =
-              [
-                p.lat,
-                p.lon
-              ];
+              p.lat,
 
+              p.lon
 
-              bounds.extend(
-                point
-              );
-
-
-              return point;
-
-            }
+            ]
           );
+
+
+
+
+
+        coords.forEach(
+          point => {
+
+            bounds.extend(
+              point
+            );
+
+          }
+        );
 
 
 
@@ -326,12 +377,9 @@ async function loadRouteMap(
                   line
                 ),
 
-
               weight:5,
 
-
               opacity:1,
-
 
               smoothFactor:1
 
@@ -341,12 +389,12 @@ async function loadRouteMap(
             routePolyline
           );
 
-
         }
 
 
       }
     );
+
 
 
 
@@ -369,6 +417,7 @@ async function loadRouteMap(
         );
 
 
+
         if (
           bounds.isValid()
         ) {
@@ -388,6 +437,7 @@ async function loadRouteMap(
         }
 
 
+
       },
       200
     );
@@ -400,7 +450,7 @@ async function loadRouteMap(
 
 
     console.error(
-      "Route error:",
+      "Route loading error:",
       error
     );
 
