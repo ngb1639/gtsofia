@@ -55,25 +55,14 @@ function initRouteMap() {
 
 
 
-  // Картата се създава само веднъж
+  // вече има карта
   if (routeMap) {
-
-    setTimeout(() => {
-
-      routeMap.invalidateSize();
-
-    }, 200);
-
-
     return true;
   }
 
 
 
   try {
-
-
-    container.innerHTML = "";
 
 
     routeMap = L.map(
@@ -94,7 +83,7 @@ function initRouteMap() {
       "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       {
         attribution:
-          '&copy; OpenStreetMap contributors',
+          "&copy; OpenStreetMap contributors",
 
         maxZoom: 19
       }
@@ -105,12 +94,11 @@ function initRouteMap() {
     return true;
 
 
-
   } catch(error) {
 
 
     console.error(
-      "Error initializing map:",
+      "Map init error:",
       error
     );
 
@@ -137,13 +125,14 @@ async function loadRouteMap(
 
 
   const container =
-    document.getElementById("routeMap");
+    document.getElementById(
+      "routeMap"
+    );
 
 
   if (!container) {
     return;
   }
-
 
 
 
@@ -154,41 +143,29 @@ async function loadRouteMap(
 
 
 
-
   console.log(
-    "Loading relation:",
+    "Loading:",
     relationID,
     direction
   );
 
 
 
-
   if (!relationID) {
 
-
-    container.innerHTML =
-      '<div class="empty-state">No map available</div>';
-
+    console.warn(
+      "Missing relation"
+    );
 
     return;
 
   }
-
 
 
 
   if (!initRouteMap()) {
-
-
-    container.innerHTML =
-      '<div class="empty-state">No map available</div>';
-
-
     return;
-
   }
-
 
 
 
@@ -197,27 +174,7 @@ async function loadRouteMap(
 
     /*
     =========================
-    WAIT FOR MAP SIZE
-    =========================
-    */
-
-
-    await new Promise(resolve => {
-
-      setTimeout(resolve, 300);
-
-    });
-
-
-    routeMap.invalidateSize();
-
-
-
-
-
-    /*
-    =========================
-    LOAD OSM RELATION
+    LOAD OSM DATA
     =========================
     */
 
@@ -234,7 +191,6 @@ async function loadRouteMap(
 
 
 
-
     const response =
       await fetch(
         "https://overpass-api.de/api/interpreter",
@@ -246,18 +202,13 @@ async function loadRouteMap(
 
 
 
-
-
     if (!response.ok) {
 
-
       throw new Error(
-        `Overpass error: ${response.status}`
+        response.status
       );
 
     }
-
-
 
 
 
@@ -266,25 +217,13 @@ async function loadRouteMap(
 
 
 
-
-
-    console.log(
-      "Loaded elements:",
-      data.elements.length
-    );
-
-
-
-
-
     if (
       !data.elements ||
       data.elements.length === 0
     ) {
 
-
       throw new Error(
-        "No route data found"
+        "No geometry"
       );
 
     }
@@ -295,18 +234,18 @@ async function loadRouteMap(
 
     /*
     =========================
-    REMOVE OLD ROUTE
+    REMOVE OLD ROUTE ONLY
     =========================
     */
 
 
     if (routePolyline) {
 
+      routePolyline.clearLayers();
 
       routeMap.removeLayer(
         routePolyline
       );
-
 
       routePolyline = null;
 
@@ -318,7 +257,7 @@ async function loadRouteMap(
 
     /*
     =========================
-    DRAW ROUTE
+    CREATE NEW ROUTE LAYER
     =========================
     */
 
@@ -328,9 +267,8 @@ async function loadRouteMap(
 
 
 
-    let bounds =
+    const bounds =
       L.latLngBounds();
-
 
 
 
@@ -338,8 +276,6 @@ async function loadRouteMap(
     data.elements.forEach(el => {
 
 
-
-      // Само OSM ways
       if (
         el.type !== "way" ||
         !el.geometry
@@ -348,19 +284,6 @@ async function loadRouteMap(
         return;
 
       }
-
-
-
-
-
-      if (
-        el.geometry.length < 2
-      ) {
-
-        return;
-
-      }
-
 
 
 
@@ -390,29 +313,33 @@ async function loadRouteMap(
 
 
 
-
-      L.polyline(
-        coords,
-        {
-
-          color:
-            getTransportColor(line),
+      if (
+        coords.length > 1
+      ) {
 
 
-          weight: 5,
+        L.polyline(
+          coords,
+          {
 
+            color:
+              getTransportColor(
+                line
+              ),
 
-          opacity: 1,
+            weight:5,
 
+            opacity:1,
 
-          smoothFactor: 1
+            smoothFactor:1
 
-        }
+          }
 
-      ).addTo(
-        routePolyline
-      );
+        ).addTo(
+          routePolyline
+        );
 
+      }
 
 
     });
@@ -421,49 +348,54 @@ async function loadRouteMap(
 
 
 
-    if (
-      bounds.isValid()
-    ) {
+
+    /*
+    =========================
+    ADD ROUTE
+    =========================
+    */
 
 
-      routePolyline.addTo(
-        routeMap
+    routePolyline.addTo(
+      routeMap
+    );
+
+
+
+    /*
+    IMPORTANT FOR LEAFLET
+    */
+
+
+    setTimeout(() => {
+
+
+      routeMap.invalidateSize(
+        true
       );
 
 
-
-      routeMap.fitBounds(
-        bounds,
-        {
-          padding:
-          [
-            50,
-            50
-          ]
-        }
-      );
+      if (
+        bounds.isValid()
+      ) {
 
 
+        routeMap.fitBounds(
+          bounds,
+          {
+            padding:
+            [
+              50,
+              50
+            ]
+          }
+        );
+
+      }
 
 
-      setTimeout(() => {
+    }, 300);
 
-        routeMap.invalidateSize();
-
-      }, 300);
-
-
-
-
-
-    } else {
-
-
-      throw new Error(
-        "No valid geometry"
-      );
-
-    }
 
 
 
@@ -472,17 +404,10 @@ async function loadRouteMap(
 
 
     console.error(
-      "Error loading route:",
+      "Route loading error:",
       error
     );
 
-
-    // Не унищожаваме Leaflet картата
-    if (routeMap) {
-
-      routeMap.invalidateSize();
-
-    }
 
   }
 
