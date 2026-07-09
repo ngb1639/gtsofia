@@ -35,40 +35,32 @@ function getTransportColor(line) {
 
     default:
       return "#111827";
-
   }
 
 }
-
-
 
 
 
 /*
 =========================
-CLEAR ROUTE LAYER
+DESTROY MAP
 =========================
 */
+function destroyRouteMap() {
 
-function clearRouteLayer() {
 
+  if (routeMap) {
 
-  if (
-    routePolyline &&
-    routeMap
-  ) {
+    routeMap.remove();
 
-    routeMap.removeLayer(
-      routePolyline
-    );
-
-    routePolyline = null;
+    routeMap = null;
 
   }
 
+
+  routePolyline = null;
+
 }
-
-
 
 
 
@@ -79,49 +71,17 @@ function clearRouteLayer() {
 INIT MAP
 =========================
 */
-
 function initRouteMap() {
 
 
   const container =
-    document.getElementById(
-      "routeMap"
-    );
+    document.getElementById("routeMap");
 
 
 
   if (!container) {
     return false;
   }
-
-
-
-
-
-  // reuse existing map
-
-  if (routeMap) {
-
-
-    setTimeout(
-      () => {
-
-        routeMap.invalidateSize(
-          true
-        );
-
-      },
-      50
-    );
-
-
-    return true;
-
-  }
-
-
-
-
 
 
 
@@ -132,20 +92,15 @@ function initRouteMap() {
       L.map(
         "routeMap",
         {
-
           center:
           [
             42.6977,
             23.3219
           ],
 
-          zoom:13,
-
-          preferCanvas:true
-
+          zoom:13
         }
       );
-
 
 
 
@@ -167,7 +122,6 @@ function initRouteMap() {
 
 
 
-
     return true;
 
 
@@ -183,13 +137,9 @@ function initRouteMap() {
 
     return false;
 
-
   }
 
 }
-
-
-
 
 
 
@@ -200,12 +150,10 @@ function initRouteMap() {
 LOAD ROUTE
 =========================
 */
-
 async function loadRouteMap(
   line,
   direction
 ) {
-
 
 
   const container =
@@ -222,9 +170,6 @@ async function loadRouteMap(
 
 
 
-
-
-
   const relationID =
     direction === "A"
       ? line.relationA
@@ -233,11 +178,9 @@ async function loadRouteMap(
 
 
 
-
   if (!relationID) {
     return;
   }
-
 
 
 
@@ -250,16 +193,6 @@ async function loadRouteMap(
 
 
 
-
-  // махаме само старата линия
-  clearRouteLayer();
-
-
-
-
-
-
-
   try {
 
 
@@ -267,11 +200,9 @@ async function loadRouteMap(
 
 
 
-
-
     /*
     =========================
-    CACHE
+    CHECK CACHE
     =========================
     */
 
@@ -295,13 +226,10 @@ async function loadRouteMap(
     } else {
 
 
-
       console.log(
         "Loading from Overpass:",
         relationID
       );
-
-
 
 
 
@@ -317,22 +245,14 @@ async function loadRouteMap(
 
 
 
-
-
-
       const response =
         await fetch(
           "https://overpass-api.de/api/interpreter",
           {
-
             method:"POST",
-
             body:query
-
           }
         );
-
-
 
 
 
@@ -348,11 +268,8 @@ async function loadRouteMap(
 
 
 
-
       data =
         await response.json();
-
-
 
 
 
@@ -361,8 +278,6 @@ async function loadRouteMap(
 
 
     }
-
-
 
 
 
@@ -383,24 +298,21 @@ async function loadRouteMap(
 
 
 
-
-
     /*
     =========================
-    CREATE ROUTE LAYERS
+    CREATE ROUTE LAYER
     =========================
-
-    ВАЖНО:
-    Не обединяваме way-овете,
-    защото OSM relation order
-    не е гарантиран.
     */
-
-
 
 
     routePolyline =
       L.layerGroup();
+
+
+
+    const bounds =
+      L.latLngBounds();
+
 
 
 
@@ -421,11 +333,10 @@ async function loadRouteMap(
 
 
 
-
-
         const coords =
           el.geometry.map(
-            p => [
+            p =>
+            [
 
               p.lat,
 
@@ -438,13 +349,23 @@ async function loadRouteMap(
 
 
 
+        coords.forEach(
+          point => {
+
+            bounds.extend(
+              point
+            );
+
+          }
+        );
+
+
 
 
 
         if (
           coords.length > 1
         ) {
-
 
 
           L.polyline(
@@ -468,14 +389,11 @@ async function loadRouteMap(
             routePolyline
           );
 
-
         }
-
 
 
       }
     );
-
 
 
 
@@ -490,16 +408,6 @@ async function loadRouteMap(
 
 
 
-
-
-
-    /*
-    =========================
-    FIT BOUNDS
-    =========================
-    */
-
-
     setTimeout(
       () => {
 
@@ -511,46 +419,28 @@ async function loadRouteMap(
 
 
         if (
-          routePolyline
+          bounds.isValid()
         ) {
 
 
-          const bounds =
-            routePolyline.getBounds();
-
-
-
-          if (
-            bounds.isValid()
-          ) {
-
-
-            routeMap.fitBounds(
-              bounds,
-              {
-
-                padding:
-                [
-                  50,
-                  50
-                ]
-
-              }
-            );
-
-
-          }
+          routeMap.fitBounds(
+            bounds,
+            {
+              padding:
+              [
+                50,
+                50
+              ]
+            }
+          );
 
         }
 
 
 
-
       },
-      50
+      200
     );
-
-
 
 
 
@@ -566,6 +456,5 @@ async function loadRouteMap(
 
 
   }
-
 
 }
