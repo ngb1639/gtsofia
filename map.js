@@ -41,8 +41,6 @@ function getTransportColor(line) {
 
 
 
-
-
 /*
 =========================
 DESTROY MAP
@@ -105,6 +103,7 @@ function initRouteMap() {
 
 
 
+
     L.tileLayer(
       "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       {
@@ -125,6 +124,7 @@ function initRouteMap() {
     return true;
 
 
+
   } catch(error) {
 
 
@@ -135,6 +135,192 @@ function initRouteMap() {
 
 
     return false;
+
+  }
+
+}
+
+
+
+
+
+/*
+=========================
+FETCH ROUTE DATA
+=========================
+*/
+async function fetchRouteData(relationID) {
+
+
+  const query = `
+    [out:json];
+
+    relation(${relationID});
+
+    >;
+
+    out geom;
+  `;
+
+
+
+  const response =
+    await fetch(
+      "https://overpass.kumi.systems/api/interpreter",
+      {
+        method:"POST",
+        body:query
+      }
+    );
+
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      `Overpass ${response.status}`
+    );
+
+  }
+
+
+
+
+  const data =
+    await response.json();
+
+
+
+
+  const segments = [];
+
+
+
+
+
+  data.elements.forEach(
+    el => {
+
+
+      if (
+        el.type !== "way" ||
+        !el.geometry
+      ) {
+
+        return;
+
+      }
+
+
+
+
+      if (
+        el.geometry.length < 2
+      ) {
+
+        return;
+
+      }
+
+
+
+
+
+      segments.push(
+        el.geometry.map(
+          p =>
+          [
+            p.lat,
+            p.lon
+          ]
+        )
+      );
+
+
+
+    }
+  );
+
+
+
+
+  return segments;
+
+}
+
+
+
+
+
+/*
+=========================
+PRELOAD BOTH DIRECTIONS
+=========================
+*/
+async function preloadRoute(line) {
+
+
+  const relations = [
+    line.relationA,
+    line.relationB
+  ];
+
+
+
+
+  for (const relationID of relations) {
+
+
+    if (!relationID) {
+      continue;
+    }
+
+
+
+
+    if (routeCache[relationID]) {
+      continue;
+    }
+
+
+
+
+
+    try {
+
+
+      const segments =
+        await fetchRouteData(
+          relationID
+        );
+
+
+
+      routeCache[relationID] =
+        segments;
+
+
+
+      console.log(
+        "Preloaded:",
+        relationID
+      );
+
+
+
+
+    } catch(error) {
+
+
+      console.warn(
+        "Preload failed:",
+        relationID,
+        error
+      );
+
+
+    }
+
 
   }
 
@@ -198,35 +384,30 @@ async function loadRouteMap(
   try {
 
 
-    const cacheKey =
-      `${relationID}_${direction}`;
-
-
-
     let segments;
 
 
 
     /*
     =========================
-    CHECK CACHE
+    USE CACHE
     =========================
     */
 
 
     if (
-      routeCache[cacheKey]
+      routeCache[relationID]
     ) {
 
 
       console.log(
-        "Route from cache:",
-        cacheKey
+        "Using cache:",
+        relationID
       );
 
 
       segments =
-        routeCache[cacheKey];
+        routeCache[relationID];
 
 
 
@@ -235,123 +416,26 @@ async function loadRouteMap(
 
 
       console.log(
-        "Loading route:",
-        cacheKey
+        "Loading:",
+        relationID
       );
 
 
 
-      const query = `
-        [out:json];
-
-        relation(${relationID});
-
-        >;
-
-        out geom;
-      `;
-
-
-
-      const response =
-        await fetch(
-          "https://overpass-api.de/api/interpreter",
-          {
-            method:"POST",
-            body:query
-          }
+      segments =
+        await fetchRouteData(
+          relationID
         );
 
 
 
-
-      if (!response.ok) {
-
-        throw new Error(
-          `Overpass ${response.status}`
-        );
-
-      }
-
-
-
-
-
-      const data =
-        await response.json();
-
-
-
-
-
-      segments = [];
-
-
-
-
-
-      data.elements.forEach(
-        el => {
-
-
-          if (
-            el.type !== "way" ||
-            !el.geometry
-          ) {
-
-            return;
-
-          }
-
-
-
-
-          if (
-            el.geometry.length < 2
-          ) {
-
-            return;
-
-          }
-
-
-
-
-
-          segments.push(
-            el.geometry.map(
-              p =>
-              [
-                p.lat,
-                p.lon
-              ]
-            )
-          );
-
-
-
-        }
-      );
-
-
-
-
-
-      routeCache[cacheKey] =
+      routeCache[relationID] =
         segments;
-
 
     }
 
 
 
-
-
-    /*
-    =========================
-    CREATE POLYLINE
-    =========================
-    */
 
 
     routePolyline =
@@ -393,9 +477,12 @@ async function loadRouteMap(
                 line
               ),
 
+
             weight:5,
 
+
             opacity:1,
+
 
             smoothFactor:2
 
