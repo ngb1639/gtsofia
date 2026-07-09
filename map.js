@@ -41,6 +41,8 @@ function getTransportColor(line) {
 
 
 
+
+
 /*
 =========================
 DESTROY MAP
@@ -78,7 +80,6 @@ function initRouteMap() {
     document.getElementById("routeMap");
 
 
-
   if (!container) {
     return false;
   }
@@ -104,7 +105,6 @@ function initRouteMap() {
 
 
 
-
     L.tileLayer(
       "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       {
@@ -123,7 +123,6 @@ function initRouteMap() {
 
 
     return true;
-
 
 
   } catch(error) {
@@ -170,6 +169,7 @@ async function loadRouteMap(
 
 
 
+
   const relationID =
     direction === "A"
       ? line.relationA
@@ -178,9 +178,11 @@ async function loadRouteMap(
 
 
 
+
   if (!relationID) {
     return;
   }
+
 
 
 
@@ -196,7 +198,12 @@ async function loadRouteMap(
   try {
 
 
-    let data;
+    const cacheKey =
+      `${relationID}_${direction}`;
+
+
+
+    let segments;
 
 
 
@@ -208,27 +215,28 @@ async function loadRouteMap(
 
 
     if (
-      routeCache[relationID]
+      routeCache[cacheKey]
     ) {
 
 
       console.log(
-        "Using cached route:",
-        relationID
+        "Route from cache:",
+        cacheKey
       );
 
 
-      data =
-        routeCache[relationID];
+      segments =
+        routeCache[cacheKey];
 
 
 
     } else {
 
 
+
       console.log(
-        "Loading from Overpass:",
-        relationID
+        "Loading route:",
+        cacheKey
       );
 
 
@@ -260,7 +268,7 @@ async function loadRouteMap(
       if (!response.ok) {
 
         throw new Error(
-          `Overpass error ${response.status}`
+          `Overpass ${response.status}`
         );
 
       }
@@ -268,29 +276,70 @@ async function loadRouteMap(
 
 
 
-      data =
+
+      const data =
         await response.json();
 
 
 
-      routeCache[relationID] =
-        data;
 
 
-    }
+      segments = [];
 
 
 
 
 
-    if (
-      !data.elements ||
-      data.elements.length === 0
-    ) {
+      data.elements.forEach(
+        el => {
 
-      throw new Error(
-        "No route data"
+
+          if (
+            el.type !== "way" ||
+            !el.geometry
+          ) {
+
+            return;
+
+          }
+
+
+
+
+          if (
+            el.geometry.length < 2
+          ) {
+
+            return;
+
+          }
+
+
+
+
+
+          segments.push(
+            el.geometry.map(
+              p =>
+              [
+                p.lat,
+                p.lon
+              ]
+            )
+          );
+
+
+
+        }
       );
+
+
+
+
+
+      routeCache[cacheKey] =
+        segments;
+
 
     }
 
@@ -300,7 +349,7 @@ async function loadRouteMap(
 
     /*
     =========================
-    CREATE ROUTE LAYER
+    CREATE POLYLINE
     =========================
     */
 
@@ -317,36 +366,8 @@ async function loadRouteMap(
 
 
 
-    data.elements.forEach(
-      el => {
-
-
-        if (
-          el.type !== "way" ||
-          !el.geometry
-        ) {
-
-          return;
-
-        }
-
-
-
-
-        const coords =
-          el.geometry.map(
-            p =>
-            [
-
-              p.lat,
-
-              p.lon
-
-            ]
-          );
-
-
-
+    segments.forEach(
+      coords => {
 
 
         coords.forEach(
@@ -363,38 +384,31 @@ async function loadRouteMap(
 
 
 
-        if (
-          coords.length > 1
-        ) {
+        L.polyline(
+          coords,
+          {
 
+            color:
+              getTransportColor(
+                line
+              ),
 
-          L.polyline(
-            coords,
-            {
+            weight:5,
 
-              color:
-                getTransportColor(
-                  line
-                ),
+            opacity:1,
 
-              weight:5,
+            smoothFactor:2
 
-              opacity:1,
+          }
 
-              smoothFactor:1
+        ).addTo(
+          routePolyline
+        );
 
-            }
-
-          ).addTo(
-            routePolyline
-          );
-
-        }
 
 
       }
     );
-
 
 
 
@@ -437,9 +451,8 @@ async function loadRouteMap(
         }
 
 
-
       },
-      200
+      100
     );
 
 
