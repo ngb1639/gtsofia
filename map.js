@@ -98,19 +98,31 @@ async function loadRouteMap(line, direction) {
     out geom;
     `;
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    let response;
+    let retries = 3;
+    
+    while (retries > 0) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-    const response = await fetch(
-      "https://overpass-api.de/api/interpreter",
-      {
-        method: "POST",
-        body: query,
-        signal: controller.signal
+        response = await fetch(
+          "https://overpass-api.de/api/interpreter",
+          {
+            method: "POST",
+            body: query,
+            signal: controller.signal
+          }
+        );
+
+        clearTimeout(timeoutId);
+        break;
+      } catch (error) {
+        retries--;
+        if (retries === 0) throw error;
+        await new Promise(resolve => setTimeout(resolve, 2000));
       }
-    );
-
-    clearTimeout(timeoutId);
+    }
 
     if (!response.ok) {
       throw new Error(`API returned ${response.status}`);
