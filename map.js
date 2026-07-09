@@ -33,32 +33,32 @@ function initRouteMap() {
   
   if (!container) return false;
 
-  if (!routeMap) {
-    try {
-      container.innerHTML = "";
-      
-      routeMap = L.map("routeMap", {
-        center: [42.6977, 23.3219],
-        zoom: 13,
-        zoomControl: true
-      });
-
-      L.tileLayer(
-        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-          attribution: '&copy; OpenStreetMap contributors',
-          maxZoom: 19
-        }
-      ).addTo(routeMap);
-      
-      return true;
-    } catch(error) {
-      console.error("Error initializing map:", error);
-      return false;
-    }
+  if (routeMap) {
+    routeMap.remove();
+    routeMap = null;
   }
-  
-  return true;
+
+  try {
+    container.innerHTML = "";
+    
+    routeMap = L.map("routeMap", {
+      center: [42.6977, 23.3219],
+      zoom: 13
+    });
+
+    L.tileLayer(
+      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 19
+      }
+    ).addTo(routeMap);
+    
+    return true;
+  } catch(error) {
+    console.error("Error initializing map:", error);
+    return false;
+  }
 }
 
 /*
@@ -83,11 +83,6 @@ async function loadRouteMap(line, direction) {
     return;
   }
 
-  if (routePolyline) {
-    routeMap.removeLayer(routePolyline);
-    routePolyline = null;
-  }
-
   try {
     const query = `[out:json];relation(${relationID});(._;>;);out geom;`;
 
@@ -95,16 +90,9 @@ async function loadRouteMap(line, direction) {
       "https://overpass-api.de/api/interpreter",
       {
         method: "POST",
-        body: query,
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
+        body: query
       }
     );
-
-    if (response.status === 429) {
-      throw new Error("Too many requests. Please wait and try again.");
-    }
 
     if (!response.ok) {
       throw new Error(`API error: ${response.status}`);
@@ -118,35 +106,35 @@ async function loadRouteMap(line, direction) {
 
     let points = [];
 
-    data.elements.forEach(el => {
-      if (el.geometry && Array.isArray(el.geometry)) {
-        el.geometry.forEach(p => {
-          if (p.lat && p.lon) {
-            points.push([p.lat, p.lon]);
-          }
-        });
+    for (let i = 0; i < data.elements.length; i++) {
+      const el = data.elements[i];
+      if (el.type === "way" && el.geometry) {
+        for (let j = 0; j < el.geometry.length; j++) {
+          const p = el.geometry[j];
+          points.push([p.lat, p.lon]);
+        }
       }
-    });
+    }
 
     if (!points.length) {
       throw new Error("No valid points");
     }
 
+    if (routePolyline) {
+      routeMap.removeLayer(routePolyline);
+      routePolyline = null;
+    }
+
     routePolyline = L.polyline(points, {
       color: getTransportColor(line.type),
-      weight: 6,
-      opacity: 0.8,
-      lineCap: 'round',
-      lineJoin: 'round'
+      weight: 5,
+      opacity: 0.7
     }).addTo(routeMap);
 
-    const bounds = routePolyline.getBounds();
-    if (bounds.isValid()) {
-      routeMap.fitBounds(bounds, { padding: [50, 50] });
-    }
+    routeMap.fitBounds(routePolyline.getBounds(), { padding: [50, 50] });
 
   } catch(error) {
     console.error("Error loading route:", error);
-    container.innerHTML = `<div class="empty-state">No map available</div>`;
+    container.innerHTML = '<div class="empty-state">No map available</div>';
   }
 }
