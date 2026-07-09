@@ -84,7 +84,7 @@ async function loadRouteMap(line, direction) {
   }
 
   try {
-    const query = `[out:json];relation(${relationID});(._;>;);out geom;`;
+    const query = `[out:json];relation(${relationID});out geom;`;
 
     const response = await fetch(
       "https://overpass-api.de/api/interpreter",
@@ -107,9 +107,13 @@ async function loadRouteMap(line, direction) {
     let points = [];
 
     data.elements.forEach(el => {
-      if (el.geometry) {
-        el.geometry.forEach(p => {
-          points.push([p.lat, p.lon]);
+      if (el.type === "relation" && el.members) {
+        el.members.forEach(member => {
+          if (member.geometry) {
+            member.geometry.forEach(p => {
+              points.push([p.lat, p.lon]);
+            });
+          }
         });
       }
     });
@@ -126,8 +130,7 @@ async function loadRouteMap(line, direction) {
     routePolyline = L.polyline(points, {
       color: getTransportColor(line.type),
       weight: 5,
-      opacity: 0.7,
-      smoothFactor: 1
+      opacity: 0.7
     }).addTo(routeMap);
 
     routeMap.fitBounds(routePolyline.getBounds(), { padding: [50, 50] });
