@@ -1,6 +1,8 @@
 let routeMap = null;
 let routePolyline = null;
 
+const routeCache = {};
+
 
 /*
 =========================
@@ -9,7 +11,6 @@ TRANSPORT COLORS
 */
 function getTransportColor(line) {
 
-  // Използва цвета от данните на линията
   if (line.color) {
     return line.color;
   }
@@ -38,6 +39,7 @@ function getTransportColor(line) {
 }
 
 
+
 /*
 =========================
 INIT MAP
@@ -45,50 +47,81 @@ INIT MAP
 */
 function initRouteMap() {
 
-  const container = document.getElementById("routeMap");
+  const container =
+    document.getElementById("routeMap");
 
-  if (!container) return false;
 
-
-  if (routeMap) {
-    routeMap.remove();
-    routeMap = null;
+  if (!container) {
+    return false;
   }
+
+
+
+  // Ако картата вече съществува,
+  // просто я преоразмеряваме
+  if (routeMap) {
+
+    setTimeout(() => {
+      routeMap.invalidateSize();
+    }, 100);
+
+    return true;
+  }
+
 
 
   try {
 
+
     container.innerHTML = "";
 
 
-    routeMap = L.map("routeMap", {
-      center: [42.6977, 23.3219],
-      zoom: 13
-    });
+
+    routeMap = L.map(
+      "routeMap",
+      {
+        center: [
+          42.6977,
+          23.3219
+        ],
+
+        zoom: 13
+      }
+    );
+
 
 
     L.tileLayer(
       "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       {
-        attribution: '&copy; OpenStreetMap contributors',
+        attribution:
+          '&copy; OpenStreetMap contributors',
+
         maxZoom: 19
       }
+
     ).addTo(routeMap);
+
 
 
     return true;
 
 
+
   } catch(error) {
+
 
     console.error(
       "Error initializing map:",
       error
     );
 
+
     return false;
   }
 }
+
+
 
 
 
@@ -97,12 +130,19 @@ function initRouteMap() {
 LOAD ROUTE
 =========================
 */
-async function loadRouteMap(line, direction) {
+async function loadRouteMap(
+  line,
+  direction
+) {
 
 
-  const container = document.getElementById("routeMap");
+  const container =
+    document.getElementById("routeMap");
 
-  if (!container) return;
+
+  if (!container) {
+    return;
+  }
 
 
 
@@ -113,69 +153,106 @@ async function loadRouteMap(line, direction) {
 
 
 
+  console.log(
+    "Loading relation:",
+    relationID,
+    "direction:",
+    direction
+  );
+
+
+
   if (!relationID) {
 
     container.innerHTML =
-      '<div class="empty-state">No map available</div>';
+      '<div class="empty-state">Няма налична карта</div>';
 
     return;
   }
+
 
 
 
   if (!initRouteMap()) {
 
     container.innerHTML =
-      '<div class="empty-state">No map available</div>';
+      '<div class="empty-state">Няма налична карта</div>';
 
     return;
   }
 
 
 
+
   try {
+
+
+    let data;
+
 
 
     /*
     =========================
-    GET OSM RELATION
+    CHECK CACHE
     =========================
     */
 
-    const query = `
-      [out:json];
 
-      relation(${relationID});
-
-      >;
-
-      out geom;
-    `;
+    if (routeCache[relationID]) {
 
 
+      data =
+        routeCache[relationID];
 
-    const response = await fetch(
-      "https://overpass-api.de/api/interpreter",
-      {
-        method: "POST",
-        body: query
+
+    } else {
+
+
+      const query = `
+        [out:json];
+
+        relation(${relationID});
+
+        >;
+
+        out geom;
+      `;
+
+
+
+      const response =
+        await fetch(
+          "https://overpass-api.de/api/interpreter",
+          {
+            method: "POST",
+            body: query
+          }
+        );
+
+
+
+      if (!response.ok) {
+
+
+        throw new Error(
+          `Overpass error: ${response.status}`
+        );
+
       }
-    );
 
 
 
-    if (!response.ok) {
+      data =
+        await response.json();
 
-      throw new Error(
-        `API error: ${response.status}`
-      );
+
+
+      routeCache[relationID] =
+        data;
 
     }
 
 
-
-    const data =
-      await response.json();
 
 
 
@@ -192,11 +269,14 @@ async function loadRouteMap(line, direction) {
 
 
 
+
+
     /*
     =========================
-    REMOVE OLD ROUTE
+    REMOVE OLD POLYLINE
     =========================
     */
+
 
     if (routePolyline) {
 
@@ -207,6 +287,8 @@ async function loadRouteMap(line, direction) {
       routePolyline = null;
 
     }
+
+
 
 
 
@@ -227,44 +309,57 @@ async function loadRouteMap(line, direction) {
 
 
 
+
     data.elements.forEach(el => {
 
 
-      // взимаме само way-овете
+
       if (
         el.type !== "way" ||
         !el.geometry
       ) {
+
         return;
+
       }
+
 
 
 
       if (
         el.geometry.length < 2
       ) {
+
         return;
+
       }
 
 
 
+
       const coords =
-        el.geometry.map(p => {
+        el.geometry.map(
+          p => {
 
 
-          const point =
-            [
-              p.lat,
-              p.lon
-            ];
+            const point =
+              [
+                p.lat,
+                p.lon
+              ];
 
 
-          bounds.extend(point);
+            bounds.extend(
+              point
+            );
 
 
-          return point;
+            return point;
 
-        });
+          }
+        );
+
+
 
 
 
@@ -275,9 +370,12 @@ async function loadRouteMap(line, direction) {
           color:
             getTransportColor(line),
 
+
           weight: 5,
 
+
           opacity: 1,
+
 
           smoothFactor: 1
 
@@ -288,7 +386,11 @@ async function loadRouteMap(line, direction) {
       );
 
 
+
     });
+
+
+
 
 
 
@@ -300,6 +402,7 @@ async function loadRouteMap(line, direction) {
       routePolyline.addTo(
         routeMap
       );
+
 
 
       routeMap.fitBounds(
@@ -314,13 +417,25 @@ async function loadRouteMap(line, direction) {
       );
 
 
+
+      setTimeout(() => {
+
+        routeMap.invalidateSize();
+
+      }, 200);
+
+
+
+
     } else {
+
 
       throw new Error(
         "No valid geometry"
       );
 
     }
+
 
 
 
@@ -334,7 +449,7 @@ async function loadRouteMap(line, direction) {
 
 
     container.innerHTML =
-      '<div class="empty-state">No map available</div>';
+      '<div class="empty-state">Няма налична карта</div>';
 
   }
 
