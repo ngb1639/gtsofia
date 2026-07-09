@@ -105,30 +105,18 @@ async function loadRouteMap(line, direction) {
     }
 
     let points = [];
-    let longestWayIndex = -1;
-    let maxPoints = 0;
 
-    data.elements.forEach((el, idx) => {
+    data.elements.forEach(el => {
       if (el.type === "relation" && el.members) {
         el.members.forEach(member => {
-          if (member.geometry && member.geometry.length > maxPoints) {
-            maxPoints = member.geometry.length;
-            longestWayIndex = idx;
+          if (member.geometry) {
+            member.geometry.forEach(p => {
+              points.push([p.lat, p.lon]);
+            });
           }
         });
       }
     });
-
-    if (longestWayIndex !== -1) {
-      const members = data.elements[longestWayIndex].members;
-      members.forEach(member => {
-        if (member.geometry && member.geometry.length === maxPoints) {
-          member.geometry.forEach(p => {
-            points.push([p.lat, p.lon]);
-          });
-        }
-      });
-    }
 
     if (!points.length) {
       throw new Error("No valid points");
