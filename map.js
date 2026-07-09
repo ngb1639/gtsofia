@@ -84,7 +84,7 @@ async function loadRouteMap(line, direction) {
   }
 
   try {
-    const query = `[out:json];relation(${relationID});(._;>;);out body geom;`;
+    const query = `[out:json];relation(${relationID});out geom;`;
 
     const response = await fetch(
       "https://overpass-api.de/api/interpreter",
@@ -105,14 +105,30 @@ async function loadRouteMap(line, direction) {
     }
 
     let points = [];
+    let longestWayIndex = -1;
+    let maxPoints = 0;
 
-    data.elements.forEach(el => {
-      if (el.geometry) {
-        el.geometry.forEach(p => {
-          points.push([p.lat, p.lon]);
+    data.elements.forEach((el, idx) => {
+      if (el.type === "relation" && el.members) {
+        el.members.forEach(member => {
+          if (member.geometry && member.geometry.length > maxPoints) {
+            maxPoints = member.geometry.length;
+            longestWayIndex = idx;
+          }
         });
       }
     });
+
+    if (longestWayIndex !== -1) {
+      const members = data.elements[longestWayIndex].members;
+      members.forEach(member => {
+        if (member.geometry && member.geometry.length === maxPoints) {
+          member.geometry.forEach(p => {
+            points.push([p.lat, p.lon]);
+          });
+        }
+      });
+    }
 
     if (!points.length) {
       throw new Error("No valid points");
