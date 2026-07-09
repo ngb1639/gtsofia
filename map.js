@@ -1,6 +1,7 @@
 let routeMap = null;
 let routePolyline = null;
 
+
 /*
 =========================
 TRANSPORT COLORS
@@ -23,28 +24,35 @@ function getTransportColor(type) {
   }
 }
 
+
 /*
 =========================
 INIT MAP
 =========================
 */
 function initRouteMap() {
+
   const container = document.getElementById("routeMap");
-  
+
   if (!container) return false;
+
 
   if (routeMap) {
     routeMap.remove();
     routeMap = null;
   }
 
+
   try {
+
     container.innerHTML = "";
-    
+
+
     routeMap = L.map("routeMap", {
       center: [42.6977, 23.3219],
       zoom: 13
     });
+
 
     L.tileLayer(
       "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -53,13 +61,23 @@ function initRouteMap() {
         maxZoom: 19
       }
     ).addTo(routeMap);
-    
+
+
     return true;
+
+
   } catch(error) {
-    console.error("Error initializing map:", error);
+
+    console.error(
+      "Error initializing map:",
+      error
+    );
+
     return false;
   }
 }
+
+
 
 /*
 =========================
@@ -67,24 +85,61 @@ LOAD ROUTE
 =========================
 */
 async function loadRouteMap(line, direction) {
+
+
   const container = document.getElementById("routeMap");
-  
+
   if (!container) return;
 
-  const relationID = direction === "A" ? line.relationA : line.relationB;
+
+
+  const relationID =
+    direction === "A"
+      ? line.relationA
+      : line.relationB;
+
+
 
   if (!relationID) {
-    container.innerHTML = '<div class="empty-state">No map available</div>';
+
+    container.innerHTML =
+      '<div class="empty-state">No map available</div>';
+
     return;
   }
+
+
 
   if (!initRouteMap()) {
-    container.innerHTML = '<div class="empty-state">No map available</div>';
+
+    container.innerHTML =
+      '<div class="empty-state">No map available</div>';
+
     return;
   }
 
+
+
   try {
-    const query = `[out:json];relation(${relationID});out geom;`;
+
+
+    /*
+    =========================
+    GET OSM RELATION
+    =========================
+    */
+
+    const query = `
+      [out:json];
+
+      relation(${relationID});
+
+      >;
+
+      out geom;
+    `;
+
+
 
     const response = await fetch(
       "https://overpass-api.de/api/interpreter",
@@ -94,49 +149,183 @@ async function loadRouteMap(line, direction) {
       }
     );
 
+
+
     if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+
+      throw new Error(
+        `API error: ${response.status}`
+      );
+
     }
 
-    const data = await response.json();
 
-    if (!data.elements || data.elements.length === 0) {
-      throw new Error("No route data found");
+
+    const data =
+      await response.json();
+
+
+
+    if (
+      !data.elements ||
+      data.elements.length === 0
+    ) {
+
+      throw new Error(
+        "No route data found"
+      );
+
     }
 
-    let points = [];
 
-    data.elements.forEach(el => {
-      if (el.type === "relation" && el.members) {
-        el.members.forEach(member => {
-          if (member.geometry) {
-            member.geometry.forEach(p => {
-              points.push([p.lat, p.lon]);
-            });
-          }
-        });
-      }
-    });
 
-    if (!points.length) {
-      throw new Error("No valid points");
-    }
+    /*
+    =========================
+    REMOVE OLD ROUTE
+    =========================
+    */
 
     if (routePolyline) {
-      routeMap.removeLayer(routePolyline);
+
+      routeMap.removeLayer(
+        routePolyline
+      );
+
       routePolyline = null;
+
     }
 
-    routePolyline = L.polyline(points, {
-      color: getTransportColor(line.type),
-      weight: 5,
-      opacity: 1
-    }).addTo(routeMap);
 
-    routeMap.fitBounds(routePolyline.getBounds(), { padding: [50, 50] });
+
+    /*
+    =========================
+    DRAW OSM WAYS
+    =========================
+    */
+
+
+    routePolyline =
+      L.layerGroup();
+
+
+
+    let bounds =
+      L.latLngBounds();
+
+
+
+    data.elements.forEach(el => {
+
+
+      if (
+        el.type !== "way" ||
+        !el.geometry
+      ) {
+        return;
+      }
+
+
+
+      /*
+      Ignore tiny non-route ways
+      */
+
+      if (
+        el.geometry.length < 2
+      ) {
+        return;
+      }
+
+
+
+      const coords =
+        el.geometry.map(p => {
+
+
+          const point =
+            [
+              p.lat,
+              p.lon
+            ];
+
+
+          bounds.extend(point);
+
+
+          return point;
+
+        });
+
+
+
+      L.polyline(
+        coords,
+        {
+          color:
+            getTransportColor(
+              line.type
+            ),
+
+          weight: 5,
+
+          opacity: 1,
+
+          smoothFactor: 1
+        }
+
+      ).addTo(
+        routePolyline
+      );
+
+
+    });
+
+
+
+    if (
+      bounds.isValid()
+    ) {
+
+
+      routePolyline.addTo(
+        routeMap
+      );
+
+
+      routeMap.fitBounds(
+        bounds,
+        {
+          padding:
+            [
+              50,
+              50
+            ]
+        }
+      );
+
+
+    } else {
+
+      throw new Error(
+        "No valid geometry"
+      );
+
+    }
+
+
 
   } catch(error) {
-    console.error("Error loading route:", error);
-    container.innerHTML = '<div class="empty-state">No map available</div>';
+
+
+    console.error(
+      "Error loading route:",
+      error
+    );
+
+
+    container.innerHTML =
+      '<div class="empty-state">No map available</div>';
+
   }
+
 }
