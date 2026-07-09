@@ -40,6 +40,12 @@ function renderLines() {
 
 function selectLine(line) {
 
+    if (typeof destroyRouteMap === "function") {
+
+    destroyRouteMap();
+
+  }
+
   const direction = line.activeDirection === "A"
     ? line.directionA
     : line.directionB;
