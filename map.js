@@ -43,26 +43,26 @@ function getTransportColor(line) {
 
 /*
 =========================
-DESTROY MAP
+CLEAR ROUTE ONLY
 =========================
 */
-function destroyRouteMap() {
 
+function clearRouteLayer() {
 
-  if (routeMap) {
+  if (
+    routePolyline &&
+    routeMap
+  ) {
 
-    routeMap.remove();
+    routeMap.removeLayer(
+      routePolyline
+    );
 
-    routeMap = null;
+    routePolyline = null;
 
   }
 
-
-  routePolyline = null;
-
 }
-
-
 
 
 
@@ -71,17 +71,42 @@ function destroyRouteMap() {
 INIT MAP
 =========================
 */
+
 function initRouteMap() {
 
 
   const container =
-    document.getElementById("routeMap");
-
+    document.getElementById(
+      "routeMap"
+    );
 
 
   if (!container) {
     return false;
   }
+
+
+
+  // reuse existing map
+
+  if (routeMap) {
+
+    setTimeout(
+      () => {
+
+        routeMap.invalidateSize(
+          true
+        );
+
+      },
+      50
+    );
+
+    return true;
+
+  }
+
+
 
 
 
@@ -92,13 +117,17 @@ function initRouteMap() {
       L.map(
         "routeMap",
         {
+
           center:
           [
             42.6977,
             23.3219
           ],
 
-          zoom:13
+          zoom:13,
+
+          preferCanvas:true
+
         }
       );
 
@@ -150,6 +179,7 @@ function initRouteMap() {
 LOAD ROUTE
 =========================
 */
+
 async function loadRouteMap(
   line,
   direction
@@ -191,12 +221,19 @@ async function loadRouteMap(
 
 
 
+  // remove only old route
+
+  clearRouteLayer();
+
+
+
 
 
   try {
 
 
     let data;
+
 
 
 
@@ -226,10 +263,12 @@ async function loadRouteMap(
     } else {
 
 
+
       console.log(
         "Loading from Overpass:",
         relationID
       );
+
 
 
 
@@ -245,14 +284,21 @@ async function loadRouteMap(
 
 
 
+
+
       const response =
         await fetch(
           "https://overpass-api.de/api/interpreter",
           {
+
             method:"POST",
+
             body:query
+
           }
         );
+
+
 
 
 
@@ -268,8 +314,10 @@ async function loadRouteMap(
 
 
 
+
       data =
         await response.json();
+
 
 
 
@@ -300,19 +348,12 @@ async function loadRouteMap(
 
     /*
     =========================
-    CREATE ROUTE LAYER
+    CREATE SINGLE POLYLINE
     =========================
     */
 
 
-    routePolyline =
-      L.layerGroup();
-
-
-
-    const bounds =
-      L.latLngBounds();
-
+    const allCoords = [];
 
 
 
@@ -333,68 +374,82 @@ async function loadRouteMap(
 
 
 
-        const coords =
-          el.geometry.map(
-            p =>
-            [
 
-              p.lat,
-
-              p.lon
-
-            ]
-          );
+        el.geometry.forEach(
+          p => {
 
 
-
-
-
-        coords.forEach(
-          point => {
-
-            bounds.extend(
-              point
+            allCoords.push(
+              [
+                p.lat,
+                p.lon
+              ]
             );
+
 
           }
         );
 
 
-
-
-
-        if (
-          coords.length > 1
-        ) {
-
-
-          L.polyline(
-            coords,
-            {
-
-              color:
-                getTransportColor(
-                  line
-                ),
-
-              weight:5,
-
-              opacity:1,
-
-              smoothFactor:1
-
-            }
-
-          ).addTo(
-            routePolyline
-          );
-
-        }
-
-
       }
     );
 
+
+
+
+
+    if (
+      allCoords.length < 2
+    ) {
+
+      throw new Error(
+        "Not enough coordinates"
+      );
+
+    }
+
+
+
+
+
+
+    /*
+    =========================
+    SIMPLIFY GEOMETRY
+    =========================
+    */
+
+
+    const simplified =
+      L.LineUtil.simplify(
+        allCoords,
+        0.00005
+      );
+
+
+
+
+
+
+
+    routePolyline =
+      L.polyline(
+        simplified,
+        {
+
+          color:
+            getTransportColor(
+              line
+            ),
+
+          weight:5,
+
+          opacity:1,
+
+          smoothFactor:1
+
+        }
+      );
 
 
 
@@ -408,6 +463,14 @@ async function loadRouteMap(
 
 
 
+
+    /*
+    =========================
+    FIT MAP
+    =========================
+    */
+
+
     setTimeout(
       () => {
 
@@ -415,6 +478,12 @@ async function loadRouteMap(
         routeMap.invalidateSize(
           true
         );
+
+
+
+        const bounds =
+          routePolyline.getBounds();
+
 
 
 
@@ -426,21 +495,26 @@ async function loadRouteMap(
           routeMap.fitBounds(
             bounds,
             {
+
               padding:
               [
                 50,
                 50
               ]
+
             }
           );
+
 
         }
 
 
 
       },
-      200
+      50
     );
+
+
 
 
 
