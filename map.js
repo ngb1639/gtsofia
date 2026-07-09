@@ -1,8 +1,6 @@
 let routeMap = null;
 let routePolyline = null;
 
-const routeCache = {};
-
 
 /*
 =========================
@@ -57,13 +55,15 @@ function initRouteMap() {
 
 
 
-  // Ако картата вече съществува,
-  // просто я преоразмеряваме
+  // Картата се създава само веднъж
   if (routeMap) {
 
     setTimeout(() => {
+
       routeMap.invalidateSize();
-    }, 100);
+
+    }, 200);
+
 
     return true;
   }
@@ -74,7 +74,6 @@ function initRouteMap() {
 
 
     container.innerHTML = "";
-
 
 
     routeMap = L.map(
@@ -99,7 +98,6 @@ function initRouteMap() {
 
         maxZoom: 19
       }
-
     ).addTo(routeMap);
 
 
@@ -118,7 +116,9 @@ function initRouteMap() {
 
 
     return false;
+
   }
+
 }
 
 
@@ -146,6 +146,7 @@ async function loadRouteMap(
 
 
 
+
   const relationID =
     direction === "A"
       ? line.relationA
@@ -153,21 +154,25 @@ async function loadRouteMap(
 
 
 
+
   console.log(
     "Loading relation:",
     relationID,
-    "direction:",
     direction
   );
 
 
 
+
   if (!relationID) {
 
+
     container.innerHTML =
-      '<div class="empty-state">Няма налична карта</div>';
+      '<div class="empty-state">No map available</div>';
+
 
     return;
+
   }
 
 
@@ -175,10 +180,13 @@ async function loadRouteMap(
 
   if (!initRouteMap()) {
 
+
     container.innerHTML =
-      '<div class="empty-state">Няма налична карта</div>';
+      '<div class="empty-state">No map available</div>';
+
 
     return;
+
   }
 
 
@@ -187,70 +195,83 @@ async function loadRouteMap(
   try {
 
 
-    let data;
+    /*
+    =========================
+    WAIT FOR MAP SIZE
+    =========================
+    */
+
+
+    await new Promise(resolve => {
+
+      setTimeout(resolve, 300);
+
+    });
+
+
+    routeMap.invalidateSize();
+
+
 
 
 
     /*
     =========================
-    CHECK CACHE
+    LOAD OSM RELATION
     =========================
     */
 
 
-    if (routeCache[relationID]) {
+    const query = `
+      [out:json];
 
+      relation(${relationID});
 
-      data =
-        routeCache[relationID];
+      >;
 
-
-    } else {
-
-
-      const query = `
-        [out:json];
-
-        relation(${relationID});
-
-        >;
-
-        out geom;
-      `;
+      out geom;
+    `;
 
 
 
-      const response =
-        await fetch(
-          "https://overpass-api.de/api/interpreter",
-          {
-            method: "POST",
-            body: query
-          }
-        );
+
+    const response =
+      await fetch(
+        "https://overpass-api.de/api/interpreter",
+        {
+          method: "POST",
+          body: query
+        }
+      );
 
 
 
-      if (!response.ok) {
 
 
-        throw new Error(
-          `Overpass error: ${response.status}`
-        );
-
-      }
+    if (!response.ok) {
 
 
-
-      data =
-        await response.json();
-
-
-
-      routeCache[relationID] =
-        data;
+      throw new Error(
+        `Overpass error: ${response.status}`
+      );
 
     }
+
+
+
+
+
+    const data =
+      await response.json();
+
+
+
+
+
+    console.log(
+      "Loaded elements:",
+      data.elements.length
+    );
 
 
 
@@ -260,6 +281,7 @@ async function loadRouteMap(
       !data.elements ||
       data.elements.length === 0
     ) {
+
 
       throw new Error(
         "No route data found"
@@ -273,16 +295,18 @@ async function loadRouteMap(
 
     /*
     =========================
-    REMOVE OLD POLYLINE
+    REMOVE OLD ROUTE
     =========================
     */
 
 
     if (routePolyline) {
 
+
       routeMap.removeLayer(
         routePolyline
       );
+
 
       routePolyline = null;
 
@@ -310,10 +334,12 @@ async function loadRouteMap(
 
 
 
+
     data.elements.forEach(el => {
 
 
 
+      // Само OSM ways
       if (
         el.type !== "way" ||
         !el.geometry
@@ -326,6 +352,7 @@ async function loadRouteMap(
 
 
 
+
       if (
         el.geometry.length < 2
       ) {
@@ -333,6 +360,7 @@ async function loadRouteMap(
         return;
 
       }
+
 
 
 
@@ -393,7 +421,6 @@ async function loadRouteMap(
 
 
 
-
     if (
       bounds.isValid()
     ) {
@@ -409,12 +436,13 @@ async function loadRouteMap(
         bounds,
         {
           padding:
-            [
-              50,
-              50
-            ]
+          [
+            50,
+            50
+          ]
         }
       );
+
 
 
 
@@ -422,7 +450,8 @@ async function loadRouteMap(
 
         routeMap.invalidateSize();
 
-      }, 200);
+      }, 300);
+
 
 
 
@@ -448,8 +477,12 @@ async function loadRouteMap(
     );
 
 
-    container.innerHTML =
-      '<div class="empty-state">Няма налична карта</div>';
+    // Не унищожаваме Leaflet картата
+    if (routeMap) {
+
+      routeMap.invalidateSize();
+
+    }
 
   }
 
