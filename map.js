@@ -63,6 +63,63 @@ function initRouteMap() {
 
 /*
 =========================
+BUILD ORDERED ROUTE
+=========================
+*/
+function buildOrderedRoute(ways) {
+  if (!ways || ways.length === 0) return [];
+  
+  let allSegments = ways.map(way => ({
+    points: way.geometry,
+    used: false
+  }));
+
+  let route = [];
+  let currentSegment = allSegments[0];
+  currentSegment.used = true;
+  route.push(...currentSegment.points);
+
+  while (true) {
+    let found = false;
+    let lastPoint = route[route.length - 1];
+
+    for (let segment of allSegments) {
+      if (segment.used) continue;
+
+      let firstPoint = segment.points[0];
+      let lastSegmentPoint = segment.points[segment.points.length - 1];
+
+      let distToFirst = Math.hypot(
+        lastPoint.lat - firstPoint.lat,
+        lastPoint.lon - firstPoint.lon
+      );
+
+      let distToLast = Math.hypot(
+        lastPoint.lat - lastSegmentPoint.lat,
+        lastPoint.lon - lastSegmentPoint.lon
+      );
+
+      if (distToFirst < distToLast) {
+        segment.used = true;
+        route.push(...segment.points);
+        found = true;
+        break;
+      } else if (distToLast < 0.01) {
+        segment.used = true;
+        route.push(...segment.points.reverse());
+        found = true;
+        break;
+      }
+    }
+
+    if (!found) break;
+  }
+
+  return route.map(p => [p.lat, p.lon]);
+}
+
+/*
+=========================
 LOAD ROUTE
 =========================
 */
@@ -104,17 +161,13 @@ async function loadRouteMap(line, direction) {
       throw new Error("No route data found");
     }
 
-    let points = [];
+    let ways = data.elements.filter(el => el.type === "way" && el.geometry);
 
-    for (let i = 0; i < data.elements.length; i++) {
-      const el = data.elements[i];
-      if (el.type === "way" && el.geometry) {
-        for (let j = 0; j < el.geometry.length; j++) {
-          const p = el.geometry[j];
-          points.push([p.lat, p.lon]);
-        }
-      }
+    if (!ways.length) {
+      throw new Error("No valid ways");
     }
+
+    let points = buildOrderedRoute(ways);
 
     if (!points.length) {
       throw new Error("No valid points");
