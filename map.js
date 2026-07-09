@@ -104,23 +104,25 @@ async function loadRouteMap(line, direction) {
       throw new Error("No route data found");
     }
 
-    let points = [];
+    let longestWay = null;
+    let maxPoints = 0;
 
     data.elements.forEach(el => {
       if (el.type === "relation" && el.members) {
         el.members.forEach(member => {
-          if (member.geometry) {
-            member.geometry.forEach(p => {
-              points.push([p.lat, p.lon]);
-            });
+          if (member.geometry && member.geometry.length > maxPoints) {
+            maxPoints = member.geometry.length;
+            longestWay = member.geometry;
           }
         });
       }
     });
 
-    if (!points.length) {
+    if (!longestWay) {
       throw new Error("No valid points");
     }
+
+    let points = longestWay.map(p => [p.lat, p.lon]);
 
     if (routePolyline) {
       routeMap.removeLayer(routePolyline);
