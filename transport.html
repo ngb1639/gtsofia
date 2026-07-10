@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Линии | GTSofia</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+
+  <a href="index.html" class="nav-logo">GTSOFIA</a>
+
+  <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+
+  <nav id="navMenu">
+    <a href="index.html">Начало</a>
+    <a href="transport.html" class="active">Линии</a>
+    <a href="rolling-stock.html">Подвижен състав</a>
+    <a href="about.html">За проекта</a>
+  </nav>
+
+</header>
+
+<!-- MAIN APP -->
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <input class="search" id="searchInput" placeholder="Търсене по линия…" />
+
+    <div class="filters">
+
+      <button class="filter-btn active" onclick="setFilter(null, this)">Всички</button>
+      <button class="filter-btn" onclick="setFilter('bus', this)">Автобуси</button>
+      <button class="filter-btn" onclick="setFilter('trolley', this)">Тролейбуси</button>
+      <button class="filter-btn" onclick="setFilter('tram', this)">Трамваи</button>
+      <button class="filter-btn" onclick="setFilter('metro', this)">Метро</button>
+      <button class="filter-btn" onclick="setFilter('night', this)">Нощни линии</button>
+
+    </div>
+
+    <h3 class="section-title">Линии</h3>
+
+    <div class="lines-grid" id="linesGrid"></div>
+
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <div id="contentArea">
+      <div class="empty-state">
+        Изберете линия, за да видите информация за нея.
+      </div>
+    </div>
+
+  </main>
+
+</div>
+
+<!-- SCRIPTS -->
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="navbar.js"></script>
+
+<!-- 🚧 NEW: alerts system -->
+<script src="alerts.js"></script>
+
+</body>
+</html>
