@@ -10,84 +10,13 @@ BASE RESET
 
 body {
   font-family: "Sofia Sans", sans-serif;
-  background: var(--bg);
+  background: #f3f4f6;
   min-height: 100vh;
-  color: var(--text);
+  color: #111827;
 }
 
 img {
   max-width: 100%;
-}
-
-/* =========================
-THEME VARIABLES
-========================= */
-
-:root {
-
-  --bg: #f3f4f6;
-  --surface: #ffffff;
-  --surface-hover: #f9fafb;
-
-  --text: #111827;
-  --text-secondary: #6b7280;
-
-  --border: #e5e7eb;
-
-  --input-bg: #f3f4f6;
-
-  --button-bg: #e5e7eb;
-  --button-hover: #d1d5db;
-
-  --active-bg: #111827;
-  --active-text: white;
-
-  --shadow:
-    0 2px 10px rgba(0,0,0,0.05);
-}
-
-
-[data-theme="dark"] {
-
-  --bg: #111827;
-  --surface: #1f2937;
-  --surface-hover: #374151;
-
-  --text: #f9fafb;
-  --text-secondary: #d1d5db;
-
-  --border: #374151;
-
-  --input-bg: #374151;
-
-  --button-bg: #374151;
-  --button-hover: #4b5563;
-
-  --active-bg: #f9fafb;
-  --active-text: #111827;
-
-  --shadow:
-    0 2px 12px rgba(0,0,0,0.35);
-}
-
-body,
-.navbar,
-.sidebar,
-.content,
-.info-card,
-.home-card,
-.stock-card,
-.promo-card,
-.stops-card,
-.filter-btn,
-.search,
-.switch-btn {
-
-  transition:
-    background-color .25s ease,
-    color .25s ease,
-    border-color .25s ease;
-
 }
 
 /* =========================
@@ -96,50 +25,34 @@ NAVBAR
 
 .navbar {
   height: 70px;
-
-  background: color-mix(
-    in srgb,
-    var(--surface) 88%,
-    transparent
-  );
-
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-
-  border-bottom: 1px solid var(--border);
-
+  border-bottom: 1px solid rgba(229, 231, 235, 0.7);
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: 0 24px;
-
   position: sticky;
   top: 0;
   z-index: 1000;
-
   transition:
-    background .3s ease,
-    border-color .3s ease,
-    box-shadow .3s ease;
+    background 0.3s ease,
+    backdrop-filter 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .navbar.scrolled {
-
-  background: color-mix(
-    in srgb,
-    var(--surface) 75%,
-    transparent
-  );
-
-  box-shadow:
-    0 6px 20px rgba(0,0,0,.15);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
 .nav-logo {
   font-size: 26px;
   font-weight: 700;
-  color: var(--text);
+  color: #111827;
   text-decoration: none;
 }
 
@@ -150,7 +63,7 @@ NAVBAR
 
 .navbar nav a {
   text-decoration: none;
-  color: var(--text-secondary);
+  color: #374151;
   font-weight: 600;
   padding: 10px 14px;
   border-radius: 10px;
@@ -158,7 +71,7 @@ NAVBAR
 }
 
 .navbar nav a:hover {
-  background: var(--button-bg);
+  background: #f3f4f6;
 }
 
 .navbar nav a.active {
@@ -172,23 +85,6 @@ NAVBAR
   background: none;
   border: none;
   cursor: pointer;
-}
-
-.theme-toggle {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: none;
-  background: var(--button-bg);
-  color: var(--text);
-  font-size: 20px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-
-.theme-toggle:hover {
-  background: var(--button-hover);
 }
 
 /* =========================
@@ -206,7 +102,7 @@ SIDEBAR
 
 .sidebar {
   width: 360px;
-  background: var(--surface);
+  background: white;
   border-right: 1px solid #e5e7eb;
   padding: 20px;
   overflow-y: auto;
@@ -224,32 +120,11 @@ SIDEBAR
   border: none;
   border-radius: 12px;
   padding: 0 16px;
-  background: var(--input-bg);
-  color: var(--text);
+  background: #f3f4f6;
   font-family: "Sofia Sans", sans-serif;
   font-size: 15px;
   margin-bottom: 16px;
   outline: none;
-}
-
-.search::placeholder {
-  color: var(--text-secondary);
-}
-
-.direction-arrow {
-
-  width:15px;
-  opacity:.7;
-
-}
-
-
-[data-theme="dark"] .direction-arrow {
-
-  filter:
-    invert(1)
-    brightness(1.8);
-
 }
 
 .filters {
@@ -261,30 +136,19 @@ SIDEBAR
 }
 
 .filter-btn {
-  background: var(--button-bg);
-  color: var(--text);
-  border: 1px solid var(--border);
+  font-family: "Sofia Sans", sans-serif;
+  border: none;
   padding: 10px 14px;
   border-radius: 10px;
+  background: #e5e7eb;
   font-weight: 600;
   cursor: pointer;
-  transition: .2s;
-}
-
-
-.filter-btn:hover {
-  background: var(--button-hover);
-}
-
-
-.filter-btn.active {
-  background: var(--active-bg);
-  color: var(--active-text);
-  border-color: transparent;
+  transition: 0.2s;
+  font-size: 14px;
 }
 
 .filter-btn:hover {
-  background: var(--button-hover);
+  background: #d1d5db;
 }
 
 .filter-btn.active {
@@ -349,7 +213,7 @@ CONTENT AREA
 
 .empty-state {
   font-family: "Sofia Sans", sans-serif;
-  color:var(--text-secondary);
+  color: #9ca3af;
   font-size: 18px;
   margin-top: 40px;
 }
@@ -371,30 +235,19 @@ LINE DETAILS
 }
 
 .switch-btn {
-
-  background: var(--active-bg);
-  color: var(--active-text);
-
-  height:42px;
-  padding:0 18px;
-
-  border-radius:12px;
-
-  font-weight:600;
-
-  border:1px solid var(--border);
-
-  cursor:pointer;
-
-  transition:.2s;
-
+  font-family: "Sofia Sans", sans-serif;
+  border: none;
+  background: #111827;
+  color: white;
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-
 .switch-btn:hover {
-
-  opacity:.85;
-
+  opacity: 0.9;
 }
 
 .route-direction {
@@ -453,7 +306,7 @@ STOPS
 ========================= */
 
 .stops-card {
-  background: var(--surface);
+  background: white;
   border-radius: 18px;
   padding: 28px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
@@ -471,7 +324,7 @@ STOPS
   top: 0;
   bottom: 0;
   width: 2px;
-  background:var(--border);
+  background: #d1d5db;
 }
 
 .stop-item {
@@ -487,8 +340,8 @@ STOPS
   width: 16px;
   height: 16px;
   border-radius: 999px;
-  background:var(--active-bg);
-  border:4px solid var(--surface);
+  background: #111827;
+  border: 4px solid white;
 }
 
 .stop-name {
@@ -514,12 +367,12 @@ HOME PAGE
 }
 
 .home-card {
-  background: var(--surface);
+  background: white;
   border-radius: 18px;
   padding: 24px;
   text-decoration: none;
   color: inherit;
-  border: 1px solid var(--border);
+  border: 1px solid #e5e7eb;
   transition: 0.2s;
 }
 
@@ -532,10 +385,10 @@ PROMO CARD (HOME)
 ========================= */
 
 .promo-card {
-  background: var(--surface);
+  background: white;
   border-radius: 18px;
   padding: 18px 24px;
-  border: 1px solid var(--border);
+  border: 1px solid #e5e7eb;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -560,7 +413,7 @@ PROMO CARD (HOME)
 
 .promo-text {
   font-size: 14px;
-  color: var(--text-secondary);
+  color: #6b7280;
   margin-bottom: 16px;
 }
 
@@ -571,8 +424,8 @@ PROMO CARD (HOME)
   padding: 10px 14px;
   border: none;
   border-radius: 10px;
-  background: var(--button-bg);
-  color: var(--text);
+  background: #e5e7eb;
+  color: #111827;
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
@@ -581,15 +434,15 @@ PROMO CARD (HOME)
 }
 
 .promo-btn:hover {
-  background: var(--button-hover);
+  background: #d1d5db;
 }
 
 .promo-btn.secondary {
-  background: var(--button-bg);
+  background: #e5e7eb;
 }
 
 .promo-btn.secondary:hover {
-  background: var(--button-hover);
+  background: #d1d5db;
 }
 
 .promo-actions {
@@ -616,10 +469,10 @@ ROLLING STOCK
 }
 
 .stock-card {
-  background: var(--surface);
+  background: white;
   border-radius: 18px;
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid #e5e7eb;
 }
 
 .stock-image {
@@ -643,14 +496,11 @@ ROLLING STOCK
   display: flex;
   align-items: center;
   justify-content: center;
-
   height: 25px;
   width: 42px;
   min-width: 35px;
   padding: 0 8px;
-
   border-radius: 6px;
-
   font-weight: 700;
 }
 
@@ -667,10 +517,10 @@ ABOUT PAGE
 ========================= */
 
 .info-card {
-  background: var(--surface);
+  background: white;
   padding: 24px;
   border-radius: 18px;
-  border: 1px solid var(--border);
+  border: 1px solid #e5e7eb;
   width: 100%;
 }
 
