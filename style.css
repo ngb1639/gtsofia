@@ -10,13 +10,64 @@ BASE RESET
 
 body {
   font-family: "Sofia Sans", sans-serif;
-  background: #f3f4f6;
+  background: var(--bg);
   min-height: 100vh;
-  color: #111827;
+  color: var(--text);
 }
 
 img {
   max-width: 100%;
+}
+
+/* =========================
+THEME VARIABLES
+========================= */
+
+:root {
+
+  --bg: #f3f4f6;
+  --surface: #ffffff;
+  --surface-hover: #f9fafb;
+
+  --text: #111827;
+  --text-secondary: #6b7280;
+
+  --border: #e5e7eb;
+
+  --input-bg: #f3f4f6;
+
+  --button-bg: #e5e7eb;
+  --button-hover: #d1d5db;
+
+  --active-bg: #111827;
+  --active-text: white;
+
+  --shadow:
+    0 2px 10px rgba(0,0,0,0.05);
+}
+
+
+[data-theme="dark"] {
+
+  --bg: #111827;
+  --surface: #1f2937;
+  --surface-hover: #374151;
+
+  --text: #f9fafb;
+  --text-secondary: #d1d5db;
+
+  --border: #374151;
+
+  --input-bg: #374151;
+
+  --button-bg: #374151;
+  --button-hover: #4b5563;
+
+  --active-bg: #f9fafb;
+  --active-text: #111827;
+
+  --shadow:
+    0 2px 12px rgba(0,0,0,0.35);
 }
 
 /* =========================
@@ -52,7 +103,7 @@ NAVBAR
 .nav-logo {
   font-size: 26px;
   font-weight: 700;
-  color: #111827;
+  color: var(--text);
   text-decoration: none;
 }
 
@@ -63,17 +114,15 @@ NAVBAR
 
 .navbar nav a {
   text-decoration: none;
-  color: #374151;
+  color: var(--text-secondary);
   font-weight: 600;
-
   padding: 10px 14px;
   border-radius: 10px;
-
   transition: 0.2s;
 }
 
 .navbar nav a:hover {
-  background: #f3f4f6;
+  background: var(--button-bg);
 }
 
 .navbar nav a.active {
@@ -87,6 +136,23 @@ NAVBAR
   background: none;
   border: none;
   cursor: pointer;
+}
+
+.theme-toggle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: var(--button-bg);
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+
+.theme-toggle:hover {
+  background: var(--button-hover);
 }
 
 /* =========================
@@ -104,7 +170,7 @@ SIDEBAR
 
 .sidebar {
   width: 360px;
-  background: white;
+  background: var(--surface);
   border-right: 1px solid #e5e7eb;
   padding: 20px;
   overflow-y: auto;
@@ -142,7 +208,7 @@ SIDEBAR
   border: none;
   padding: 10px 14px;
   border-radius: 10px;
-  background: #e5e7eb;
+  background: var(--button-bg);
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s;
@@ -150,7 +216,7 @@ SIDEBAR
 }
 
 .filter-btn:hover {
-  background: #d1d5db;
+  background: var(--button-hover);
 }
 
 .filter-btn.active {
@@ -308,7 +374,7 @@ STOPS
 ========================= */
 
 .stops-card {
-  background: white;
+  background: var(--surface);
   border-radius: 18px;
   padding: 28px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
@@ -326,7 +392,7 @@ STOPS
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #d1d5db;
+  background: var(--button-hover);
 }
 
 .stop-item {
@@ -343,7 +409,7 @@ STOPS
   height: 16px;
   border-radius: 999px;
   background: #111827;
-  border: 4px solid white;
+  border: 4px solid var(--surface);
 }
 
 .stop-name {
@@ -369,14 +435,12 @@ HOME PAGE
 }
 
 .home-card {
-  background: white;
+  background: var(--surface);
   border-radius: 18px;
   padding: 24px;
-
   text-decoration: none;
   color: inherit;
-
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   transition: 0.2s;
 }
 
@@ -389,10 +453,10 @@ PROMO CARD (HOME)
 ========================= */
 
 .promo-card {
-  background: white;
+  background: var(--surface);
   border-radius: 18px;
   padding: 18px 24px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -417,7 +481,7 @@ PROMO CARD (HOME)
 
 .promo-text {
   font-size: 14px;
-  color: #6b7280;
+  color: var(--text-secondary);
   margin-bottom: 16px;
 }
 
@@ -428,8 +492,8 @@ PROMO CARD (HOME)
   padding: 10px 14px;
   border: none;
   border-radius: 10px;
-  background: #e5e7eb;
-  color: #111827;
+  background: var(--button-bg);
+  color: var(--text);
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
@@ -438,15 +502,15 @@ PROMO CARD (HOME)
 }
 
 .promo-btn:hover {
-  background: #d1d5db;
+  background: var(--button-hover);
 }
 
 .promo-btn.secondary {
-  background: #e5e7eb;
+  background: var(--button-bg);
 }
 
 .promo-btn.secondary:hover {
-  background: #d1d5db;
+  background: var(--button-hover);
 }
 
 .promo-actions {
@@ -473,10 +537,10 @@ ROLLING STOCK
 }
 
 .stock-card {
-  background: white;
+  background: var(--surface);
   border-radius: 18px;
   overflow: hidden;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
 }
 
 .stock-image {
@@ -524,10 +588,10 @@ ABOUT PAGE
 ========================= */
 
 .info-card {
-  background: white;
+  background: var(--surface);
   padding: 24px;
   border-radius: 18px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   width: 100%;
 }
 
