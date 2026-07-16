@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
               line.type === "trolley" ? "Тролейбус" :
               line.type === "tram" ? "Трамвай" :
               line.type === "metro" ? "Метро" :
+              line.type === "night" ? "Нощна линия" :
               ""
             }
           </span>
