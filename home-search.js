@@ -1,16 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   const input = document.getElementById("homeLineSearch");
+  const typeSelect = document.getElementById("homeTransportType");
   const results = document.getElementById("homeLineResults");
 
-  if (!input || !results) return;
+  if (!input || !results || !typeSelect) return;
+
 
   function hideResults() {
     results.innerHTML = "";
     results.style.display = "none";
   }
 
-  input.addEventListener("input", () => {
+
+  function renderResults() {
 
     const value = input.value.trim().toLowerCase();
 
@@ -19,9 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+
+    const selectedType = typeSelect.value;
+
+
     const matches = lines.filter(line =>
+      line.type === selectedType &&
       line.number.toLowerCase().includes(value)
     );
+
 
     if (!matches.length) {
       hideResults();
@@ -37,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (line.type === "metro") {
         textColor = line.textColor;
       }
+
 
       return `
         <div 
@@ -118,6 +128,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       });
 
+  }
+
+
+  input.addEventListener("input", renderResults);
+
+
+  typeSelect.addEventListener("change", () => {
+
+    if (input.value.trim()) {
+      renderResults();
+    }
+
   });
 
 
@@ -125,7 +147,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("click", (e) => {
 
     if (!input.contains(e.target) &&
-        !results.contains(e.target)) {
+        !results.contains(e.target) &&
+        !typeSelect.contains(e.target)) {
 
       hideResults();
 
