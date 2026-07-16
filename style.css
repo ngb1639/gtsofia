@@ -545,6 +545,29 @@ ROLLING STOCK
   border-radius: 50%;
 }
 
+.stock-filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.stock-filters button {
+  font-family: "Sofia Sans", sans-serif;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: #e5e7eb;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.stock-filters button:hover {
+  background: #111827;
+  color: white;
+}
+
 /* =========================
 ABOUT PAGE
 ========================= */
