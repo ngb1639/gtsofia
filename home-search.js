@@ -5,90 +5,133 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!input || !results) return;
 
+  function hideResults() {
+    results.innerHTML = "";
+    results.style.display = "none";
+  }
 
   input.addEventListener("input", () => {
 
     const value = input.value.trim().toLowerCase();
 
-    results.innerHTML = "";
-
-    if (!value) return;
-
+    if (!value) {
+      hideResults();
+      return;
+    }
 
     const matches = lines.filter(line =>
       line.number.toLowerCase().includes(value)
     );
 
-
-    matches.slice(0, 10).forEach(line => {
-
-      const item = document.createElement("div");
-
-      item.style.padding = "10px 14px";
-      item.style.cursor = "pointer";
-      item.style.fontWeight = "600";
+    if (!matches.length) {
+      hideResults();
+      return;
+    }
 
 
-      item.innerHTML = `
-        ${line.number}
-        <span style="
-          color:#6b7280;
-          font-size:13px;
-          margin-left:8px;
-        ">
-          ${getTypeName(line.type)}
-        </span>
+    results.innerHTML = matches.map(line => {
+
+      let color = line.color;
+      let textColor = "white";
+
+      if (line.type === "metro") {
+        textColor = line.textColor;
+      }
+
+      return `
+        <div 
+          class="home-search-item"
+          data-type="${line.type}"
+          data-number="${line.number}"
+          style="
+            display:flex;
+            align-items:center;
+            gap:10px;
+            padding:10px 14px;
+            cursor:pointer;
+          "
+        >
+
+          ${
+            line.type === "metro"
+            ?
+            `<div style="
+              width:30px;
+              height:30px;
+              border-radius:50%;
+              background:${color};
+              color:${textColor};
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              font-weight:700;
+            ">
+              ${line.number}
+            </div>`
+            :
+            `<div style="
+              width:60px;
+              height:30px;
+              border-radius:6px;
+              background:${color};
+              color:white;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              font-weight:700;
+            ">
+              ${line.number}
+            </div>`
+          }
+
+          <span>
+            ${
+              line.type === "bus" ? "Автобус" :
+              line.type === "trolley" ? "Тролейбус" :
+              line.type === "tram" ? "Трамвай" :
+              line.type === "metro" ? "Метро" :
+              ""
+            }
+          </span>
+
+        </div>
       `;
 
-
-      item.onclick = () => {
-
-        window.location.href =
-          `transport.html?line=${encodeURIComponent(line.type)}:${encodeURIComponent(line.number)}`;
-
-      };
+    }).join("");
 
 
-      item.onmouseenter = () => {
-        item.style.background = "#f3f4f6";
-      };
-
-      item.onmouseleave = () => {
-        item.style.background = "white";
-      };
+    results.style.display = "block";
 
 
-      results.appendChild(item);
+    document.querySelectorAll(".home-search-item")
+      .forEach(item => {
 
-    });
+        item.addEventListener("click", () => {
+
+          const type = item.dataset.type;
+          const number = item.dataset.number;
+
+          window.location.href =
+            `transport.html?line=${type}:${number}`;
+
+        });
+
+      });
 
   });
 
 
-  document.addEventListener("click", e => {
+  // затваряне при клик извън полето
+  document.addEventListener("click", (e) => {
 
     if (!input.contains(e.target) &&
         !results.contains(e.target)) {
 
-      results.innerHTML = "";
+      hideResults();
 
     }
 
   });
 
+
 });
-
-
-function getTypeName(type) {
-
-  const names = {
-    bus: "Автобус",
-    trolley: "Тролейбус",
-    tram: "Трамвай",
-    metro: "Метро",
-    night: "Нощна линия"
-  };
-
-  return names[type] || "";
-
-}
