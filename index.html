@@ -79,12 +79,23 @@
 
   <div style="position:relative;margin-top:10px;">
 
-    <input 
-      id="homeLineSearch"
-      class="search"
-      placeholder="Въведете номер на линия…"
-      autocomplete="off"
-    />
+<div class="home-search-row">
+
+  <select id="homeTransportType" class="home-type-select">
+    <option value="bus">Автобуси</option>
+    <option value="trolley">Тролейбуси</option>
+    <option value="tram">Трамваи</option>
+    <option value="metro">Метро</option>
+  </select>
+
+  <input 
+    id="homeLineSearch"
+    class="search"
+    placeholder="Въведете номер на линия…"
+    autocomplete="off"
+  />
+
+</div>
 
     <div 
       id="homeLineResults"
