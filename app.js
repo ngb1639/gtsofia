@@ -137,3 +137,28 @@ document.getElementById("searchInput")
   .addEventListener("input", renderLines);
 
 renderLines();
+
+/* =========================
+AUTO OPEN LINE FROM HOME SEARCH
+========================= */
+
+const params = new URLSearchParams(window.location.search);
+const selectedLine = params.get("line");
+
+
+if (selectedLine) {
+
+  const [type, number] = selectedLine.split(":");
+
+
+  const line = lines.find(l =>
+    l.type === type &&
+    l.number === number
+  );
+
+
+  if (line) {
+    selectLine(line);
+  }
+
+}
