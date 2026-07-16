@@ -464,13 +464,14 @@ function renderStock() {
     if (items.length === 0) return;
 
     // SECTION TITLE
-    const title = document.createElement("h2");
-    title.textContent = groups[type];
-    title.style.margin = "24px 0 12px";
-    title.style.fontSize = "20px";
-    title.style.gridColumn = "1 / -1";
+const title = document.createElement("h2");
+title.textContent = groups[type];
+title.id = type + "Section";
+title.style.margin = "24px 0 12px";
+title.style.fontSize = "20px";
+title.style.gridColumn = "1 / -1";
 
-    grid.appendChild(title);
+grid.appendChild(title);
 
     // CARDS
     items.forEach(item => {
@@ -546,3 +547,16 @@ INIT
 ========================= */
 
 document.addEventListener("DOMContentLoaded", renderStock);
+
+function scrollToStock(type) {
+
+  const section = document.getElementById(type + "Section");
+
+  if (!section) return;
+
+  section.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+}
