@@ -381,6 +381,15 @@ HOME PAGE
   transform: translateY(-4px);
 }
 
+.home-search-item:hover {
+  background: #f3f4f6;
+}
+
+#homeLineResults {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
 /* =========================
 PROMO CARD (HOME)
 ========================= */
