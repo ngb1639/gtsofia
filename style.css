@@ -167,11 +167,12 @@ LINE PILLS
 ========================= */
 
 .line-pill {
-  min-width: 60px;
-  min-height: 30px;
+  width: 60px;
+  height: 30px;
   border-radius: 6px;
   color: white;
   font-weight: 700;
+  font-size: 17px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -184,13 +185,14 @@ LINE PILLS
 }
 
 .metro-pill {
-  min-width: 30px;
-  min-height: 30px;
+  width: 30px;
+  height: 30px;
   border-radius: 999px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
+  font-size: 17px;
   cursor: pointer;
   transition: 0.2s;
 }
@@ -289,11 +291,12 @@ LINE DETAILS
 }
 
 .details-number {
-  min-width: 60px;
-  min-height: 30px;
+  width: 60px;
+  height: 30px;
   border-radius: 6px;
   color: white;
   font-weight: 700;
+  font-size: 17px;
   display: flex;
   align-items: center;
   justify-content: center;
