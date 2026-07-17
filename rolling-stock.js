@@ -495,9 +495,12 @@ grid.appendChild(title);
               let meta = { color: "#111827", text: "white" };
 
               switch (item.type) {
-
                 case "bus":
-                  meta = { color: "#BD202E", text: "white" };
+                  if (["X43", "61", "63", "66", "103"].includes(line)) {
+                    meta = { color: "#006838", text: "white" };
+                  } else {
+                    meta = { color: "#BD202E", text: "white" };
+                  }
                   break;
 
                 case "tram":
