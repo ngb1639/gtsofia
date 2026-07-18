@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="bg">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Разписания | GTSofia</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+<a href="index.html" class="nav-logo">
+GTSOFIA
+</a>
+
+
+<button class="nav-toggle" onclick="toggleMenu()">☰</button>
+
+
+<nav id="navMenu">
+
+<a href="index.html">
+Начало
+</a>
+
+<a href="transport.html">
+Линии
+</a>
+
+<a href="schedule.html" class="active">
+Разписания
+</a>
+
+<a href="rolling-stock.html">
+Подвижен състав
+</a>
+
+<a href="about.html">
+За проекта
+</a>
+
+</nav>
+
+</header>
+
+
+
+<main class="content">
+
+
+<h1 style="margin-bottom:20px;">
+Разписания
+</h1>
+
+
+
+<div class="info-card">
+
+
+<h2>
+Избор на линия
+</h2>
+
+
+<select id="lineSelect"
+style="
+width:100%;
+height:44px;
+border:none;
+background:#f3f4f6;
+border-radius:12px;
+padding:0 14px;
+font-family:'Sofia Sans';
+font-size:16px;
+margin-top:10px;
+">
+
+</select>
+
+
+
+<select id="directionSelect"
+style="
+width:100%;
+height:44px;
+border:none;
+background:#f3f4f6;
+border-radius:12px;
+padding:0 14px;
+font-family:'Sofia Sans';
+font-size:16px;
+margin-top:10px;
+">
+
+</select>
+
+
+
+<select id="stopSelect"
+style="
+width:100%;
+height:44px;
+border:none;
+background:#f3f4f6;
+border-radius:12px;
+padding:0 14px;
+font-family:'Sofia Sans';
+font-size:16px;
+margin-top:10px;
+">
+
+</select>
+
+
+</div>
+
+
+
+
+<div class="info-card"
+style="margin-top:20px;">
+
+
+<h2>
+Следващи заминавания
+</h2>
+
+
+<div id="timesContainer"
+style="margin-top:15px;">
+
+Изберете спирка.
+
+</div>
+
+
+</div>
+
+
+
+</main>
+
+
+
+<script src="navbar.js"></script>
+
+<script src="schedule.js"></script>
+
+
+</body>
+
+</html>
