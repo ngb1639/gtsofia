@@ -586,88 +586,105 @@ MOBILE RESPONSIVE
 
 @media (max-width: 900px) {
 
-  body {
-    background: #f3f4f6;
-  }
-
-  /* Navbar */
-  .navbar {
-    height: 60px;
-    padding: 0 16px;
-  }
-
-  .nav-logo {
-    font-size: 22px;
-  }
-
-
-  /* App */
   .app {
-    display: block;
+    flex-direction: column;
     height: auto;
   }
 
-
-  /* Sidebar becomes compact card */
   .sidebar {
     width: 100%;
-    padding: 14px;
-    background: transparent;
-    border: none;
-    overflow: visible;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
   }
 
-  .logo {
+  .content {
+    padding: 16px;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .navbar nav {
     display: none;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
   }
 
-  .search {
-    height: 48px;
-    font-size: 16px;
-    background: white;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  .navbar nav.open {
+    display: flex;
   }
 
+  .navbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px 16px;
+  }
 
-  /* Filters scroll horizontally */
-  .filters {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 4px;
+  .line-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .switch-btn {
+    width: 100%;
+  }
+
+.destination-name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.promo-card {
+    align-items: center;
+  }
+
+    /* Only transport page */
+  .transport-page .app {
+    height: auto;
+    min-height: calc(100vh - 70px);
+    flex-direction: column;
+  }
+
+  .transport-page .sidebar {
+    width: 100%;
+    padding: 16px;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .transport-page .logo {
+    font-size: 24px;
     margin-bottom: 14px;
-    scrollbar-width: none;
   }
 
-  .filters::-webkit-scrollbar {
-    display: none;
+  .transport-page .search {
+    height: 42px;
+    margin-bottom: 12px;
   }
 
-  .filter-btn {
-    flex: 0 0 auto;
-    padding: 9px 16px;
-    border-radius: 999px;
+  .transport-page .filters {
+    gap: 6px;
+    margin-bottom: 16px;
   }
 
-
-  /* Line buttons */
-  .lines-grid {
-    background: white;
-    padding: 14px;
-    border-radius: 18px;
-    gap: 12px;
-    max-height: 160px;
-    overflow-y: auto;
-    box-shadow: 0 2px 10px rgba(0,0,0,.05);
+  .transport-page .filter-btn {
+    padding: 8px 12px;
+    font-size: 14px;
   }
 
-  .line-pill {
+  .transport-page .lines-grid {
+    gap: 8px;
+  }
+
+  .transport-page .line-pill {
     width: 54px;
     height: 28px;
     font-size: 15px;
   }
 
-  .metro-pill {
+  .transport-page .metro-pill {
     width: 28px;
     height: 28px;
     font-size: 15px;
@@ -675,106 +692,75 @@ MOBILE RESPONSIVE
 
 
   /* Content */
-  .content {
-    padding: 8px 14px 30px;
+  .transport-page .content {
+    padding: 14px;
+    overflow: visible;
   }
 
 
-  /* Route header */
-  .line-header {
-    background: white;
-    border-radius: 18px;
-    padding: 16px;
-    margin-bottom: 14px;
+  /* Header */
+  .transport-page .line-header {
+    flex-direction: column;
     gap: 14px;
+    margin-bottom: 18px;
   }
 
-  .line-left {
+  .transport-page .line-left {
     gap: 12px;
     flex-wrap: wrap;
   }
 
-  .switch-btn {
-    width: auto;
-    height: 38px;
-    padding: 0 14px;
-    font-size: 14px;
+  .transport-page .destination-name {
+    font-size: 20px;
   }
 
-  .route-direction {
+  .transport-page .route-direction {
     gap: 10px;
   }
 
-  .destination-name {
-    font-size: 20px;
+  .transport-page .switch-btn {
+    width: 100%;
+    height: 40px;
   }
 
 
   /* Details pills */
-  .details-pill {
+  .transport-page .details-pill {
     gap: 5px;
   }
 
-  .details-number {
-    width: 52px;
+  .transport-page .details-number {
+    width: 54px;
     height: 28px;
     font-size: 15px;
   }
 
-
-  /* Stops */
-  .stops-card {
-    padding: 20px 16px;
-    border-radius: 18px;
+  .transport-page .details-icon,
+  .transport-page .details-icon img {
+    width: 28px;
+    height: 28px;
   }
 
-  .stops-line {
-    margin-left: 4px;
+
+  /* Stops card */
+  .transport-page .stops-card {
+    padding: 18px;
+    border-radius: 14px;
   }
 
-  .stop-item {
-    padding-left: 32px;
+  .transport-page .stops-line {
+    margin-left: 8px;
+  }
+
+  .transport-page .stop-item {
+    padding-left: 30px;
     padding-bottom: 22px;
   }
 
-  .stop-name {
+  .transport-page .stop-name {
     font-size: 15px;
-    line-height: 1.35;
   }
 
-  .stop-dot {
-    width: 14px;
-    height: 14px;
-  }
-
-
-  /* Home page fixes */
-  .home {
-    padding: 16px;
-  }
-
-  .home-grid {
-    grid-template-columns: 1fr;
-  }
-
-
-  /* Promo */
-  .promo-actions {
-    flex-direction: column;
-  }
-
-  .promo-btn {
-    max-width: none;
-  }
-
-
-  /* Rolling stock */
-  .stock-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .stock-image {
-    height: 170px;
-  }
+}
 
 }
