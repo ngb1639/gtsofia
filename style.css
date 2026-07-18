@@ -643,4 +643,29 @@ MOBILE RESPONSIVE
     align-items: center;
   }
 
+  .line-pill {
+  border-radius: 6px;
+  color: white;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.line-pill:hover {
+  transform: scale(1.05);
+}
+
+.metro-pill {
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
 }
