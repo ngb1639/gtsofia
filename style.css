@@ -171,10 +171,13 @@ LINE PILLS
   height: 30px;
   border-radius: 6px;
   color: white;
-  font-weight: 800;
-  line-height: 30px;
-  text-align: center;
-  display: inline-block;
+  font-weight: 700;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 .line-pill:hover {
@@ -185,9 +188,13 @@ LINE PILLS
   width: 30px;
   height: 30px;
   border-radius: 999px;
-  font-weight: 800;
-  line-height: 30px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 .metro-pill:hover {
@@ -293,7 +300,7 @@ LINE DETAILS
   border-radius: 6px;
   color: white;
   font-weight: 700;
-  line-height: 1;
+  font-size: 17px;
   display: flex;
   align-items: center;
   justify-content: center;
