@@ -1,1 +1,58 @@
+name: Update GTFS data
 
+on:
+  schedule:
+    - cron: "30 3 * * *"
+
+  workflow_dispatch:
+
+
+jobs:
+
+  update:
+
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      - name: Download routes
+        run: |
+          curl https://trinmo.org/gtfs-data/static/routes \
+          -o gtfs-data/routes.json
+
+
+      - name: Download trips
+        run: |
+          curl https://trinmo.org/gtfs-data/static/trips \
+          -o gtfs-data/trips.json
+
+
+      - name: Download stops
+        run: |
+          curl https://trinmo.org/gtfs-data/stops \
+          -o gtfs-data/stops.json
+
+
+      - name: Download stop times
+        run: |
+          curl https://trinmo.org/gtfs-data/static/stop_times \
+          -o gtfs-data/stop_times.json
+
+
+      - name: Commit changes
+        run: |
+
+          git config user.name "github-actions"
+
+          git config user.email "github-actions@github.com"
+
+          git add gtfs-data
+
+          git commit -m "Update GTFS data" || exit 0
+
+          git push
