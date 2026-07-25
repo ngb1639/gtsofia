@@ -1,5 +1,11 @@
 console.log("schedule.js е зареден");
 
+fetch("schedules/index.json")
+.then(response => response.json())
+.then(data => {
+    console.log("Линии:", data);
+});
+
 
 const scheduleLines = document.getElementById("scheduleLines");
 const scheduleContent = document.getElementById("scheduleContent");
