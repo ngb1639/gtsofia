@@ -1,288 +1,161 @@
-let scheduleLines = [];
-
-let currentSchedule = [];
-let currentDirection = 0;
+let scheduleLines = document.getElementById("scheduleLines");
+let scheduleContent = document.getElementById("scheduleContent");
 
 
-
-// Зареждаме списъка с линии
 
 fetch("schedules/index.json")
 .then(response => response.json())
-.then(data => {
-
-    scheduleLines = data;
-
-    renderLines();
-
-});
+.then(lines => {
 
 
+    lines.forEach(line => {
 
 
-// Показване на линиите
+        let button = document.createElement("button");
 
-function renderLines(){
+        button.className = "line-pill";
 
-
-    const container = document.getElementById("scheduleLines");
-
-    container.innerHTML = "";
+        button.innerText = line;
 
 
-    scheduleLines.forEach(line => {
-
-
-        let pill = document.createElement("div");
-
-
-        pill.className = "line-pill";
-
-
-        pill.innerText = line;
-
-
-
-        pill.onclick = () => {
+        button.onclick = () => {
 
             loadSchedule(line);
 
         };
 
 
-        container.appendChild(pill);
+        scheduleLines.appendChild(button);
 
 
     });
 
 
-}
+})
+.catch(error => {
+
+console.error("Грешка при зареждане на линиите:", error);
+
+});
 
 
 
 
-
-// Зареждане на разписание
 
 function loadSchedule(line){
 
 
-    fetch(`schedules/${line}.json`)
-    .then(response => response.json())
-    .then(data => {
+fetch(`schedules/${line}.json`)
 
+.then(response => response.json())
 
-        currentSchedule = data;
+.then(data => {
 
-        currentDirection = 0;
 
+let html = `
 
-        showSchedule(line);
+<div class="line-header">
 
+<span class="line-number">
+${line}
+</span>
 
-    });
+</div>
 
+`;
 
-}
 
 
+data.forEach(direction => {
 
 
+html += `
 
+<div class="schedule-card">
 
-// Визуализация
 
-function showSchedule(line){
+<h3>
+${direction.direction}
+</h3>
 
 
-    const content = document.getElementById("scheduleContent");
+<table>
 
+<tr>
 
-    content.innerHTML = "";
+<th>
+Час
+</th>
 
+<th>
+Спирка
+</th>
 
+</tr>
 
-    let header = document.createElement("div");
 
+`;
 
-    header.className = "line-header";
 
+direction.stops.forEach(stop=>{
 
 
-    let directions = "";
+html += `
 
+<tr>
 
+<td>
+${stop.time}
+</td>
 
-    if(currentSchedule.length > 1){
+<td>
+${stop.stop}
+</td>
 
+</tr>
 
-        directions = `
+`;
 
-        <div class="promo-actions">
 
-        ${currentSchedule.map((item,index)=>`
+});
 
-            <button 
-            class="promo-btn ${index===currentDirection ? '' : 'secondary'}"
-            onclick="changeDirection(${index}, '${line}')">
 
-            ${item.direction}
+html += `
 
-            </button>
+</table>
 
 
-        `).join("")}
+</div>
 
-        </div>
+`;
 
 
-        `;
+});
 
 
-    }
+scheduleContent.innerHTML = html;
 
 
+})
 
 
+.catch(error=>{
 
-    header.innerHTML = `
 
+console.error(error);
 
-    <div class="line-left">
 
+scheduleContent.innerHTML =
 
-        <div class="line-pill">
+`
+<div class="empty-state">
 
-            ${line}
+Няма намерено разписание за линия ${line}
 
-        </div>
+</div>
+`;
 
-
-        <div>
-
-
-            <h2>
-                Линия ${line}
-            </h2>
-
-
-            <p>
-                ${currentSchedule[currentDirection].direction}
-            </p>
-
-
-        </div>
-
-
-    </div>
-
-
-
-    ${directions}
-
-
-    `;
-
-
-
-    content.appendChild(header);
-
-
-
-
-
-
-    let card = document.createElement("div");
-
-
-    card.className = "stops-card";
-
-
-
-    card.innerHTML = `
-
-
-    <div class="stops-line">
-
-
-    ${currentSchedule[currentDirection].stops.map(stop=>`
-
-
-        <div class="stop-item">
-
-
-            <div class="stop-dot"></div>
-
-
-            <div>
-
-
-                <strong>
-                    ${formatTime(stop.time)}
-                </strong>
-
-
-                <br>
-
-
-                ${stop.stop}
-
-
-            </div>
-
-
-        </div>
-
-
-
-    `).join("")}
-
-
-
-    </div>
-
-
-
-    `;
-
-
-
-    content.appendChild(card);
-
-
-
-}
-
-
-
-
-
-// Смяна на посока
-
-function changeDirection(index,line){
-
-
-    currentDirection = index;
-
-
-    showSchedule(line);
-
-
-}
-
-
-
-
-
-// Премахване на секундите
-
-function formatTime(time){
-
-
-    if(!time) return "";
-
-
-    return time.substring(0,5);
+});
 
 
 }
