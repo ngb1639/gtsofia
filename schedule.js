@@ -1,11 +1,5 @@
 console.log("schedule.js е зареден");
 
-fetch("schedules/index.json")
-.then(response => response.json())
-.then(data => {
-    console.log("Линии:", data);
-});
-
 
 const scheduleLines = document.getElementById("scheduleLines");
 const scheduleContent = document.getElementById("scheduleContent");
@@ -81,6 +75,24 @@ function loadSchedule(line){
     .then(data => {
 
 
+        /*
+        Премахване на дублиращи се направления.
+        Проверяваме:
+        - името на направлението
+        - първата спирка
+
+        Така оставяме различните маршрути,
+        но махаме напълно еднаквите.
+        */
+
+        const uniqueDirections = data.filter((item, index, self) =>
+            index === self.findIndex(d =>
+                d.direction === item.direction &&
+                d.stops[0]?.stop === item.stops[0]?.stop
+            )
+        );
+
+
 
         let html = `
 
@@ -102,7 +114,7 @@ function loadSchedule(line){
 
 
 
-        data.forEach(direction => {
+        uniqueDirections.forEach(direction => {
 
 
 
