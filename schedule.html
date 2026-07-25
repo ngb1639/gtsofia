@@ -14,63 +14,37 @@
 
 <body>
 
-
 <header class="navbar">
 
 <a href="index.html" class="nav-logo">
 GTSOFIA
 </a>
 
-
 <button class="nav-toggle" onclick="toggleMenu()">☰</button>
 
-
 <nav id="navMenu">
-
-<a href="index.html">
-Начало
-</a>
-
-<a href="transport.html">
-Линии
-</a>
-
-<a href="schedules.html" class="active">
-Разписания
-</a>
-
-<a href="rolling-stock.html">
-Подвижен състав
-</a>
-
-<a href="about.html">
-За проекта
-</a>
-
-
+<a href="index.html">Начало</a>
+<a href="transport.html">Линии</a>
+<a href="schedules.html" class="active">Разписания</a>
+<a href="rolling-stock.html">Подвижен състав</a>
+<a href="about.html">За проекта</a>
 </nav>
 
 </header>
 
 
-
-<div class="schedule-app">
+<div class="app">
 
 
 <aside class="sidebar">
 
-
-<input 
-class="search"
-id="scheduleSearch"
-placeholder="Търсене по линия..."
->
-
+<h3 class="section-title">
+Линии
+</h3>
 
 <div id="scheduleLines" class="lines-grid">
 
 </div>
-
 
 </aside>
 
@@ -81,10 +55,9 @@ placeholder="Търсене по линия..."
 
 <div id="scheduleContent">
 
+
 <div class="empty-state">
-
-Изберете линия, за да видите разписанието.
-
+Изберете линия, за да видите разписание.
 </div>
 
 
@@ -97,10 +70,8 @@ placeholder="Търсене по линия..."
 </div>
 
 
-
-<script src="data.js"></script>
-<script src="schedule.js"></script>
 <script src="navbar.js"></script>
+<script src="schedule.js"></script>
 
 
 </body>
