@@ -1,26 +1,31 @@
 console.log("schedule.js е зареден");
 
-let scheduleLines = document.getElementById("scheduleLines");
-let scheduleContent = document.getElementById("scheduleContent");
+
+const scheduleLines = document.getElementById("scheduleLines");
+const scheduleContent = document.getElementById("scheduleContent");
 
 
-
+// Зареждаме списъка с линии
 fetch("schedules/index.json")
+
 .then(response => response.json())
+
 .then(lines => {
 
 
     lines.forEach(line => {
 
 
-        let button = document.createElement("button");
+        const button = document.createElement("button");
+
 
         button.className = "line-pill";
 
-        button.innerText = line;
+
+        button.textContent = line;
 
 
-        button.onclick = () => {
+        button.onclick = function(){
 
             loadSchedule(line);
 
@@ -34,9 +39,24 @@ fetch("schedules/index.json")
 
 
 })
+
 .catch(error => {
 
-console.error("Грешка при зареждане на линиите:", error);
+    console.error(
+        "Грешка при зареждане на списъка с линии:",
+        error
+    );
+
+
+    scheduleLines.innerHTML = `
+
+    <div class="empty-state">
+
+    Не могат да се заредят линиите.
+
+    </div>
+
+    `;
 
 });
 
@@ -44,120 +64,166 @@ console.error("Грешка при зареждане на линиите:", err
 
 
 
+// Зареждане на конкретно разписание
 function loadSchedule(line){
 
 
-fetch(`schedules/${line}.json`)
+    fetch(`schedules/${line}.json`)
 
-.then(response => response.json())
+    .then(response => response.json())
 
-.then(data => {
-
-
-let html = `
-
-<div class="line-header">
-
-<span class="line-number">
-${line}
-</span>
-
-</div>
-
-`;
+    .then(data => {
 
 
 
-data.forEach(direction => {
+        let html = `
 
 
-html += `
-
-<div class="schedule-card">
+        <div class="line-header">
 
 
-<h3>
-${direction.direction}
-</h3>
+            <span class="line-number">
+
+                ${line}
+
+            </span>
 
 
-<table>
-
-<tr>
-
-<th>
-Час
-</th>
-
-<th>
-Спирка
-</th>
-
-</tr>
+        </div>
 
 
-`;
+        `;
 
 
-direction.stops.forEach(stop=>{
+
+        data.forEach(direction => {
 
 
-html += `
 
-<tr>
-
-<td>
-${stop.time}
-</td>
-
-<td>
-${stop.stop}
-</td>
-
-</tr>
-
-`;
+            html += `
 
 
-});
+            <div class="schedule-card">
 
 
-html += `
+                <h2>
 
-</table>
+                    Линия ${line}
 
-
-</div>
-
-`;
+                </h2>
 
 
-});
+                <h3>
+
+                    ${direction.direction}
+
+                </h3>
 
 
-scheduleContent.innerHTML = html;
+
+                <table>
 
 
-})
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Час
+                            </th>
 
 
-.catch(error=>{
+                            <th>
+                                Спирка
+                            </th>
 
 
-console.error(error);
+                        </tr>
+
+                    </thead>
 
 
-scheduleContent.innerHTML =
 
-`
-<div class="empty-state">
+                    <tbody>
 
-Няма намерено разписание за линия ${line}
 
-</div>
-`;
+                    ${direction.stops.map(stop => `
 
-});
+
+                        <tr>
+
+
+                            <td>
+
+                                ${stop.time}
+
+                            </td>
+
+
+
+                            <td>
+
+                                ${stop.stop}
+
+                            </td>
+
+
+                        </tr>
+
+
+                    `).join("")}
+
+
+                    </tbody>
+
+
+                </table>
+
+
+
+            </div>
+
+
+            `;
+
+
+
+        });
+
+
+
+        scheduleContent.innerHTML = html;
+
+
+
+    })
+
+
+    .catch(error => {
+
+
+        console.error(
+            "Грешка при зареждане на разписанието:",
+            error
+        );
+
+
+        scheduleContent.innerHTML = `
+
+
+        <div class="empty-state">
+
+
+            Няма намерено разписание за линия ${line}
+
+
+        </div>
+
+
+        `;
+
+
+    });
 
 
 }
