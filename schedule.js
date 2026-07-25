@@ -1,3 +1,5 @@
+console.log("schedule.js е зареден");
+
 let scheduleLines = document.getElementById("scheduleLines");
 let scheduleContent = document.getElementById("scheduleContent");
 
