@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="bg">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Разписания | GTSofia</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="style.css">
 
 </head>
-
 
 <body>
 
@@ -36,7 +35,7 @@ GTSOFIA
 Линии
 </a>
 
-<a href="schedule.html" class="active">
+<a href="schedules.html" class="active">
 Разписания
 </a>
 
@@ -55,33 +54,36 @@ GTSOFIA
 
 
 
+<div class="schedule-app">
+
+
+<aside class="sidebar">
+
+
+<input 
+class="search"
+id="scheduleSearch"
+placeholder="Търсене по линия..."
+>
+
+
+<div id="scheduleLines" class="lines-grid">
+
+</div>
+
+
+</aside>
+
+
+
 <main class="content">
 
 
-<h1>
-Разписания
-</h1>
+<div id="scheduleContent">
 
+<div class="empty-state">
 
-<div class="schedule-box">
-
-
-<label>
-Избери линия:
-</label>
-
-
-<select id="lineSelect">
-
-<option>
-Зареждане...
-</option>
-
-</select>
-
-
-
-<div id="scheduleResult">
+Изберете линия, за да видите разписанието.
 
 </div>
 
@@ -92,11 +94,14 @@ GTSOFIA
 </main>
 
 
+</div>
 
-<script src="navbar.js"></script>
+
+
+<script src="data.js"></script>
 <script src="schedule.js"></script>
+<script src="navbar.js"></script>
 
 
 </body>
-
 </html>
