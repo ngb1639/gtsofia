@@ -1,100 +1,73 @@
-let schedules = {};
+let scheduleLines = [];
 
 
 
-fetch("schedule.json")
-
-.then(response => response.json())
-
+fetch("schedules/index.json")
+.then(r => r.json())
 .then(data => {
 
-    schedules = data;
+    scheduleLines = data;
 
-    loadLines();
+    renderLines();
 
 });
 
 
 
+function renderLines(){
 
-function loadLines(){
-
-    const select = document.getElementById(
-        "lineSelect"
-    );
+const container =
+document.getElementById("scheduleLines");
 
 
-    select.innerHTML = "";
+container.innerHTML="";
 
 
-    Object.keys(schedules)
-    .sort()
-    .forEach(line=>{
+scheduleLines.forEach(line=>{
 
 
-        let option=document.createElement(
-            "option"
-        );
+let pill=document.createElement("div");
 
 
-        option.value=line;
-        option.textContent="Линия "+line;
+pill.className="line-pill";
+
+pill.innerText=line;
 
 
-        select.appendChild(option);
-
-
-    });
+pill.onclick=()=>loadSchedule(line);
 
 
 
-    showSchedule(
-        select.value
-    );
+container.appendChild(pill);
+
+
+
+});
 
 
 }
 
 
 
-document
-.getElementById("lineSelect")
-.addEventListener(
-"change",
-function(){
-
-    showSchedule(this.value);
-
-});
+function loadSchedule(line){
 
 
+fetch(`schedules/${line}.json`)
+.then(r=>r.json())
+.then(data=>{
 
 
-
-function showSchedule(line){
-
-
-let container=document.getElementById(
-"scheduleResult"
-);
+let content =
+document.getElementById("scheduleContent");
 
 
-container.innerHTML="";
-
-
-let directions=schedules[line];
+content.innerHTML="";
 
 
 
-directions.forEach(direction=>{
+let card=document.createElement("div");
 
-
-let card=document.createElement(
-"div"
-);
-
-
-card.className="info-card";
+card.className="stops-card";
 
 
 
@@ -104,31 +77,49 @@ card.innerHTML=`
 Линия ${line}
 </h2>
 
+<br>
 
 <h3>
-${direction.direction}
+${data[0].direction}
 </h3>
 
 
-<hr>
+<br>
+
+<div class="stops-line">
 
 
-${direction.stops.map(stop=>`
+${data[0].stops.map(stop=>`
 
-<p>
+<div class="stop-item">
+
+<div class="stop-dot"></div>
+
+
+<div>
+
 <b>${stop.time}</b>
--
+<br>
+
 ${stop.stop}
-</p>
+
+</div>
+
+
+</div>
+
 
 `).join("")}
 
+
+
+</div>
 
 `;
 
 
 
-container.appendChild(card);
+content.appendChild(card);
 
 
 
