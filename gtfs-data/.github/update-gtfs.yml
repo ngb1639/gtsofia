@@ -1,4 +1,4 @@
-name: Update GTFS data
+name: Update GTFS
 
 on:
   schedule:
@@ -6,53 +6,37 @@ on:
 
   workflow_dispatch:
 
-
 jobs:
-
   update:
-
     runs-on: ubuntu-latest
-
 
     steps:
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
 
 
-      - name: Download routes
-        run: |
-          curl https://trinmo.org/gtfs-data/static/routes \
-          -o gtfs-data/routes.json
+    - name: Download GTFS files
+      run: |
+        mkdir -p gtfs-data/raw
+
+        curl -L https://trinmo.org/gtfs-data/static/routes \
+        -o gtfs-data/raw/routes.json
+
+        curl -L https://trinmo.org/gtfs-data/stops \
+        -o gtfs-data/raw/stops.json
+
+        curl -L https://trinmo.org/gtfs-data/static/trips \
+        -o gtfs-data/raw/trips.json
 
 
-      - name: Download trips
-        run: |
-          curl https://trinmo.org/gtfs-data/static/trips \
-          -o gtfs-data/trips.json
+    - name: Commit files
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
 
+        git add gtfs-data/raw
 
-      - name: Download stops
-        run: |
-          curl https://trinmo.org/gtfs-data/stops \
-          -o gtfs-data/stops.json
+        git commit -m "Update GTFS data" || exit 0
 
-
-      - name: Download stop times
-        run: |
-          curl https://trinmo.org/gtfs-data/static/stop_times \
-          -o gtfs-data/stop_times.json
-
-
-      - name: Commit changes
-        run: |
-
-          git config user.name "github-actions"
-
-          git config user.email "github-actions@github.com"
-
-          git add gtfs-data
-
-          git commit -m "Update GTFS data" || exit 0
-
-          git push
+        git push
