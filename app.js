@@ -5,9 +5,14 @@ function renderLines() {
   const grid = document.getElementById("linesGrid");
   const search = document.getElementById("searchInput").value.toLowerCase();
 
+  if (!window.lines || window.lines.length === 0) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;">Зареждане на линиите...</div>';
+    return;
+  }
+
   grid.innerHTML = "";
 
-  lines.filter(l =>
+  window.lines.filter(l =>
     (!currentFilter || l.type === currentFilter) &&
     l.number.toLowerCase().includes(search)
   ).forEach(line => {
@@ -90,7 +95,7 @@ function selectLine(line) {
       </button>
     </div>
 
-   <!-- 🚧 ALERT SLOT (NEW POSITION) -->
+   <!-- ALERT SLOT -->
   <div id="lineAlerts"></div>
 
     <div class="stops-card">
@@ -105,7 +110,7 @@ function selectLine(line) {
     </div>
   `;
 
-  // 🚀 NEW: load alerts for this line (safe call)
+  // Load alerts for this line
   if (typeof showLineAlerts === "function") {
     showLineAlerts(line.number, line.type);
   }
@@ -113,7 +118,7 @@ function selectLine(line) {
 
 function switchDirection(type, number) {
 
-  const line = lines.find(
+  const line = window.lines.find(
     l => l.type === type && l.number === number
   );
 
@@ -136,7 +141,20 @@ function setFilter(type, el) {
 document.getElementById("searchInput")
   .addEventListener("input", renderLines);
 
-renderLines();
+/* =========================
+ИНИЦИАЛИЗАЦИЯ СЛЕД ЗАРЕЖДАНЕ НА GTFS
+========================= */
+
+function initializeApp() {
+  if (window.lines && window.lines.length > 0) {
+    renderLines();
+  } else {
+    // Проверка отново за 2 секунди ако данните не са готови
+    setTimeout(initializeApp, 2000);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", initializeApp);
 
 /* =========================
 AUTO OPEN LINE FROM HOME SEARCH
@@ -145,20 +163,25 @@ AUTO OPEN LINE FROM HOME SEARCH
 const params = new URLSearchParams(window.location.search);
 const selectedLine = params.get("line");
 
-
 if (selectedLine) {
+  // Проверка дали са заредени данните
+  function checkAndSelectLine() {
+    if (!window.lines || window.lines.length === 0) {
+      setTimeout(checkAndSelectLine, 500);
+      return;
+    }
 
-  const [type, number] = selectedLine.split(":");
+    const [type, number] = selectedLine.split(":");
 
+    const line = window.lines.find(l =>
+      l.type === type &&
+      l.number === number
+    );
 
-  const line = lines.find(l =>
-    l.type === type &&
-    l.number === number
-  );
-
-
-  if (line) {
-    selectLine(line);
+    if (line) {
+      selectLine(line);
+    }
   }
 
+  checkAndSelectLine();
 }
