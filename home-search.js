@@ -22,11 +22,17 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // Проверка дали са заредени GTFS данни
+    if (!window.lines || window.lines.length === 0) {
+      results.innerHTML = '<div style="padding:10px; color:#999;">Зареждане на данни...</div>';
+      results.style.display = "block";
+      return;
+    }
 
     const selectedType = typeSelect.value;
 
 
-    const matches = lines.filter(line =>
+    const matches = window.lines.filter(line =>
       line.type === selectedType &&
       line.number.toLowerCase().includes(value)
     );
@@ -59,7 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
             gap:10px;
             padding:10px 14px;
             cursor:pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
           "
+          onmouseover="this.style.background='#f9f9f9'"
+          onmouseout="this.style.background='transparent'"
         >
 
           ${
