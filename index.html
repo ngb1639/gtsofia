@@ -162,5 +162,34 @@
   });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    // ===== ТЕСТ =====
+    const isNationalHoliday = true;
+
+    // ===== Реално условие (след теста) =====
+    // const today = new Date();
+    // const isNationalHoliday =
+    //     today.getMonth() === 2 && today.getDate() === 3;
+
+    if (isNationalHoliday) {
+
+        const logo = document.getElementById("siteLogo");
+        const text = document.getElementById("holidayText");
+
+        logo.classList.add("bulgaria");
+
+        text.style.display = "block";
+
+        requestAnimationFrame(() => {
+            text.classList.add("show");
+        });
+
+    }
+
+});
+</script>
+  
 </body>
 </html>
