@@ -19,6 +19,41 @@ img {
   max-width: 100%;
 }
 
+.logo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nav-logo.bulgaria {
+  background: linear-gradient(
+    to bottom,
+    #ffffff 33.33%,
+    #00966e 33.33% 66.66%,
+    #d62612 66.66%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.holiday-text {
+  display: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  margin-top: 4px;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: .4s ease;
+}
+
+.holiday-text.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* =========================
 NAVBAR
 ========================= */
