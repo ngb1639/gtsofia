@@ -20,38 +20,36 @@ img {
 }
 
 .logo-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-.nav-logo.bulgaria {
-  background: linear-gradient(
-    to bottom,
-    #ffffff 33.33%,
-    #00966e 33.33% 66.66%,
-    #d62612 66.66%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.flag-line {
+    display: none;
+    width: 100%;
+    max-width: 145px;
+    height: 4px;
+    margin-top: 4px;
+    border-radius: 999px;
+    background: linear-gradient(
+        to right,
+        #ffffff 0%,
+        #ffffff 33.3%,
+        #00966e 33.3%,
+        #00966e 66.6%,
+        #d62612 66.6%,
+        #d62612 100%
+    );
+    border: 1px solid #e5e7eb;
 }
 
 .holiday-text {
-  display: none;
-  font-size: 12px;
-  font-weight: 600;
-  color: #555;
-  margin-top: 4px;
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: .4s ease;
-}
-
-.holiday-text.show {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
+    display: none;
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
 }
 
 /* =========================
